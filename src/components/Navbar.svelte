@@ -2,6 +2,8 @@
   import Logo from "components/Logo.svelte";
 
   export let activeSection = '';
+
+  import { user as userStore } from "stores/user";
 </script>
 
 <div class="fixed w-full top-0 bg-base-100 z-20 shadow-xl">
@@ -27,8 +29,12 @@
         </ul>
       </div>
       <div class="navbar-end gap-2">
-        <a class="btn btn-outline rounded-md" href="/auth/login">Войти</a>
-        <a class="btn btn-sm sm:btn-md rounded-md hidden md:flex" href="/auth/signup">Зарегистрироваться</a>
+        {#if $userStore.user}
+          <a class="btn btn-outline rounded-md" href="/profile">Профиль</a>    
+        {:else}
+          <a class="btn btn-outline rounded-md" href="/auth/login">Войти</a>
+          <a class="btn btn-sm sm:btn-md rounded-md hidden md:flex" href="/auth/signup">Зарегистрироваться</a>
+        {/if}
       </div>
     </div>
   </div>

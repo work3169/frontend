@@ -3,4 +3,8 @@
     <p>© 2023 GREEN ENERGY FUND LTD - ALL RIGHTS RESERVED</p>
     <p class="text-[12px]">Support email: support-contact@geefund.com</p>
   </div>
+  <div>
+    <a href="/terms">Правила пользования</a>
+    <a href="/certificate.pdf" target="_blank">Сертификат</a>
+  </div>
 </footer>

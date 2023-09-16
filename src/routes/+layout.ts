@@ -1,12 +1,10 @@
 import { user } from 'stores/user';
 import { browser } from '$app/environment';
 /** @type {import('./$types').PageLoad} */
-export async function load() {
+export function load() {
   if (browser) {
-    const usr = await user.getUser();
-    if (!usr) {
-      user.logout();
-    }
+    user.getUser();
   }
+
   return {};
 }

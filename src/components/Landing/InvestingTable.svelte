@@ -18,10 +18,6 @@
       });
     }
   });
-  const returnDate = (date: string | Date) => {
-    const newDate = new Date(date);
-    return newDate.toLocaleDateString("ru-RU");
-  };
   let contractsList: Array<any> = [];
   $: contractsList = $contracts.filter((contract: any) => contract.show_to_all === true);
   $: {
@@ -33,10 +29,12 @@
   }
   $: {
     if (contractId != -1 && (+inputVal >= 0)) {
-      let contractPercent = contractsList.find((contract: any) => contract.id === contractId).percent_for_day;
+      let contract = contractsList.find((contract: any) => contract.id === contractId)
+      let contractPercent = contract.percent_for_day;
+      let contractTerm = contract.term;
       let initialValue = +inputVal;
-     
-      initialValue += initialValue * contractPercent * 365 / 100;
+      console.log(contractPercent)
+      initialValue += initialValue * (contractPercent / 100) * contractTerm;
       
       output = initialValue.toFixed(2).toString();
     }

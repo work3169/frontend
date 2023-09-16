@@ -3,7 +3,7 @@
 </script>
 
 <h1 class="text-4xl font-semibold mb-8 text-center">Новости</h1>
-<div class="flex flex-col lg:flex-row justify-between items-center flex-wrap gap-4">
+<div class="flex flex-wrap justify-around items-stretch  gap-4">
   <NewsCard
     isNew
     title="Инновационные солнечные панели"

@@ -8,17 +8,9 @@
   import { Jellyfish } from 'svelte-loading-spinners';
   let isLoading = false;
   let form: HTMLFormElement;
-  let firstname = "";
-  let lastname = "";
-  let nickname = "";
-  let email = "";
   let password = "";
   let confirmPassword = "";
   let errors = {
-    firstname: "",
-    lastname: "",
-    nickname: "",
-    email: "",
     password: "",
     confirmPassword: ""
   };
@@ -43,12 +35,12 @@
     const formSubmit = new FormData(form)
     formSubmit.append('reffered_by_link', ref_link)
     try {
-      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/register/`, {
+      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/reset/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': '*/*',
-          'Access-Control-Allow-Origin': window?.location.origin,
+          'Access-Control-Allow-Origin': window.location.origin,
         },
         data: formSubmit,
       })
@@ -72,31 +64,9 @@
   function handleSubmit() {
     serverError = ""
     errors = {
-      firstname: "",
-      lastname: "",
-      nickname: "",
-      email: "",
       password: "",
       confirmPassword: ""
     };
-
-    if (!firstname) {
-      errors.firstname = "Введите имя";
-    }
-
-    if (!lastname) {
-      errors.lastname = "Введите фамилию";
-    }
-
-    if (!nickname) {
-      errors.nickname = "Введите имя пользователя";
-    }
-
-    if (!email) {
-      errors.email = "Заполните электронную почту";
-    } else if (!isValidEmail(email)) {
-      errors.email = "Введите корректную электронную почту";
-    }
 
     if (!password) {
       errors.password = "Введите пароль";
@@ -112,11 +82,6 @@
       submitForm()
     }
   }
-
-  function isValidEmail(email: string) {
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    return emailRegex.test(email);
-  }
 </script>
 
 <SignInCard>
@@ -127,15 +92,7 @@
   {/if}
   {#if !isLoading}
     <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form}>
-      <h1 class="mb-6 font-semibold text-lg text-center">Регистрация</h1>
-  
-      <Input type="text" bind:value={firstname} name="first_name" placeholder="Введите имя" label="Имя" error={errors.firstname}/>
-
-      <Input type="text" bind:value={lastname} name="last_name" placeholder="Введите фамилию" label="Фамилия" error={errors.lastname} />
-
-      <Input type="text" bind:value={nickname} name="username" placeholder="Введите имя пользователя" label="Имя пользователя" error={errors.nickname} />
-
-      <Input type="email" bind:value={email} name="email" placeholder="Введите электронную почту" label="Электронная почта" error={errors.email} />
+      <h1 class="mb-6 font-semibold text-lg text-center">Смена пароля</h1>
 
       <Input type="password" bind:value={password} name="password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
 

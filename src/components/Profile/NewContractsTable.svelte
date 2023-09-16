@@ -38,7 +38,7 @@
     } catch (e: AxiosError | unknown) {
       if (axios.isAxiosError(e)) {
         const { response } = e
-        const errMsg = response?.data.non_field_errors[0];
+        const errMsg = response?.data?.non_field_errors && response?.data?.non_field_errors[0];
         if (errMsg) {
           errorMsg = errMsg;
         } else {

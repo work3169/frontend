@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { user, user as userStore } from "stores/user";
-	import { browser } from "$app/environment";
-  if (browser) userStore.getCashflow();
+  import { user as userStore } from "stores/user";
   const formatDate = (date: string | Date) => {
     let newDate: String | Date = new Date(date);
     newDate = newDate.toLocaleDateString('ru-RU');
@@ -53,7 +51,7 @@
         <th class="bg-neutral text-xs md:text-md text-right">Начисление</th>
         <th class="bg-neutral text-xs md:text-md text-right">Текущий баланс</th>
         <th class="bg-neutral text-xs md:text-md text-right">Дата</th>
-        <th class="bg-neutral text-xs md:text-md text-right">Дополнительно</th>
+        <th class="bg-neutral text-xs md:text-md text-left">Дополнительно</th>
       </tr>
     </thead>
     {#if $userStore.operations.length}
@@ -70,10 +68,10 @@
             {status[operation.status].name}
           </div>
         </td>
-        <td class="text-right">{operation.current_balance-operation.previous_balance}$</td>
+        <td class="text-right">{operation.amount}$</td>
         <td class="text-right"><span class="font-medium">${operation.current_balance}</span></td>
         <td class="text-right">{formatDate(operation.operation_date)}</td>
-        <td class="text-right">{operation.reason ? operation.reason : '-'}</td>
+        <td class="text-left">{operation.reason ? operation.reason : '-'}</td>
       </tr>
       {/each}
     </tbody>

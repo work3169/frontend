@@ -51,7 +51,7 @@
   {/if}
   {#if wallet}
     <div class="mt-1 text-lg">
-      Пожалуйста пополните баланс на сумму $<b>{value}</b> на кошелек <b class="text-info text-xl">{wallet}</b>
+      Пожалуйста, пополните баланс на сумму $<b>{value}</b> на кошелек <b class="text-info text-xl">{wallet}</b>
     </div>
   {/if}
 </div>

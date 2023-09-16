@@ -1,11 +1,9 @@
 <script lang="ts">
   import axios, { AxiosError } from "axios";
-  import { PUBLIC_BACKEND_URL } from "$env/static/public";
-  import { goto } from '$app/navigation';
-  import nookies from 'nookies';
   import Input from "components/Auth/Input.svelte";
 	import SignInCard from "components/Auth/SigninCard.svelte";
   import { Jellyfish } from 'svelte-loading-spinners';
+  import { user } from "stores/user";
   let isLoading = false;
   let form: HTMLFormElement;
   let nickname = "";
@@ -20,24 +18,7 @@
     isLoading = true;
     const formSubmit = new FormData(form)
     try {
-      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/token/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': '*/*',
-          'Access-Control-Allow-Origin': window.location.origin,
-        },
-        data: formSubmit,
-      })
-      nookies.set(null, "access_token", res.data.access, {
-        maxAge: 300 * 24 * 60 * 60,
-        path: "/",
-      })
-      nookies.set(null, "refresh_token", res.data.refresh, {
-        maxAge: 300 * 24 * 60 * 60,
-        path: "/",
-      })
-      goto(`/profile`);
+      user.login(formSubmit)
     } catch (e: unknown | AxiosError) {
       if (axios.isAxiosError(e)) {
         serverError = "Неверные данные или неподтверждённый пользователь"
@@ -89,9 +70,10 @@
       {#if serverError}
         <p class="text-error text-lg">{serverError}</p>
       {/if}
-      <div class="flex flex-wrap justify-end gap-2">
-        <a class="btn btn-outline" href="/auth/signup">Зарегистрироваться</a>
+      <div class="flex flex-col flex-wrap justify-center gap-2">
         <button class="btn btn-primary">Войти</button>
+        <a class="btn btn-ghost" href="/auth/signup">Зарегистрироваться</a>
+        <!-- <a class="btn btn-ghost" href="/auth/forgot-password">Забыли пароль?</a> -->
       </div>
     </form>
   {/if}

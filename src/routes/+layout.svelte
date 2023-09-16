@@ -10,6 +10,8 @@
 <svelte:head>
 	<title>GEEF</title>
 </svelte:head>
+
+
 <slot />
 
 <style>

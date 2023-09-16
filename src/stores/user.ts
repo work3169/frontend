@@ -1,17 +1,10 @@
 import { PUBLIC_BACKEND_URL as BACKEND_URL } from '$env/static/public';
+import { PUBLIC_BACKEND_URL } from "$env/static/public";
 import { writable, get } from 'svelte/store';
 import axios from 'axios';
 import nookies from 'nookies';
 import jwtDecode from 'jwt-decode';
 import { goto } from '$app/navigation';
-
-const getCookie = (name: string) => {
-    let cookie = '';
-    if (nookies.get) {
-        cookie = nookies.get(null)[name] || '';
-    }
-    return cookie;
-}
 
 export interface Contract {
     id: number;
@@ -23,7 +16,6 @@ export interface Contract {
 }
 
 interface User {
-    isAuthenticated: boolean;
     accessToken: string;
     refreshToken: string;
     isLoading: boolean;
@@ -42,11 +34,10 @@ interface User {
     wallets: any;
     operations: BalanceOperation[];
     next_cashflow: string;
-    isUserLoaded: boolean;
 }
 
 interface BalanceOperation {
-    cash_amount: number;
+    amount: number;
     current_balance: number;
     operation_date: string;
     operation_type: number;
@@ -55,15 +46,13 @@ interface BalanceOperation {
     status: number;
 }
 const initialUser: User = {
-    isAuthenticated: false,
-    accessToken: getCookie('access_token'),
-    refreshToken: getCookie('refresh_token'),
+    accessToken: '',
+    refreshToken: '',
     isLoading: false,
     user: null,
     wallets: '',
     operations: [],
     next_cashflow: '',
-    isUserLoaded: false,
 };
 
 const isValidToken = (token: string) => {
@@ -80,38 +69,77 @@ function createUserStore() {
         subscribe,
         logout: async () => {
             // Remove tokens from cookies
+            await goto('/auth/login');
             nookies.destroy(null, 'access_token');
             nookies.destroy(null, 'refresh_token');
             set(initialUser);
-            await goto('/auth/login')
-            location.reload();
         },
+        login: async (formSubmit: FormData) => {
+            const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/token/`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': '*/*',
+                  'Access-Control-Allow-Origin': window.location.origin,
+                },
+                data: formSubmit,
+            })
+            nookies.set(null, "access_token", res.data.access, {
+                maxAge: 300 * 24 * 60 * 60,
+                path: "/",
+            })
+            nookies.set(null, "refresh_token", res.data.refresh, {
+                maxAge: 300 * 24 * 60 * 60,
+                path: "/",
+            })
+            update(user => ({
+                ...user,
+                accessToken: res.data.access,
+                refreshToken: res.data.refresh,
+            }));
+            goto(`/profile`);
+        },    
         refreshToken: async () => {
-            const { refreshToken, accessToken } = get(user);
+            let { refreshToken, accessToken } = get(user);
+            if (!refreshToken) {
+                refreshToken = nookies.get(null).refresh_token;
+                if (!refreshToken) {
+                    return;
+                }
+            }
+            if (!accessToken) {
+                accessToken = nookies.get(null).access_token;
+            }
+            if (isValidToken(accessToken)) {
+                update(user => ({
+                    ...user,
+                    accessToken,
+                    refreshToken,
+                }));
+                return;
+            }
             try {
-                if (refreshToken && !isValidToken(accessToken)) {
-                    const { data } = await axios(`${BACKEND_URL}/api/v1/token/refresh/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': window.location.origin,
-                        },
-                        data: { refresh: refreshToken },
-                    });
+                const { data } = await axios(`${BACKEND_URL}/api/v1/token/refresh/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': window.location.origin,
+                    },
+                    data: { refresh: refreshToken },
+                });
 
-                    if (data.access) {
-                        nookies.set(null, 'access_token', data.access, { path: '/' });
+                if (data.access) {
+                    nookies.set(null, 'access_token', data.access, { path: '/' });
 
-                        update(user => ({
-                            ...user,
-                            accessToken: data.access,
-                        }));
-                    }
+                    update(user => ({
+                        ...user,
+                        accessToken: data.access,
+                    }));
                 }
             } catch (e) {
-                user.logout();
-         
-                console.log(e)
+                nookies.destroy(null, 'access_token');
+                nookies.destroy(null, 'refresh_token');
+                set(initialUser);
             }
         },
         getAccessToken: async () => {
@@ -122,9 +150,6 @@ function createUserStore() {
 
         getUser: async () => {
             try {
-                update(user => ({
-                    ...user,
-                }));
                 const accessToken = await user.getAccessToken();
                 const { data } = await axios(`${BACKEND_URL}/api/v1/user/`, {
                     method: 'GET',
@@ -140,13 +165,7 @@ function createUserStore() {
                 }));
                 return get(user);
             } catch (e) {
-                console.log(e)
-                user.logout();
-            } finally {
-                update(user => ({
-                    ...user,
-                    isUserLoaded: true,
-                }));
+                console.log(e);
             }
         },
         getContracts: async () => {

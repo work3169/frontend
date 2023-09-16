@@ -1,8 +1,6 @@
 <script lang="ts">
   import HeaderContainer from "components/Profile/HeaderContainer.svelte";
   import { user as userStore } from "stores/user";
-
-  console.log($userStore);
 </script>
 
 <HeaderContainer>
@@ -37,32 +35,14 @@
     <div class="font-semibold">Реферальная ccылка</div>
     <a href={`https://${window.location.host}/auth/signup/?ref_link=${$userStore.user?.userprofile.ref_link}`}>https://{window.location.host}/auth/signup/?ref_link={$userStore.user?.userprofile.ref_link}</a>
   </div>
+  <div>
+    <a class="font-semibold my-3 text-secondary" href="https://t.me/geef_support">Обратиться в поддержку</a>
+  </div>
+
+
   <div class="flex flex-wrap gap-4">
     <a class="btn btn-primary" href="/profile/balance/replenish">Внести средства</a>
     <a class="btn btn-primary" href="/profile/balance/withdraw">Вывести средства</a>
   </div>
   <button class="btn btn-outline btn-secondary max-w-sm btn-sm" on:click={userStore.logout}>Выйти из аккаунта</button>
-  <!-- <div class="mt-2 flex flex-col gap-4">
-    <div>
-      <label for="oldpass" class="label">
-        <span class="label-text">Старый пароль</span>
-      </label>
-      <input name="oldpass" type="password" placeholder="Старый пароль" class="input input-bordered w-full max-w-xs" />
-    </div>
-    <div>
-      <label for="newpass" class="label">
-        <span class="label-text">Новый пароль</span>
-      </label>
-      <input name="newpass" type="password" placeholder="Новый пароль" class="input input-bordered w-full max-w-xs" />
-    </div>
-    <div>
-      <label for="confirmpass" class="label">
-        <span class="label-text">Подтвердите новый пароль</span>
-      </label>
-      <input name="confirmpass" type="password" placeholder="Подтвердите новый пароль" class="input input-bordered w-full max-w-xs" />  
-    </div>
-    <div>
-      <button class="btn btn-primary">Поменять пароль</button>
-    </div>
-  </div> -->
 </div>

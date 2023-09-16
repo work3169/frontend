@@ -1,5 +1,16 @@
 <script lang="ts">
   import Drawer from "components/Profile/Drawer.svelte";
+  import { onDestroy } from "svelte";
+  import { user } from 'stores/user';
+
+  const intervalId = setInterval(() => {
+    user.getUser()
+    user.getCashflow()
+  }, 5000);
+
+  onDestroy(() => {
+      clearInterval(intervalId);
+  });
 </script>
 
 <div class="drawer drawer-mobile bg-base-200">

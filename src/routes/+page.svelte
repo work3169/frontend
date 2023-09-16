@@ -59,10 +59,9 @@
 <div class="container mx-auto my-24">
   <div id="news" bind:this={newsSection}></div>
   <NewsSection />
-</div>
-<div class="2xl:container 2xl:mx-auto">
   <LandingPerformanceSection />
 </div>
+
 <div class="container mx-auto my-24">
   <div id="reviews" bind:this={reviewsSection}></div>
   <Testimonials />
