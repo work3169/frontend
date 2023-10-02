@@ -13,6 +13,7 @@
 	import Investing from "components/Landing/Investing.svelte";
   import NewsSection from "components/Landing/NewsSection.svelte";
   import Testimonials from "components/Landing/Testimonials.svelte";
+  import SupportIcon from "components/Landing/SupportIcon.svelte";
 
 
   let mainSection: HTMLElement;
@@ -73,6 +74,7 @@
   <Investing />
 </div>
 
+<SupportIcon />
 <FooterCta />
 <Footer />
 

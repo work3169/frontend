@@ -1,5 +1,6 @@
 <script lang="ts">
   import { user as userStore } from "stores/user";
+  import { getContext } from "svelte";
   const formatDate = (date: string | Date) => {
     let newDate: String | Date = new Date(date);
     newDate = newDate.toLocaleDateString('ru-RU');
@@ -39,6 +40,12 @@
     name: 'Реферальный бонус',
     class: 'badge-outline badge-success'
   }]
+  const intervalIdCashflow = getContext('intervalIdCashflow') as number;
+  const getNextCashflow = () => {
+    clearInterval(intervalIdCashflow);
+    userStore.getNextCashflow();
+  }
+
 </script>
 <div class="overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-12">
   {#key $userStore.operations}
@@ -86,5 +93,5 @@
   {/key}
 </div>
 {#if $userStore.next_cashflow}
-  <button class="btn btn-outline mt-4" disabled={$userStore.isLoading} on:click={() => userStore.getNextCashflow()}>Загрузить больше</button>
+  <button class="btn btn-outline mt-4" disabled={$userStore.isLoading} on:click={() => getNextCashflow()}>Загрузить больше</button>
 {/if}

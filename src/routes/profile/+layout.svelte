@@ -1,15 +1,21 @@
 <script lang="ts">
   import Drawer from "components/Profile/Drawer.svelte";
-  import { onDestroy } from "svelte";
+  import { onDestroy, setContext } from "svelte";
   import { user } from 'stores/user';
+  
 
-  const intervalId = setInterval(() => {
+  const intervalIdUser = setInterval(() => {
     user.getUser()
-    user.getCashflow()
   }, 5000);
 
+  const intervalIdCashflow = setInterval(() => {
+    user.getCashflow()
+  }, 5000);
+  setContext('intervalIdCashflow', intervalIdCashflow);
+
   onDestroy(() => {
-      clearInterval(intervalId);
+    clearInterval(intervalIdUser);
+    clearInterval(intervalIdCashflow);
   });
 </script>
 
