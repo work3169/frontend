@@ -10,41 +10,44 @@
   let form: HTMLFormElement;
   let password = "";
   let confirmPassword = "";
+  let code = "";
+  let success = false;
   let errors = {
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    code: "",
   };
   let serverError = ""
   $: isLoading
-  let ref_link = "";
+  let pid = "";
   if (browser) {
     const queryString = window.location.search;
 
     const urlParams = new URLSearchParams(queryString);
 
-    ref_link = urlParams.get('ref_link') || "";
+    pid = urlParams.get('pid') || "";
 
-    if (ref_link) {
-      localStorage.setItem('ref_link', ref_link)
+    if (pid) {
+      localStorage.setItem('pid', pid)
     } else {
-      ref_link = localStorage.getItem('ref_link') || ""
+      pid = localStorage.getItem('pid') || ""
     }
   }
   const submitForm = async() => {
     isLoading = true;
     const formSubmit = new FormData(form)
-    formSubmit.append('reffered_by_link', ref_link)
+    formSubmit.append('profile_id', pid)
     try {
-      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/reset/`, {
+      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/user/recovery_password/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': window.location.origin,
+          // 'Content-Type': 'multipart/form-data',
         },
         data: formSubmit,
       })
-      goto(`/auth/confirm?uuid=${res.data.confirmed_link}`);
+      success = true;
     } catch (e: unknown | AxiosError) {
       if (axios.isAxiosError(e)) {
         if (e.response?.data?.username) {
@@ -65,9 +68,13 @@
     serverError = ""
     errors = {
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      code: "",
     };
 
+    if (code.length < 4) {
+      errors.code = "Некорректный код";
+    }
     if (!password) {
       errors.password = "Введите пароль";
     }
@@ -91,19 +98,27 @@
     </div>
   {/if}
   {#if !isLoading}
-    <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form}>
+    <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form} autocomplete="off">
       <h1 class="mb-6 font-semibold text-lg text-center">Смена пароля</h1>
+      <Input bind:value={code} name="pwd_change_code" placeholder="4321" label="Код" error={errors.code} />
 
-      <Input type="password" bind:value={password} name="password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
+      <Input type="password" bind:value={password} name="new_password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
 
-      <Input type="password" bind:value={confirmPassword} name="password_confirm" placeholder="Подтвердите пароль" label="Подтверждение пароля" error={errors.confirmPassword} />
+      <Input type="password" bind:value={confirmPassword} name="new_password_confirm" placeholder="Подтвердите пароль" label="Подтверждение пароля" error={errors.confirmPassword} />
       {#if serverError}
         <p class="text-error text-lg">{serverError}</p>
       {/if}
-      <div class="flex flex-wrap justify-end gap-2">
-        <a class="btn btn-outline" href="/auth/login">Войти</a>
-        <button class="btn btn-primary">Зарегистрироваться</button>
-      </div>
+      {#if !success}
+        <div class="flex flex-wrap justify-end gap-2">
+          <a class="btn btn-outline" href="/auth/login">Назад</a>
+          <button class="btn btn-primary">Сменить Пароль</button>
+        </div>
+      {:else}
+        <div class="flex flex-wrap justify-end gap-2">
+          <div class="text-success self-center">Пароль успешно изменен</div>
+          <a class="btn btn-outline" href="/auth/login">Войти</a>
+        </div>
+      {/if}
     </form>
   {/if}
 

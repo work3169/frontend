@@ -1,16 +1,15 @@
 <script lang="ts">
   import axios, { AxiosError } from "axios";
+  import { goto } from '$app/navigation';
+  import { PUBLIC_BACKEND_URL } from "$env/static/public";
   import Input from "components/Auth/Input.svelte";
 	import SignInCard from "components/Auth/SigninCard.svelte";
   import { Jellyfish } from 'svelte-loading-spinners';
-  import { user } from "stores/user";
   let isLoading = false;
   let form: HTMLFormElement;
-  let nickname = "";
-  let password = "";
+  let nameOrEmail = "";
   let errors = {
-    nickname: "",
-    password: ""
+    nameOrEmail: "",
   };
   let serverError = ""
   $: isLoading
@@ -18,10 +17,20 @@
     isLoading = true;
     const formSubmit = new FormData(form)
     try {
-      user.login(formSubmit)
+      const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/user/recovery_password/`, {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': window.location.origin,
+        },
+        data: formSubmit,
+      })
+      goto(`/auth/reset?pid=${res.data.profile_id}`);
     } catch (e: unknown | AxiosError) {
       if (axios.isAxiosError(e)) {
-        serverError = "Неверные данные или неподтверждённый пользователь"
+        if (e.response?.data?.non_field_errors) {
+          serverError = e.response?.data?.non_field_errors[0]
+        }
       } else {
         serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
       }
@@ -30,23 +39,15 @@
     }
   }
   function handleSubmit() {
-    // Reset errors
     serverError = ""
     errors = {
-      nickname: "",
-      password: ""
+      nameOrEmail: "",
     };
 
-    // Validate form fields
-    if (!nickname) {
-      errors.nickname = "Заполните имя пользователя";
+    if (!nameOrEmail) {
+      errors.nameOrEmail = "Введите пароль";
     }
 
-    if (!password) {
-      errors.password = "Введите пароль";
-    }
-
-    // If there are no errors, submit the form
     if (Object.values(errors).every(error => !error)) {
       submitForm()
     }
@@ -61,20 +62,17 @@
   {/if}
   {#if !isLoading}
     <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form}>
-      <h1 class="mb-6 font-semibold text-lg text-center">Войти</h1>
-  
-      <Input type="text" bind:value={nickname} name="username" placeholder="Введите имя пользователя" label="Имя пользователя" error={errors.nickname} />
+      <h1 class="mb-6 font-semibold text-lg text-center">Забыли пароль?</h1>
 
-      <Input type="password" bind:value={password} name="password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
-
+      <Input bind:value={nameOrEmail} name="name_email" placeholder="email@example.com" label="Введите почту или логин" error={errors.nameOrEmail} />
       {#if serverError}
         <p class="text-error text-lg">{serverError}</p>
       {/if}
-      <div class="flex flex-col flex-wrap justify-center gap-2">
-        <button class="btn btn-primary">Войти</button>
-        <a class="btn btn-ghost" href="/auth/signup">Зарегистрироваться</a>
-        <a class="btn btn-ghost" href="/auth/forgot-password">Забыли пароль?</a>
+      <div class="flex flex-wrap justify-end gap-2">
+        <a class="btn btn-outline" href="/auth/login">НАЗАД</a>
+        <button class="btn btn-primary">СБРОСИТЬ ПАРОЛЬ</button>
       </div>
     </form>
   {/if}
+
 </SignInCard>
