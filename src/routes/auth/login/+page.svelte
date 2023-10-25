@@ -18,8 +18,9 @@
     isLoading = true;
     const formSubmit = new FormData(form)
     try {
-      user.login(formSubmit)
+      await user.login(formSubmit)
     } catch (e: unknown | AxiosError) {
+      console.log('alo suka')
       if (axios.isAxiosError(e)) {
         serverError = "Неверные данные или неподтверждённый пользователь"
       } else {

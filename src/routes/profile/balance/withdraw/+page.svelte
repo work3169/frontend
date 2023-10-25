@@ -154,23 +154,19 @@
   <div class="flex flex-wrap items-center gap-4 gap-y-2 mt-4">
     <select class="select select-bordered w-full max-w-md" bind:value={walletType}>
       <option disabled selected value="">Выберите тип кошелька</option>
-      <option value="4">Credit Card</option>
+      <option value="0">Credit Card</option>
       <option value="1">TRC20 USDT</option>
       <option value="2">Bitcoin</option>
       <option value="3">Ethereum</option>
     </select>
-    {#if walletType === '4'}
-      <div class="text-error flex items-center">Данный вид вывода средств временно недоступен в вашем регионе</div>
-    {:else}
-      <input  bind:value={walletInput}  placeholder="Введите номер" class="input input-bordered input-secondary w-full max-w-sm" />
-      <button class="btn btn-primary w-full max-w-[200px]" on:click={addWallet} disabled={isLoadingWalletAdd}>
-        {#if isLoadingWalletAdd}
-          <Jellyfish size="35" color="#68cca1" />
-        {:else}
-          Добавить кошелек
-        {/if}
-      </button>
-    {/if}
+    <input  bind:value={walletInput}  placeholder="Введите номер" class="input input-bordered input-secondary w-full max-w-sm" />
+    <button class="btn btn-primary w-full max-w-[200px]" on:click={addWallet} disabled={isLoadingWalletAdd}>
+      {#if isLoadingWalletAdd}
+        <Jellyfish size="35" color="#68cca1" />
+      {:else}
+        Добавить кошелек
+      {/if}
+    </button>
     {#if walletAddError}
       <div class="text-error mt-1">
         {walletAddError}

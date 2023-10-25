@@ -45,19 +45,19 @@
   <div class="flex-col md:flex-row flex md:items-center gap-8 mb-8">
     <label class="flex items-center cursor-pointer gap-3">    
       <input class="radio radio-primary" type="radio" name="radio" value="1" bind:group={walletType} /> 
-      <img class="h-8" src="/visamastercard.png" />
+      <img class="h-8" src="/visamastercard.png" alt="visa" />
     </label>
     <label class="flex items-center cursor-pointer gap-3">
       <input class="radio radio-primary" type="radio" name="radio" value="2" bind:group={walletType} />
-      <img class="h-6" src="/btc.png" />    
+      <img class="h-6" src="/btc.png" alt="btc" />    
     </label>
     <label class="flex items-center cursor-pointer gap-3">
       <input class="radio radio-primary" type="radio" name="radio" value="3" bind:group={walletType} />
-      <img class="h-12" src="/eth.png" />
+      <img class="h-12" src="/eth.png" alt="eth" />
     </label>
     <label class="flex items-center cursor-pointer gap-3">
       <input class="radio radio-primary" type="radio" name="radio" value="4" checked bind:group={walletType} />
-      <img class="h-10" src="/tether.png" />
+      <img class="h-10" src="/tether.png" alt="tether" />
     </label>
   </div>
   
@@ -66,7 +66,6 @@
       <input bind:value={value} class="input input-bordered w-full max-w-sm " placeholder="Сумма" />
       <button on:click={replenish} class="btn btn-primary min-w-[150px]">Пополнить</button>
     </div>
-
 
     {#if error}
       <div class="text-error mt-1">

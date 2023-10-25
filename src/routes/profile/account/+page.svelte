@@ -1,6 +1,7 @@
 <script lang="ts">
   import HeaderContainer from "components/Profile/HeaderContainer.svelte";
   import { user as userStore } from "stores/user";
+  let isHowItWorksOpened = false
 </script>
 
 <HeaderContainer>
@@ -32,8 +33,26 @@
     <div>{$userStore.user?.email}</div>
   </div>
   <div>
-    <div class="font-semibold">Реферальная ccылка</div>
+    <div class="font-semibold flex flex-col md:flex-row justify-start items-start md:items-center">
+      <span>Реферальная ccылка</span>
+      <button class="btn btn-sm btn-outline md:ml-2" on:click={() => (isHowItWorksOpened = true)}>Как это работает?</button>
+    </div>
     <a href={`https://${window.location.host}/auth/signup/?ref_link=${$userStore.user?.userprofile.ref_link}`}>https://{window.location.host}/auth/signup/?ref_link={$userStore.user?.userprofile.ref_link}</a>
+   {#if isHowItWorksOpened}
+    <div class="prose my-4">
+      <h3>Условия Реферальных Наград:</h3>
+      <p>При каждом открытии нового контракта через вашу реферральную ссылку, вы имеете право на следующие процентные выплаты:</p>
+      <ul>
+        <li>1. Первая линия: 5% от суммы первоначального вложения, сделанного новым инвестором, который зарегистрировался через вашу ссылку.</li>
+        <li>2. Вторая линия: 3% от суммы первоначального вложения, сделанного новым инвестором, который был привлечен вашими инвесторами первой линии.</li>
+        <li>3. Третья линия: 2% от суммы первоначального вложения, сделанного новым инвестором, который был привлечен вашими инвесторами второй линии.</li>
+      </ul>
+      <h3>Индивидуальные Условия:</h3>
+      <p>
+        Мы также хотели бы подчеркнуть, что в случае вашей выдающейся активности и успешных реферральных усилиях, мы оставляем за собой право предложить вам индивидуальные условия и бонусы. Это наше способ признать ваш вклад в рост нашего фонда и вознаградить вас соответствующим образом.
+      </p>
+    </div>
+   {/if}
   </div>
   <div>
     <a class="font-semibold my-3 text-secondary" href="https://t.me/geef_support">Обратиться в поддержку</a>
