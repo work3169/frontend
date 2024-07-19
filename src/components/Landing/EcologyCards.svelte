@@ -9,7 +9,7 @@
 </div>
 <div class="flex flex-wrap gap-4 justify-around">
   <EcologyCard
-    title="Солнечная Енергия"
+    title="Солнечная Энергия"
     text="Эти технологии позволяют преобразовывать солнечный свет в электрическую энергию с помощью фотоэлектрических панелей либо зеркал."
     image="cards/sun.webp"
     href="/infobase/solar"
