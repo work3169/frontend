@@ -1,6 +1,6 @@
 
 <script lang="ts">
-  export let title = "Солнечная Енергия";
+  export let title = "Солнечная Энергия";
   export let text = `Эти технологии позволяют преобразовывать солнечный свет в электрическую энергию с помощью фотоэлектрических панелей либо зеркал.`;
   export let image = "greenenergy.webp";
   export let href = "/infobase/solar";
