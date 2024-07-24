@@ -43,7 +43,7 @@
   <div>
     <div>
       <div class="font-semibold">Фамилия</div>
-      <div>{$userStore.user?.first_name}</div>
+      <div>{$userStore.user?.last_name}</div>
     </div>
   </div>
   <div>
