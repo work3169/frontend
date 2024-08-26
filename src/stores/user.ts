@@ -29,6 +29,7 @@ interface User {
             registration_uuid: string;
             showing_contracts: Contract[];
             ref_link: string;
+            account_status: number;
         }
     } | null;
     wallets: any;
@@ -80,7 +81,7 @@ function createUserStore() {
                 headers: {
                   'Content-Type': 'application/json',
                   'Accept': '*/*',
-                  'Access-Control-Allow-Origin': window.location.origin,
+                //   'Access-Control-Allow-Origin': window.location.origin,
                 },
                 data: formSubmit,
             })
@@ -123,7 +124,7 @@ function createUserStore() {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': window.location.origin,
+                        // 'Access-Control-Allow-Origin': window.location.origin,
                     },
                     data: { refresh: refreshToken },
                 });
@@ -155,7 +156,7 @@ function createUserStore() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': window.location.origin,
+                        // 'Access-Control-Allow-Origin': window.location.origin,
                         'Authorization': `Bearer ${accessToken}`,
                     },
                 });
@@ -174,7 +175,7 @@ function createUserStore() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': window.location.origin,
+                    // 'Access-Control-Allow-Origin': window.location.origin,
                     'Authorization': `Bearer ${accessToken}`,
                 },
             });
@@ -194,7 +195,7 @@ function createUserStore() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': window.location.origin,
+                        // 'Access-Control-Allow-Origin': window.location.origin,
                         'Authorization': `Bearer ${accessToken}`,
                     },
                 });
@@ -223,7 +224,7 @@ function createUserStore() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': window.location.origin,
+                        // 'Access-Control-Allow-Origin': window.location.origin,
                         'Authorization': `Bearer ${accessToken}`,
                     },
                 });

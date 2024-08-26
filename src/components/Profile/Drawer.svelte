@@ -22,6 +22,7 @@
     <DrawerButton icon="history" text="История баланса" href="/profile/balance" />
     <DrawerButton icon="wallet-alt" text="Внести средства" href="/profile/balance/replenish" />
     <DrawerButton icon="money-withdraw" text="Вывести средства" href="/profile/balance/withdraw" />
+    <DrawerButton icon="group" text="Реферальная система" href="/profile/referrals" />
     <DrawerButton icon="user" text="Профиль" href="/profile/account" />
     <DrawerButton icon="home-alt-2" text="На главную" href="/" />
     <!-- svelte-ignore a11y-click-events-have-key-events -->

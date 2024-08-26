@@ -7,7 +7,7 @@
 <HeaderContainer>
   <h1 class="font-medium text-2xl">Профиль</h1>
 </HeaderContainer>
-{#if $userStore.user.userprofile.account_status == 0}
+{#if $userStore?.user?.userprofile.account_status == 0}
 <div class="flex w-full mt-8">
   <div class="alert alert-success rounded-xl shadow-lg max-w-sm">
     <div>
@@ -16,7 +16,7 @@
     </div>
   </div>
 </div>
-{:else if $userStore.user.userprofile.account_status == 1}
+{:else if $userStore?.user?.userprofile.account_status == 1}
 <div class="flex w-full mt-8">
   <div class="alert alert-warning rounded-xl shadow-lg max-w-md">
     <div>
@@ -24,7 +24,7 @@
     </div>
   </div>
 </div>
-{:else if $userStore.user.userprofile.account_status == 2}
+{:else if $userStore?.user?.userprofile.account_status == 2}
 <div class="flex w-full mt-8">
   <div class="alert alert-error rounded-xl shadow-lg max-w-sm">
     <div>
@@ -56,6 +56,10 @@
       <button class="btn btn-sm btn-outline md:ml-2" on:click={() => (isHowItWorksOpened = true)}>Как это работает?</button>
     </div>
     <a href={`https://${window.location.host}/auth/signup/?ref_link=${$userStore.user?.userprofile.ref_link}`}>https://{window.location.host}/auth/signup/?ref_link={$userStore.user?.userprofile.ref_link}</a>
+
+    <a class="block mt-6 text-green-600 font-bold" href="/profile/referrals">
+      Моя реферальная система
+    </a>
    {#if isHowItWorksOpened}
     <div class="prose my-4">
       <h3>Условия Реферальных Наград:</h3>

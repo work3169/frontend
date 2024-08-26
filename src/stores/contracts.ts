@@ -30,7 +30,6 @@ function createContractsStore() {
             'Authorization': `Bearer ${accessToken}`,
           },
         });
-        console.log(response.data)
         update(() => response.data);
       } catch (e) {
         console.log('error happened', e)
@@ -44,7 +43,6 @@ function createContractsStore() {
             'Access-Control-Allow-Origin': window.location.origin,
           },
         });
-        console.log(response.data)
         update(() => response.data);
       } catch (e) {
         console.log('error happened', e)
