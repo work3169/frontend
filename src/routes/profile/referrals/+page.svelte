@@ -5,6 +5,7 @@
     import {user as userStore} from 'stores/user'
     import { Jellyfish } from "svelte-loading-spinners";
 	import { onMount } from "svelte";
+	import ReferralsBlock from "components/Profile/ReferralsBlock.svelte";
     let isLoading = true;
     onMount(async () => {
     try {
@@ -19,7 +20,6 @@
       isLoading = false;
     }
   });
-    console.log($referralsStore)
 </script>
 
 <HeaderContainer>
@@ -27,7 +27,6 @@
     <div class="flex gap-4">
       <a class="btn btn-outline" href="/profile/balance">Назад</a>
     </div>
-   
 </HeaderContainer>
 
 
@@ -101,41 +100,7 @@
         <tbody> 
           <!-- row 1 -->
           {#each $referralsStore.details as referral}
-          <tr>
-            <td class="sticky left-0">{referral.username}</td>
-            <td>{referral.contracts_count}</td>
-            <td>{referral.contracts_value}</td>
-            <td>{referral.profit}</td>
-            <td>{referral.level}</td>
-            <td></td>
-          </tr>
-        
-          {#if referral.referrals?.length}
-            {#each referral.referrals as subReferral}
-              <tr>
-                <td class="sticky left-0">{subReferral.username}</td>
-                <td>{subReferral.contracts_count}</td>
-                <td>{subReferral.contracts_value}</td>
-                <td>{subReferral.profit}</td>
-                <td>{subReferral.level}</td>
-                <td>{referral.username}</td> <!-- Здесь отображаем имя родительского пользователя -->
-              </tr>
-        
-              {#if subReferral.referrals?.length}
-                {#each subReferral.referrals as subSubReferral}
-                  <tr>
-                    <td class="sticky left-0">{subSubReferral.username}</td>
-                    <td>{subSubReferral.contracts_count}</td>
-                    <td>{subSubReferral.contracts_value}</td>
-                    <td>{subSubReferral.profit}</td>
-                    <td>{subSubReferral.level}</td>
-                    <td>{subReferral.username}</td> <!-- Здесь отображаем имя родительского пользователя -->
-                  </tr>
-                {/each}
-              {/if}
-        
-            {/each}
-          {/if}
+          <ReferralsBlock referral={referral} />
         {/each}
         </tbody>
       {/if}
