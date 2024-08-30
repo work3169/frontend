@@ -30,8 +30,10 @@
    
 </HeaderContainer>
 
+
 {#if !isLoading}
 <div class="flex gap-2 flex-wrap max-w-4xl mt-2">
+    
     <div class="flex stats shadow mt-4 w-full">
         <div class="stat">
             <div class="stat-title">Всего контрактов</div>
@@ -98,20 +100,43 @@
       {#if $referralsStore.details?.length > 0}
         <tbody> 
           <!-- row 1 -->
-            {#each $referralsStore.details as referral}
+          {#each $referralsStore.details as referral}
+          <tr>
+            <td class="sticky left-0">{referral.username}</td>
+            <td>{referral.contracts_count}</td>
+            <td>{referral.contracts_value}</td>
+            <td>{referral.profit}</td>
+            <td>{referral.level}</td>
+            <td></td>
+          </tr>
+        
+          {#if referral.referrals?.length}
+            {#each referral.referrals as subReferral}
               <tr>
-                <td class="sticky left-0">{referral.username}</td>
-                <td>
-                    {referral.contracts_count}
-                </td>
-                <td>
-                    {referral.contracts_value}
-                </td>
-                <td>{referral.profit}</td>
-                <td>{referral.level}</td>
-                <td>{referral.referrals?.length ? referral.referrals?.map(r => r.username).join(', ') : ''}</td>
+                <td class="sticky left-0">{subReferral.username}</td>
+                <td>{subReferral.contracts_count}</td>
+                <td>{subReferral.contracts_value}</td>
+                <td>{subReferral.profit}</td>
+                <td>{subReferral.level}</td>
+                <td>{referral.username}</td> <!-- Здесь отображаем имя родительского пользователя -->
               </tr>
+        
+              {#if subReferral.referrals?.length}
+                {#each subReferral.referrals as subSubReferral}
+                  <tr>
+                    <td class="sticky left-0">{subSubReferral.username}</td>
+                    <td>{subSubReferral.contracts_count}</td>
+                    <td>{subSubReferral.contracts_value}</td>
+                    <td>{subSubReferral.profit}</td>
+                    <td>{subSubReferral.level}</td>
+                    <td>{subReferral.username}</td> <!-- Здесь отображаем имя родительского пользователя -->
+                  </tr>
+                {/each}
+              {/if}
+        
             {/each}
+          {/if}
+        {/each}
         </tbody>
       {/if}
     </table>

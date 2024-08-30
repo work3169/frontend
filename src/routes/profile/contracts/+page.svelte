@@ -1,5 +1,4 @@
 <script lang="ts">
-  import FillerTable from "components/Profile/FillerTable.svelte";
   import HeaderContainer from "components/Profile/HeaderContainer.svelte";
   import ContractsTable from "components/Profile/ContractsTable.svelte";
 </script>
