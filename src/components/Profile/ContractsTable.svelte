@@ -63,7 +63,7 @@
               <td class="sticky left-0">{contract.contract.name}</td>
               <td>
                 {#if contract.current_profit}
-                  <span class="text-success font-bold">+{contract.current_profit}$</span>
+                  <span class="text-success font-bold">+${contract.current_profit}</span>
                 {/if}
                 {#if !contract.current_profit}
                   0

@@ -23,7 +23,6 @@ function createReferralsStore() {
             'Authorization': `Bearer ${accessToken}`,
           },
         });
-        console.log(response.data)
         update(() => response.data);
       } catch (e) {
         console.log('error happened', e)
