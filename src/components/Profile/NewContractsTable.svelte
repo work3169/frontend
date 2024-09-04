@@ -76,8 +76,8 @@
           <td>{contract.name}</td>
           <td class="text-right md:px-4">${contract.min_money}</td>
           <td class="text-right md:px-4">${contract.max_money}</td>
-          <td class="text-right">{contract.percent_for_day}</td>
-          <td class="text-right">{contract.term}д</td>
+          <td class="text-right">{contract.percent_for_day} %</td>
+          <td class="text-right">{contract.term} д.</td>
         </tr>
         {/each}
       </tbody>
