@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
   import { contracts } from "stores/contracts";
+  import { user, user as userStore } from "stores/user";
   import Input from "components/Auth/Input.svelte";
   // import type { Contract } from "stores/contracts";
 	import { onDestroy, onMount } from "svelte";
@@ -12,14 +13,19 @@
   let info = "";
   onMount(() => {
     if (browser) {
-      contracts.getPublicContracts();
+      if (!$userStore.accessToken) {
+        contracts.getPublicContracts();
+      }
+  
       unsubscribe = contracts.subscribe(() => {
         contractsList = $contracts;
       });
     }
   });
   let contractsList: Array<any> = [];
-  $: contractsList = $contracts.filter((contract: any) => contract.show_to_all === true);
+  $: {
+    contractsList = $user.accessToken ? $userStore.user?.userprofile.showing_contracts! : $contracts.filter((contract: any) => contract.show_to_all === true);
+  }
   $: {
     // Remove non-digit characters
     inputVal = inputVal.replace(/\D/g, '');
