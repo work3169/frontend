@@ -24,6 +24,7 @@
   });
   let contractsList: Array<any> = [];
   $: {
+    // TODO: 
     contractsList = $user.accessToken ? $userStore.user?.userprofile.showing_contracts! : $contracts.filter((contract: any) => contract.show_to_all === true);
   }
   $: {
