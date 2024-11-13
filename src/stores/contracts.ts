@@ -15,6 +15,8 @@ export interface Contract {
 }
 
 export interface CommonContractItem {
+  contract_creator: string
+  amount: string | number
   contract_name: string,
   created_at: string,
   end_date: string,

@@ -64,7 +64,8 @@
         const formData = new FormData();
         formData.append("contract", invitation.contract_id.toString());
         formData.append("decision", "False");
-        await axios(`${PUBLIC_BACKEND_URL}/api/v1/contracts/common_contracts/contribute/`,{
+        formData.append("amount", "0");
+        await axios(`${PUBLIC_BACKEND_URL}/api/v1/contracts/common_contracts/contribute/`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -106,18 +107,21 @@
   </script>
   
   <div class="bg-white p-4 rounded-lg shadow-md space-y-2 max-w-2xl">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between gap-1">
       <h3 class="text-lg font-medium">
         {contract.contract_name}
         {#if contract.isActive}
           <div class="ml-1 badge badge-secondary">Активен</div>
         {/if}
       </h3>
-      <div class="text-xs text-gray-400">
-        Дата создания: <span class="text-sm text-black">{formatDate(contract.created_at)}</span>
+      <div class="text-xs text-gray-400 text-right">
+        Создан: <span class="text-sm text-black">{formatDate(contract.created_at)}</span>
         -
-        Дата окончания: <span class="text-sm text-black">{formatDate(contract.end_date)}</span>
+        Оканчивается: <span class="text-sm text-black">{formatDate(contract.end_date)}</span>
       </div>
+    </div>
+    <div class="text-gray-400 text-sm">
+        Создатель контракта: <span class="text-black text-md">{contract.contract_creator}</span>
     </div>
     {#if isInvitation}
       <div class="flex flex-col gap-2">
@@ -191,9 +195,11 @@
         {/if}
       </div>
     {:else}
-      <div>
-        Ваш депозит:<br />
-        <span class="font-semibold">{contract.dividends}</span>
+      <div class="text-gray-400 text-sm">
+        Ваш взнос: <span class="text-md text-black font-semibold">{contract.amount}</span>
+      </div>
+      <div class="text-gray-400 text-sm">
+        Планируемый доход: <span class="text-md text-black font-semibold">{contract.dividends}</span>
       </div>
     {/if}
     {#if errorMsg}
