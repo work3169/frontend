@@ -47,7 +47,7 @@
   }
 
 </script>
-<div class="overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-12">
+<div class="overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-8">
   {#key $userStore.operations}
   <table class="table w-full">
     <!-- head -->

@@ -1,7 +1,7 @@
 import { PUBLIC_BACKEND_URL as BACKEND_URL } from '$env/static/public';
 import { writable, get } from 'svelte/store';
 import axios from 'axios';
-import { user } from 'stores/user'
+import { user } from 'stores/user';
 
 export interface Contract {
   contract: {
@@ -14,12 +14,40 @@ export interface Contract {
   creation_date: string | Date,
 }
 
+export interface CommonContractItem {
+  contract_name: string,
+  created_at: string,
+  end_date: string,
+  dividends: number
+  isActive: boolean
+  contract_id: string | number
+}
+
+export interface CommonContracts {
+  created_contracts: CommonContractItem[],
+  invited_accepted_contracts: CommonContractItem[],
+  invited_rejected_contracts: CommonContractItem[],
+  new_invitations: CommonContractItem[]
+}
+
 const initialContracts: Array<Contract> = [];
+const initialCommonContracts: CommonContracts = {
+  created_contracts: [],
+  invited_accepted_contracts: [],
+  invited_rejected_contracts: [],
+  new_invitations: []
+};
+
 
 function createContractsStore() {
   const { subscribe, update } = writable(initialContracts);
+  const commonContracts = writable(initialCommonContracts);
+
   return {
     subscribe,
+    commonContracts: {
+      subscribe: commonContracts.subscribe,
+    },
     getContracts: async () => {
       try {
         const accessToken = await user.getAccessToken();
@@ -32,7 +60,7 @@ function createContractsStore() {
         });
         update(() => response.data);
       } catch (e) {
-        console.log('error happened', e)
+        console.log('error happened', e);
       }
     },
     getPublicContracts: async () => {
@@ -45,10 +73,25 @@ function createContractsStore() {
         });
         update(() => response.data);
       } catch (e) {
-        console.log('error happened', e)
+        console.log('error happened', e);
       }
     },
-  }
+    getCommonContracts: async () => {
+      try {
+        const accessToken = await user.getAccessToken();
+        const response = await axios.get(`${BACKEND_URL}/api/v1/contracts/common_contracts/user_contracts/`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': window.location.origin,
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+        commonContracts.update(() => response.data);
+      } catch (e) {
+        console.log('error happened', e);
+      }
+    },
+  };
 }
 
 export const contracts = createContractsStore();

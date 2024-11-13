@@ -14,7 +14,7 @@
 </script>
 
 <div class="mb-1">
-  <label class="label" for={name}>
+  <label class="label pb-1" for={name}>
     <span class="label-text">{label}</span>
   </label>
   {#if type === 'text'}

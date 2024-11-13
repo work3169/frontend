@@ -111,7 +111,7 @@
 </HeaderContainer>
 
 <Balance />
-<div class="bg-base-100 overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-8 min-h-[240px] rounded p-4 shadow-xl">
+<div class="bg-base-100 overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-8 min-h-[240px] rounded-xl p-4 shadow-xl">
   {#if !wallets.length && !$userStore.isLoading}
     <p class="text-warning text-medium text-lg">
       У вас нет кошельков для вывода средств. Пожалуйста, добавьте кошелек.

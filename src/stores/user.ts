@@ -15,6 +15,17 @@ export interface Contract {
     percent_for_day: number;
 }
 
+
+export interface PartneredContract {
+    id: number;
+    name: string;
+    min_amount: string;  // Decimal string for precise financial calculations
+    max_amount: string;  // Decimal string for precise financial calculations
+    period: number;      // In days
+    max_participants: number;
+    dividend_percentage: string;  // Decimal string for percentage
+  }
+
 interface User {
     accessToken: string;
     refreshToken: string;
@@ -28,6 +39,7 @@ interface User {
             account_balance: number;
             registration_uuid: string;
             showing_contracts: Contract[];
+            showing_common_contracts?: PartneredContract[];
             ref_link: string;
             account_status: number;
         }
