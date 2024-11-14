@@ -110,7 +110,7 @@
     <div class="flex items-center justify-between gap-1">
       <h3 class="text-lg font-medium">
         {contract.contract_name}
-        {#if contract.isActive}
+        {#if contract.is_active}
           <div class="ml-1 badge badge-secondary">Активен</div>
         {/if}
       </h3>

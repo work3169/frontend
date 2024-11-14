@@ -21,7 +21,7 @@ export interface CommonContractItem {
   created_at: string,
   end_date: string,
   dividends: number
-  isActive: boolean
+  is_active: boolean
   contract_id: string | number
 }
 
