@@ -40,7 +40,7 @@
         {#if (partneredContracts?.created_contracts?.length || 0) > 0}
             <div class="space-y-2 mt-2">
             {#each (partneredContracts?.created_contracts || []) as contract}
-                <PartneredContractCard contract={contract} />
+                <PartneredContractCard contract={contract} isCreated />
             {/each}
             </div>
         {:else}

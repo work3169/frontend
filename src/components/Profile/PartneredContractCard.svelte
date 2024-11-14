@@ -7,11 +7,58 @@
     import { Jellyfish } from "svelte-loading-spinners";
     export let contract: CommonContractItem;
     export let isInvitation = false;
+    export let isCreated = false;
     let isDeclining = false;
     let isAccepting = false;
+    let isAdding = false;
     let isLoading = false;
+    let username = "";
+    let successMsg = "";
     let amount: number;
     let errorMsg = "";
+
+    const inviteAfterStart = async (contract_id: string | number, username: string) => {
+        try {
+            isLoading = true;
+            errorMsg = "";
+            successMsg = "";
+            
+            const accessToken = await user.getAccessToken();
+            const formData = new FormData();
+            formData.append("contract_id", contract_id.toString());
+            formData.append("username", username);
+
+            await axios(`${PUBLIC_BACKEND_URL}/api/v1/contracts/common_contracts/invite_after_start/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                    "Authorization": `Bearer ${accessToken}`,
+                },
+                data: formData,
+            });
+            isAdding = false;
+            await contracts.getCommonContracts(); // Refresh contracts list
+            successMsg = "Пользователь успешно приглашен."
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                const { response } = e;
+                const errMsg = response?.data?.non_field_errors && response?.data?.non_field_errors[0] || response?.data?.details;
+                if (errMsg) {
+                    errorMsg = errMsg;
+                } else {
+                    console.log(e);
+                    errorMsg = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку";
+                }
+            } else {
+                console.log(e);
+                errorMsg = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку";
+            }
+        } finally {
+            isLoading = false;
+        }
+    };
+
     const acceptInvitation = async (invitation: CommonContractItem) => {
       try {
         isLoading = true;
@@ -108,7 +155,7 @@
   
   <div class="bg-white p-4 rounded-lg shadow-md space-y-2 max-w-2xl">
     <div class="flex items-center justify-between gap-1">
-      <h3 class="text-lg font-medium">
+      <h3 class="flex items-center text-lg font-medium">
         {contract.contract_name}
         {#if contract.is_active}
           <div class="ml-1 badge badge-secondary">Активен</div>
@@ -206,5 +253,24 @@
       <div class="text-error mt-2">
         {errorMsg}
       </div>
+    {/if}
+    {#if isCreated}
+        {#if !isAdding}
+            <button class="btn btn-outline btn-secondary" on:click={() => (isAdding = true)}>Добавить пользователя</button>
+        {:else}
+            <input class="input input-bordered" bind:value={username} />
+            <button class="btn btn-outline btn-secondary" on:click={async () => await inviteAfterStart(contract.contract_id, username)}>Добавить пользователя</button>
+            <button
+                class="btn btn-md btn-outline"
+                on:click={() => (isAdding = false)}
+                disabled={isLoading}
+            >
+                Назад
+            </button>
+        {/if}
+     
+    {/if}
+    {#if successMsg}
+        <div class="text-info">{successMsg}</div>
     {/if}
   </div>
