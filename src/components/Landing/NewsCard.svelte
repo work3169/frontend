@@ -11,7 +11,7 @@
     <h2 class="card-title">
       {title}
       {#if isNew}
-        <div class="badge badge-secondary">читай при мне</div>
+        <div class="badge badge-secondary">ВНИМАНИЕ</div>
       {/if}
     </h2>
     <p>{text}</p>
