@@ -153,8 +153,8 @@
     }
   </script>
   
-  <div class="bg-white p-4 rounded-lg shadow-md space-y-2 max-w-2xl">
-    <div class="flex items-center justify-between gap-1">
+  <div class="bg-white p-4 rounded-lg shadow-md space-y-2 max-w-2xl ">
+    <div class="flex items-center justify-between gap-1 ">
       <h3 class="flex items-center text-lg font-medium">
         {contract.contract_name}
         {#if contract.is_active}

@@ -5,19 +5,23 @@
 </script>
 
 <div class="drawer-side">
-  <label for="my-drawer-2" class="drawer-overlay"></label> 
-  <ul class="menu p-4 w-72 bg-base-100">
-    <div class="mt-8 mb-6 ml-3">
+  <label for="my-drawer-2" class="drawer-overlay "></label> 
+  <ul class="menu    rounded-3xl  "style="
+  background-color: #4E8D8D;
+  border: 4px solid #000000;
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+">
+    <div class="mt-8 mb-11 ml-3"> <!-- отступы дровера -->
       <div class="avatar placeholder">
         <div class="bg-neutral-focus text-neutral-content rounded-full w-10">
-          <span class="text-lg">{$userStore.user?.username.charAt(0).toUpperCase() || '' || ''}</span>
+          <span class="text-lg">{$userStore.user?.username.charAt(0).toUpperCase() || ''}</span>
         </div>
       </div>
       <div class="inline-block ml-2">
         {$userStore.user?.username || ''}
       </div>
     </div>
-    <DrawerButton text="Контракты" href="/profile/contracts" />
+    <DrawerButton text="Контракты" href="/profile/contracts"  />
     <DrawerButton icon="network-chart" text="Партнерские контракты" href="/profile/contracts/partnered" />
     <br />
     <DrawerButton icon="history" text="История баланса" href="/profile/balance" />
@@ -30,10 +34,11 @@
     <DrawerButton icon="home-alt-2" text="На главную" href="/" />
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={userStore.logout}>
-      <DrawerButton icon="log-out-circle" text="Выход" href="#"  />
+      <DrawerButton icon="log-out-circle" text="Выход" href="#" />
     </div>
   </ul>
 </div>
+
 
 <div class="btm-nav lg:hidden">
 

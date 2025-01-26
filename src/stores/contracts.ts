@@ -6,6 +6,7 @@ import { user } from 'stores/user';
 export interface Contract {
   contract: {
     name: string,
+    type?: string,
   },
   current_profit: number,
   days_from_start: number,
