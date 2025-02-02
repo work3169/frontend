@@ -2,7 +2,7 @@
   import NavbarAuth from "components/Auth/NavbarAuth.svelte";
   import Footer from "components/Footer.svelte";
 
-  export let title = "Геотермальная энергия";
+  export let title = "//";
   export let img1 = "/infobase/geo1.webp";
   export let img2 = "/infobase/geo2.webp";
   export let text1 = "";

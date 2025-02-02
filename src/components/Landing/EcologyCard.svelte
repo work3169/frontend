@@ -1,7 +1,7 @@
 
 <script lang="ts">
-  export let title = "Солнечная Энергия";
-  export let text = `Эти технологии позволяют преобразовывать солнечный свет в электрическую энергию с помощью фотоэлектрических панелей либо зеркал.`;
+  export let title = "СПАСИБО РУСАК";
+  export let text = `За каждый золотой который мешает русских с говном.`;
   export let image = "greenenergy.webp";
   export let href = "/infobase/solar";
 </script>

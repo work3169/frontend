@@ -11,13 +11,13 @@
     <h2 class="card-title">
       {title}
       {#if isNew}
-        <div class="badge badge-secondary">NEW</div>
+        <div class="badge badge-secondary">ВНИМАНИЕ</div>
       {/if}
     </h2>
     <p>{text}</p>
     <div class="card-actions justify-end">
-      <div class="badge badge-outline">Аналитика</div>
-      <div class="badge badge-outline">Энергетика</div>
+      <div class="badge badge-outline"></div>
+      <div class="badge badge-outline"></div>
     </div>
   </div>
 </div>
