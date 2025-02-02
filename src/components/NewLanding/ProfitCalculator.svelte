@@ -36,12 +36,14 @@
 
   $: {
     if (contractId != -1 && (+inputVal >= 0)) {
-      let contract = contractsList.find((contract: any) => contract.id === contractId);
-      let contractPercent = contract.percent_for_day;
-      let contractTerm = contract.term;
-      let initialValue = +inputVal;
-      initialValue += initialValue * (contractPercent / 100) * contractTerm;
-      output = initialValue.toFixed(2).toString();
+      const contract = contractsList.find((contract: any) => contract.id === contractId);
+      if (contract) {
+        const contractPercent = contract.percent_for_day;
+        const contractTerm = contract.term;
+        const initialValue = +inputVal;
+        const finalValue = initialValue + initialValue * (contractPercent / 100) * contractTerm;
+        output = finalValue.toFixed(2).toString();
+      }
     }
     info = checkContractError();
   }
@@ -62,157 +64,117 @@
 </script>
 
 <style>
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 15px;
-    background: #ffffff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    position: relative;
+  .fade-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    font-size: 1.8rem;
-    font-weight: bold;
+  .fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  .table-container {
-    margin-top: 20px;
-    overflow-x: auto;
+  .custom-gradient {
+    background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6);
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1rem;
-  }
-
-  th,
-  td {
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  th {
-    background: #4e8d8d;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-
-  .form-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
-    justify-content: center;
-  }
-
-  .select {
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-    width: 200px;
-  }
-
-  .select:focus {
-    border-color: #4e8d8d;
-    outline: none;
-  }
-
-  .result-box {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px;
-    background: #f7f9fa;
-    border-radius: 10px;
+  .custom-shadow {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
-  .result-box .info {
-    color: #2c3e50;
-    font-size: 1.2rem;
+  .hover-scale {
+    transition: transform 0.3s ease;
   }
 
-  .result-box .profit {
-    color: #16a085;
-    font-size: 1.4rem;
-    font-weight: bold;
-  }
-
-  .result-box .error {
-    color: #e74c3c;
-    font-size: 1rem;
-    margin-top: 10px;
+  .hover-scale:hover {
+    transform: scale(1.02);
   }
 </style>
-<div class="h-[80vh] flex items-center justify-center"> 
-<div class="container">
-  <div class="header">Калькулятор прибыли</div>
 
-  <!-- Таблица контрактов -->
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Название</th>
-          <th>Процент</th>
-          <th>Длительность</th>
-          <th>Мин. взнос</th>
-          <th>Макс. взнос</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#if $contracts.length === 0}
-          <tr>
-            <td colspan="5" class="text-center">Загрузка...</td>
+<div class="min-h-screen  flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full custom-shadow">
+    <!-- Заголовок -->
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Калькулятор прибыли</h1>
+
+    <!-- Таблица контрактов -->
+    <div class="overflow-x-auto ">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-3 text-left font-semibold">Название</th>
+            <th class="p-3 text-left font-semibold">Процент</th>
+            <th class="p-3 text-left font-semibold">Длительность</th>
+            <th class="p-3 text-left font-semibold">Мин. взнос</th>
+            <th class="p-3 text-left font-semibold">Макс. взнос</th>
           </tr>
-        {/if}
+        </thead>
+        <tbody>
+          {#if contractsList.length === 0}
+            <tr>
+              <td colspan="5" class="text-center py-4">Загрузка...</td>
+            </tr>
+          {:else}
+            {#each contractsList as contract}
+              <tr class="border-b hover:bg-gray-100 transition">
+                <td class="p-3">{contract.name}</td>
+                <td class="p-3">{contract.percent_for_day}%</td>
+                <td class="p-3">{contract.term} д.</td>
+                <td class="p-3">${contract.min_money}</td>
+                <td class="p-3">${contract.max_money}</td>
+              </tr>
+            {/each}
+          {/if}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Форма -->
+    <div class="space-y-4">
+      <select
+        bind:value={contractId}
+        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 hover-scale"
+      >
+        <option disabled selected value={-1}>Выберите контракт</option>
         {#each contractsList as contract}
-          <tr>
-            <td>{contract.name}</td>
-            <td>{contract.percent_for_day}%</td>
-            <td>{contract.term} д.</td>
-            <td>${contract.min_money}</td>
-            <td>${contract.max_money}</td>
-          </tr>
+          <option value={contract.id}>{contract.name}</option>
         {/each}
-      </tbody>
-    </table>
-  </div>
+      </select>
 
-  <!-- Форма -->
-  <div class="form-section">
-    <select class="select" bind:value={contractId}>
-      <option disabled selected value={-1}>Выберите контракт</option>
-      {#each contractsList as contract}
-        <option value={contract.id}>{contract.name}</option>
-      {/each}
-    </select>
+      <Input
+        type="text"
+        bind:value={inputVal}
+        name="investment"
+        placeholder="Введите сумму"
+        label="Сумма вклада"
+        
+      />
 
-    {#key contractId}
-      <Input type="text" bind:value={inputVal} name="investment" placeholder="0" label="Вклад" />
-    {/key}
+      <div class="text-right">
+        <button
+          disabled={!output || +output <= 0}
+          class="bg-[#4E8D8D] text-white px-4 py-2 rounded hover:bg-[#6DA0A0] transition disabled:bg-gray-400 hover-scale"
+        >
+          Рассчитать
+        </button>
+      </div>
+    </div>
 
-    <Input disabled={true} type="text" bind:value={output} name="output" placeholder="0" label="Прибыль" />
-  </div>
-
-  <!-- Результаты -->
-  <div class="result-box">
-    {#if +output - +inputVal > 0}
-      <div class="profit">+{(+output - +inputVal).toFixed(1)}$</div>
+    <!-- Результаты -->
+    {#if output && +output > 0}
+      <div class="mt-6 space-y-4 fade-enter fade-enter-active">
+        <div class="text-green-600 text-xl font-bold text-center">
+          Ваша прибыль: <span class="text-2xl">${(+output - +inputVal).toFixed(2)}</span>
+        </div>
+        <div class="text-gray-600 text-center">
+          Итоговая сумма: <span class="font-bold">${output}</span>
+        </div>
+      </div>
     {/if}
-    <div class="info">{info}</div>
+
+    <!-- Сообщение об ошибке -->
+    {#if info}
+      <div class="mt-4 text-red-500 text-center">{info}</div>
+    {/if}
   </div>
-</div>
 </div>

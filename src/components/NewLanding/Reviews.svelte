@@ -83,9 +83,9 @@
         
         margin: 50px auto; /* Центрируем секцию */
         overflow: hidden;
-        background-color: #f4f4f4;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        
+        
+        
     }
 
     .review-card {
