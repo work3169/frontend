@@ -1,146 +1,148 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import Chart from "chart.js/auto";
 
-  let totalInvestment = 100000; // Общая сумма инвестиций
-  let sectors = [
-    { name: "Складские системы", percentage: 35, color: "#4E8D8D" },
-    { name: "Транспортная инфраструктура", percentage: 25, color: "#2C3E50" },
-    { name: "Цифровизация", percentage: 20, color: "#16A085" },
-    { name: "Экологичный транспорт", percentage: 15, color: "#F39C12" },
-    { name: "Морская логистика", percentage: 5, color: "#E74C3C" }
-  ];
+  // Анимация углов
+  let angle1 = 0;
+  let angle2 = 180;
+  let angle3 = 90;
 
-  let currentPercentage = 0;
+  function animate() {
+    angle1 = (angle1 + 2) % 360;
+    angle2 = (angle2 + 2) % 360;
+    angle3 = (angle3 + 2) % 360;
+  }
 
-  // Анимация заполнения
+  let animationInterval: number;
+
   onMount(() => {
-    const interval = setInterval(() => {
-      if (currentPercentage < 100) {
-        currentPercentage += 1;
-      } else {
-        clearInterval(interval);
-      }
-    }, 30);
+    animationInterval = setInterval(animate, 50); // Обновление анимации каждые 50 мс
+
+    // Инициализация графика объема инвестиций
+    const investmentChartCtx = document.getElementById("investmentChart") as HTMLCanvasElement;
+    new Chart(investmentChartCtx, {
+      type: "line",
+      data: {
+        labels: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"],
+        datasets: [
+          {
+            label: "Инвестиции (млрд USD)",
+            data: [5.2, 6.8, 8.4, 10.1, 11.3, 15.6, 24.6, 34, 38],
+            borderColor: "#007bff",
+            backgroundColor: "rgba(0, 123, 255, 0.2)",
+            borderWidth: 2,
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: "top" },
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: { beginAtZero: true },
+        },
+      },
+    });
+
+    return () => clearInterval(animationInterval); // Очистка интервала при уничтожении компонента
   });
 </script>
 
 <style>
-  /* Основной контейнер */
   .container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 40px 20px;
-    border-radius: 20px;
-    background: linear-gradient(to right, #4E8D8D, #6DA0A0); /* Градиент из вашей палитры */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    font-family: Arial, sans-serif;
-    position: relative;
-    overflow: hidden;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
-  /* Заголовок */
-  .header {
+  .text-section {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .text-title {
     font-size: 2.5rem;
     font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+
+  .text-content {
+    font-size: 1.2rem;
+    color: #393939;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .animation-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .box {
+    width: 120px;
+    height: 150px;
+    background-color: #007bff;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-bottom: 20px;
-  }
-
-  /* Прогресс бар */
-  .progress-bar {
     display: flex;
-    height: 25px;
-    border-radius: 15px;
-    overflow: hidden;
-    margin: 20px 0;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .sector {
-    height: 100%;
-    transition: width 1s ease;
-  }
-
-  /* Детали */
-  .details {
-    margin-top: 20px;
-  }
-
-  .details-item {
-    margin: 10px 0;
-    font-size: 1rem;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-  }
-
-  .details-item .name {
+    justify-content: center;
+    font-size: 1rem;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .details-item .value {
-    color: #16A085;
-    font-weight: bold;
+  .box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   }
 
-  /* Декоративные элементы */
-  .decorative-circle {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    top: -50px;
-    right: -50px;
-    z-index: 1;
-    filter: blur(30px);
+  .chart-container {
+    width: 100%;
+    margin-bottom: 40px;
   }
 
-  /* Адаптивность */
-  @media (max-width: 768px) {
-    .header {
-      font-size: 2rem;
-    }
-
-    .progress-bar {
-      height: 20px;
-    }
-
-    .details-item {
-      font-size: 0.9rem;
-    }
+  canvas {
+    width: 100% !important;
+    height: 300px !important;
   }
 </style>
 
 <div class="container">
-  <!-- Декоративный элемент -->
-  <div class="decorative-circle"></div>
-
-  <!-- Заголовок -->
-  <div class="header">Распределение инвестиций</div>
-
-  <!-- Прогресс бар -->
-  <div class="progress-bar">
-    {#each sectors as sector (sector.name)}
-      <div
-        class="sector"
-        style="width: {Math.min(currentPercentage, sector.percentage)}%; background-color: {sector.color};"
-        title="{sector.name}: {sector.percentage}%"
-      ></div>
-    {/each}
+  <div class="text-section">
+    <h1 class="text-title">Информация о логистике</h1>
+    <p class="text-content">
+      Глобальная логистическая отрасль демонстрирует значительный рост и привлекает существенные инвестиции. В 2021 году объем инвестиций в логистические стартапы достиг рекордных 24,6 миллиарда долларов США, что почти вдвое превышает показатель 2020 года (12,6 миллиарда долларов США). Этот рост обусловлен повышенным вниманием к цепочкам поставок и необходимости их модернизации в условиях пандемии COVID-19.(TRANS.INFO)
+    </p>
+    <p class="text-content">
+      В первой половине 2022 года инвестиции в логистическую инфраструктуру составили около 34 миллиардов долларов США, что на 13% больше по сравнению с аналогичным периодом предыдущего года. Основным драйвером этого роста является развитие электронной коммерции, объем которой в 2021 году увеличился на 13,3% и достиг примерно 88,1 миллиарда евро.
+(MORDOR INTELLIGENCE)
+    </p>
+    <p class="text-content">
+      В целом, несмотря на текущие экономические и геополитические вызовы, логистическая отрасль продолжает привлекать значительные инвестиции, отражая ее ключевую роль в обеспечении эффективных цепочек поставок и удовлетворении растущих потребностей мировой экономики.(PWC)
+    </p>
   </div>
 
-  <!-- Детали -->
-  <div class="details">
-    {#each sectors as sector}
-      <div class="details-item">
-        <span class="name">{sector.name}</span>
-        <span class="value">${(totalInvestment * sector.percentage / 100).toFixed(2)}</span>
-      </div>
-    {/each}
+  <div class="animation-section">
+    <div class="box" style="transform: rotate({angle1}deg);">TRANS.INFO</div>
+    <div class="box" style="transform: rotate({angle2}deg);">M.INT</div>
+    <div class="box" style="transform: rotate({angle3}deg);">PWC</div>
+  </div>
+
+  <div class="chart-container">
+    <h2>График объема инвестиций в логистические стартапы</h2>
+    <canvas id="investmentChart"></canvas>
   </div>
 </div>
