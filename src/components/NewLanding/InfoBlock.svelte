@@ -47,7 +47,7 @@
   
     .text-content {
       font-size: 1.2rem;
-      color: #555;
+      color: #393939;
       line-height: 1.6;
     }
   
@@ -60,66 +60,76 @@
     }
   
     .box {
-      width: 120px;
-      height: 150px;
-      background-color: #3498db;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 10px;
-      position: relative;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-  
-    .box:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
-  
-    .box1 {
-      z-index: 3;
-      transform: translateY(calc(-10px * sin(var(--angle1))));
-      width: 140px;
-      height: 180px;
-    }
-  
-    .box2 {
-      z-index: 2;
-      transform: translateY(calc(10px * sin(var(--angle2))));
-      width: 160px;
-      height: 200px;
-      margin-left: -40px;
-    }
-  
-    .box3 {
-      z-index: 1;
-      transform: translateY(calc(-10px * sin(var(--angle3))));
-      width: 120px;
-      height: 150px;
-      margin-left: -40px;
-    }
+    width: 120px;
+    height: 150px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    /* Добавляем изображения на задний фон */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .box1 {
+    z-index: 3;
+    transform: translateY(calc(-14px * sin(var(--angle1))));
+    width: 140px;
+    height: 180px;
+    background-image: url('bgtextures/1cardbg.png'); /* Замените путь к вашему изображению */
+  }
+
+  .box2 {
+    z-index: 2;
+    transform: translateY(calc(10px * sin(var(--angle2))));
+    width: 200px;
+    height: 300px;
+    margin-left: -40px;
+    background-image: url('bgtextures/2cardbg.png'); /* Замените путь к вашему изображению */
+  }
+
+  .box3 {
+    z-index: 1;
+    transform: translateY(calc(-10px * sin(var(--angle3))));
+    width: 170px;
+    height: 250px;
+    margin-left: -40px;
+    background-image: url('bgtextures/3cardbg.png'); /* Замените путь к вашему изображению */
+  }
+    
   </style>
   
   <div class="container">
     <div class="text-section">
       <h1 class="text-title">Информация о логистике</h1>
       <p class="text-content">
-        Логистика играет важную роль в обеспечении глобальных поставок. Инвестируйте в инфраструктуру, чтобы повысить
-        эффективность.
+        Транспорт – вложения в покупку и обновление автопарка, ж/д вагонов, судов и авиафлота. Это повышает скорость, надежность и гибкость поставок, снижая затраты на перевозки.
       </p>
       <p class="text-content">
-        Карточки справа представляют основные направления инвестиций: транспорт, автоматизация и складские системы.
+        Складская инфраструктура – строительство и модернизация складов, терминалов и распределительных центров. Оптимизация складской сети позволяет ускорить обработку грузов и снизить издержки хранения.
+      </p>
+      <p class="text-content">
+        Автоматизация – инвестиции в цифровые технологии, роботизацию, WMS-системы и искусственный интеллект. Они повышают эффективность логистических процессов, сокращают ошибки и ускоряют выполнение заказов.
       </p>
     </div>
   
     <div class="animation-section">
-      <div class="box box1" style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}">Карточка 1</div>
-      <div class="box box2" style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}">Карточка 2</div>
-      <div class="box box3" style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}">Карточка 3</div>
+      <div class="box box1" style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}">Склад</div>
+      <div class="box box2" style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}">Автоматизация</div>
+      <div class="box box3" style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}">Транспорт</div>
     </div>
   </div>
   

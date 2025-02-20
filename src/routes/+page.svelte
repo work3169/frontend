@@ -12,13 +12,16 @@
   import FutureProjects from "components/NewLanding/FutureProjects.svelte";
   import InvestText from "components/NewLanding/InvestText.svelte";
   import WorldMap from "components/NewLanding/WorldMap.svelte";
+  
 
 import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
+	
 </script>
 
 
 
 <Navbar activeSection={''} />
+
 
 <HeroSection />
 <WorldMap />
