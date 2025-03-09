@@ -2,22 +2,9 @@
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
 
-  // Анимация углов
-  let angle1 = 0;
-  let angle2 = 180;
-  let angle3 = 90;
-
-  function animate() {
-    angle1 = (angle1 + 2) % 360;
-    angle2 = (angle2 + 2) % 360;
-    angle3 = (angle3 + 2) % 360;
-  }
-
   let animationInterval: number;
 
   onMount(() => {
-    animationInterval = setInterval(animate, 50); // Обновление анимации каждые 50 мс
-
     // Инициализация графика объема инвестиций
     const investmentChartCtx = document.getElementById("investmentChart") as HTMLCanvasElement;
     new Chart(investmentChartCtx, {
@@ -118,6 +105,47 @@
     width: 100% !important;
     height: 300px !important;
   }
+
+  /* Медиа-запросы для мобильных устройств */
+  @media (max-width: 768px) {
+    .text-title {
+      font-size: 1.8rem; /* Уменьшаем заголовок */
+    }
+
+    .text-content {
+      font-size: 1rem; /* Уменьшаем основной текст */
+    }
+
+    .box {
+      width: 90px; /* Уменьшаем ширину блоков */
+      height: 120px; /* Уменьшаем высоту блоков */
+      font-size: 0.8rem; /* Уменьшаем текст внутри блоков */
+    }
+
+    canvas {
+      height: 200px !important; /* Уменьшаем высоту графика */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .text-title {
+      font-size: 1.5rem; /* Еще больше уменьшаем заголовок */
+    }
+
+    .text-content {
+      font-size: 0.9rem; /* Еще больше уменьшаем основной текст */
+    }
+
+    .box {
+      width: 80px; /* Еще больше уменьшаем ширину блоков */
+      height: 100px; /* Еще больше уменьшаем высоту блоков */
+      font-size: 0.7rem; /* Еще больше уменьшаем текст внутри блоков */
+    }
+
+    canvas {
+      height: 150px !important; /* Еще больше уменьшаем высоту графика */
+    }
+  }
 </style>
 
 <div class="container">
@@ -136,9 +164,9 @@
   </div>
 
   <div class="animation-section">
-    <div class="box" style="transform: rotate({angle1}deg);">TRANS.INFO</div>
-    <div class="box" style="transform: rotate({angle2}deg);">M.INT</div>
-    <div class="box" style="transform: rotate({angle3}deg);">PWC</div>
+    <div class="box">TRANS.INFO</div>
+    <div class="box">M.INT</div>
+    <div class="box">PWC</div>
   </div>
 
   <div class="chart-container">

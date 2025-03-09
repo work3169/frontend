@@ -14,22 +14,39 @@
   };
   let serverError = ""
   $: isLoading
-  const submitForm = async() => {
-    isLoading = true;
-    const formSubmit = new FormData(form)
-    try {
-      await user.login(formSubmit)
-    } catch (e: unknown | AxiosError) {
-      console.log('alo suka')
-      if (axios.isAxiosError(e)) {
-        serverError = "Неверные данные или неподтверждённый пользователь"
-      } else {
-        serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
-      }
-    } finally {
-      isLoading = false;
-    }
+  //testing
+  const submitForm = async () => {
+  isLoading = true;
+  try {
+    console.log("Логин:", nickname, "Пароль:", password);
+    localStorage.setItem("isLoggedIn", "true");
+    
+    alert("Вход выполнен успешно! 🎉");
+
+    // Редирект в личный кабинет
+    window.location.href = "/profile"; // Или "/dashboard", если профиль там
+  } catch (e) {
+    serverError = "Ошибка. Попробуйте позже.";
+  } finally {
+    isLoading = false;
   }
+}; // end testing
+  // const submitForm = async() => {
+  //   isLoading = true;
+  //   const formSubmit = new FormData(form)
+  //   try {
+  //     await user.login(formSubmit)
+  //   } catch (e: unknown | AxiosError) {
+  //     console.log('alo suka')
+  //     if (axios.isAxiosError(e)) {
+  //       serverError = "Неверные данные или неподтверждённый пользователь"
+  //     } else {
+  //       serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //   }
+  // }
   function handleSubmit() {
     // Reset errors
     serverError = ""

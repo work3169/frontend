@@ -79,14 +79,7 @@
       animation: pulse 2s infinite;
     }
   
-    @keyframes pulse {
-      0%, 100% {
-        r: 5;
-      }
-      50% {
-        r: 8;
-      }
-    }
+    
   
     .line {
       stroke: #6DA0A0; /* Более мягкий цвет для линий */

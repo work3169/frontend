@@ -12,6 +12,7 @@
   import FutureProjects from "components/NewLanding/FutureProjects.svelte";
   import InvestText from "components/NewLanding/InvestText.svelte";
   import WorldMap from "components/NewLanding/WorldMap.svelte";
+  import WhatWeDo from "components/NewLanding/WhatWeDo.svelte";
   
 
 import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
@@ -28,6 +29,7 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
 <InvestmentPercent />
 <InvestmentCarousel />
 <Possibilities />
+<WhatWeDo />
 <ProfitCalculator />
 <InfoBlock />
 <Faq />

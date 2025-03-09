@@ -3,12 +3,11 @@
   let canvas: HTMLCanvasElement | null = null;
   let ctx: CanvasRenderingContext2D | null = null;
   const particles: Particle[] = [];
-  const particleCount = 150; // Количество частиц
-  const maxDistance = 120; // Максимальное расстояние для соединения линиями
-  const cursorRadius = 150; // Радиус отталкивания частиц
-  // Положение курсора
-  let mouse = { x: -cursorRadius, y: -cursorRadius }; // Изначально курсор вне экрана
-  // Класс частицы
+  let particleCount = 30; // Количество частиц
+  let maxDistance = 120; // Максимальное расстояние для соединения линиями
+  let cursorRadius = 150; // Радиус отталкивания частиц
+  let mouse = { x: -150, y: -150 }; // Изначально курсор вне экрана
+
   class Particle {
     x: number;
     y: number;
@@ -29,18 +28,16 @@
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
-      // Отражение от краёв
       if (canvas) {
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
-      // Отталкивание от курсора
       const dx = this.x - mouse.x;
       const dy = this.y - mouse.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
       if (distance < cursorRadius) {
         const angle = Math.atan2(dy, dx);
-        const force = (cursorRadius - distance) / cursorRadius; // Сила отталкивания
+        const force = (cursorRadius - distance) / cursorRadius;
         const directionX = Math.cos(angle) * force * 5;
         const directionY = Math.sin(angle) * force * 5;
         this.x += directionX;
@@ -56,6 +53,7 @@
       }
     }
   }
+
   const initParticles = () => {
     if (canvas) {
       for (let i = 0; i < particleCount; i++) {
@@ -68,6 +66,7 @@
       }
     }
   };
+
   const drawLines = () => {
     if (ctx && canvas) {
       for (let i = 0; i < particles.length; i++) {
@@ -89,7 +88,9 @@
       }
     }
   };
+
   const animateParticles = () => {
+    
     if (ctx && canvas) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((particle) => {
@@ -100,25 +101,34 @@
       requestAnimationFrame(animateParticles);
     }
   };
+
   onMount(() => {
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      ctx = canvas.getContext("2d");
-      initParticles();
-      animateParticles();
-      // Обработчик движения мыши
-      window.addEventListener("mousemove", (event) => {
-        mouse.x = event.clientX;
-        mouse.y = event.clientY;
-      });
-      // Обработчик изменения размера окна
-      window.addEventListener("resize", () => {
-        if (canvas) {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-      });
+    if (typeof window !== "undefined") {
+      particleCount = window.innerWidth < 768 ? 25 : 50;
+      maxDistance = window.innerWidth < 768 ? 80 : 120;
+      cursorRadius = window.innerWidth < 768 ? 100 : 150;
+
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx = canvas.getContext("2d");
+        initParticles();
+        animateParticles();
+
+        window.addEventListener("mousemove", (event) => {
+          mouse.x = event.clientX;
+          mouse.y = event.clientY;
+        });
+
+        window.addEventListener("resize", () => {
+          if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles.length = 0;
+            initParticles();
+          }
+        });
+      }
     }
   });
 </script>
@@ -127,66 +137,24 @@
   class="hero-section relative text-white flex min-h-screen"
   style="background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6);"
 >
-  <!-- Частицы -->
   <canvas bind:this={canvas} class="absolute inset-0"></canvas>
-  <!-- Контент -->
-  <div class="relative z-10 w-full flex justify-between items-center px-10">
-    <!-- Левая часть: Текст и кнопка -->
-    <div class="space-y-12 max-w-md">
-      <h1 class="text-4xl md:text-7xl font-extrabold">
+  <div class="relative z-10 w-full flex flex-col items-center justify-center px-6">
+    <div class="space-y-6 max-w-md text-center">
+      <h1 class="text-3xl font-extrabold sm:text-5xl">
         НАЧНИ<br />
         <span class="text-blue-200">ЗАРАБАТЫВАТЬ</span><br />
         <span class="text-purple-200">С НАМИ</span>
       </h1>
       <button
-        class="bg-white text-blue-500 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-100 hover:scale-105 transition duration-300"
+        class="bg-white text-blue-500 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-100 hover:scale-105 transition duration-300"
       >
         Начать сейчас
       </button>
-    </div>
-    <!-- Правая часть: Анимированная картинка -->
-    <div class="hidden md:block relative w-[600px] h-[600px]">
-      <img
-        src="/bgtextures/HeroImagePng.png"
-        alt="Flying image"
-        class="absolute top-0 left-0 w-full h-full object-contain floating"
-      />
     </div>
   </div>
 </section>
 
 <style>
-  /* Стиль для летающей картинки */
-  .floating {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  /* Стиль для канваса */
-  canvas {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-
-  /* Уменьшение расстояния между текстом и изображением */
-  .hero-section > div {
-    gap: 2rem; /* Расстояние между левой и правой частями */
-  }
-
-  /* Адаптивность для мобильных устройств */
   @media (max-width: 768px) {
     .hero-section > div {
       flex-direction: column;
@@ -194,8 +162,13 @@
       text-align: center;
     }
 
-    .hero-section img {
-      display: none; /* Скрываем изображение на мобильных устройствах */
+    h1 {
+      font-size: 2rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
     }
   }
 </style>

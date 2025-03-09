@@ -21,45 +21,45 @@
 </script>
 
   
-  <style>
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      height: 100vh;
-      box-sizing: border-box;
-    }
-  
-    .text-section {
-      flex: 1;
-      padding-right: 20px;
-    }
-  
-    .text-title {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #2c3e50;
-    }
-  
-    .text-content {
-      font-size: 1.2rem;
-      color: #393939;
-      line-height: 1.6;
-    }
-  
-    .animation-section {
-      flex: 1;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: relative;
-    }
-  
-    .box {
+<style>
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .text-section {
+    flex: 1;
+    padding-right: 20px;
+  }
+
+  .text-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+
+  .text-content {
+    font-size: 1.2rem;
+    color: #393939;
+    line-height: 1.6;
+  }
+
+  .animation-section {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+  }
+
+  .box {
     width: 120px;
     height: 150px;
     color: white;
@@ -72,8 +72,6 @@
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    /* Добавляем изображения на задний фон */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -109,8 +107,89 @@
     margin-left: -40px;
     background-image: url('bgtextures/3cardbg.png'); /* Замените путь к вашему изображению */
   }
-    
-  </style>
+
+  /* Медиа-запросы для мобильных устройств */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Изменяем расположение на вертикальное */
+      height: auto; /* Убираем фиксированную высоту */
+    }
+
+    .text-section {
+      padding-right: 0; /* Убираем отступ справа */
+      text-align: center; /* Центрируем текст */
+      margin-bottom: 20px; /* Добавляем отступ между текстом и анимацией */
+    }
+
+    .text-title {
+      font-size: 1.8rem; /* Уменьшаем заголовок */
+    }
+
+    .text-content {
+      font-size: 1rem; /* Уменьшаем основной текст */
+    }
+
+    .animation-section {
+      flex-direction: column; /* Располагаем блоки вертикально */
+      align-items: center; /* Центрируем блоки по центру */
+    }
+
+    .box {
+      width: 100px; /* Уменьшаем ширину блоков */
+      height: 130px; /* Уменьшаем высоту блоков */
+      font-size: 0.9rem; /* Уменьшаем текст внутри блоков */
+      margin-bottom: 15px; /* Добавляем отступ между блоками */
+    }
+
+    .box1 {
+      width: 120px;
+      height: 160px;
+    }
+
+    .box2 {
+      width: 150px;
+      height: 200px;
+      margin-left: 0; /* Убираем отрицательный отступ */
+    }
+
+    .box3 {
+      width: 130px;
+      height: 180px;
+      margin-left: 0; /* Убираем отрицательный отступ */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .text-title {
+      font-size: 1.5rem; /* Еще больше уменьшаем заголовок */
+    }
+
+    .text-content {
+      font-size: 0.9rem; /* Еще больше уменьшаем основной текст */
+    }
+
+    .box {
+      width: 80px; /* Еще больше уменьшаем ширину блоков */
+      height: 110px; /* Еще больше уменьшаем высоту блоков */
+      font-size: 0.8rem; /* Еще больше уменьшаем текст внутри блоков */
+    }
+
+    .box1 {
+      width: 100px;
+      height: 140px;
+    }
+
+    .box2 {
+      width: 130px;
+      height: 180px;
+    }
+
+    .box3 {
+      width: 110px;
+      height: 160px;
+    }
+  }
+</style>
   
   <div class="container">
     <div class="text-section">

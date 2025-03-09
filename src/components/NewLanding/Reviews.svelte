@@ -80,12 +80,8 @@
         position: relative;
         height: 400px; /* Уменьшаем высоту секции */
         width: 100%; /* Можно задать фиксированную ширину */
-        
         margin: 50px auto; /* Центрируем секцию */
         overflow: hidden;
-        
-        
-        
     }
 
     .review-card {
@@ -96,11 +92,12 @@
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         opacity: 0;
-        animation: fadeInOut 20s linear forwards;
+        animation: popIn 20s linear forwards;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        transform: scale(0); /* Начинаем с масштаба 0 */
     }
 
     .review-card:hover {
@@ -120,22 +117,25 @@
         color: #555;
     }
 
-    @keyframes fadeInOut {
+    @keyframes popIn {
         0% {
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(1); /* Начинаем с масштаба 0 */
         }
-        10% {
+        2% {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1.1); /* Увеличиваем до 110% */
+        }
+        3% {
+            transform: scale(1); /* Возвращаем к 100% */
         }
         90% {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1); /* Остаемся на 100% */
         }
         100% {
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(0); /* Исчезаем */
         }
     }
 </style>
@@ -144,7 +144,7 @@
     <!-- Титульный текст -->
     <div class="absolute inset-0 flex items-center justify-center z-10">
         <h1 class="text-4xl font-bold text-center text-black">
-            Отзывы наших клиентов
+            <!-- Отзывы наших клиентов -->
         </h1>
     </div>
 
@@ -159,4 +159,3 @@
         </div>
     {/each}
 </section>
-

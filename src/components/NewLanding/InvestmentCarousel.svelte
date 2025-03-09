@@ -18,7 +18,7 @@
         gap: '1rem',
         pagination: false,
         arrows: true,
-        height: '350px',
+        height: '340px',
         breakpoints: {
           768: { perPage: 1 },
         }
@@ -83,35 +83,45 @@
 <style>
   .container {
     display: flex;
+    
     align-items: center;
     justify-content: center;
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    height: 80vh;
+    height: auto; /* Убираем фиксированную высоту */
     overflow: hidden;
+    flex-direction: row; /* Горизонтальное расположение по умолчанию */
   }
+
   .text-section {
     flex: 1;
     padding: 20px;
   }
+
   .carousel-section {
-    justify-content: center;
     flex: 1;
     max-width: 600px;
     overflow: hidden;
+    align-items: center;
+    justify-content: center;
   }
+
   .carousel-title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    
+    
   }
+
   .carousel-description {
     font-size: 1.1rem;
     color: #555;
     margin-bottom: 1rem;
   }
+
   .splide__slide {
     display: flex;
     flex-direction: column;
@@ -125,8 +135,53 @@
     padding: 10px;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
+
   .splide__slide:not(.is-active) {
     transform: scale(0.95);
     opacity: 0.7;
+  }
+
+  /* Медиа-запросы для мобильных устройств */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Вертикальное расположение */
+      align-items: stretch; /* Растягиваем элементы по ширине */
+      gap: 1rem; /* Уменьшаем отступ между элементами */
+    }
+
+    .text-section {
+      text-align: center; /* Центрируем текст */
+      padding: 10px; /* Уменьшаем отступы */
+    }
+
+    .carousel-section {
+      max-width: 100%; /* Карусель занимает всю ширину */
+    }
+
+    .carousel-title {
+      font-size: 1.5rem; /* Уменьшаем заголовок */
+    }
+
+    .carousel-description {
+      font-size: 1rem; /* Уменьшаем описание */
+    }
+
+    .splide__slide {
+      height: 250px; /* Уменьшаем высоту слайдов */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-title {
+      font-size: 1.2rem; /* Еще больше уменьшаем заголовок */
+    }
+
+    .carousel-description {
+      font-size: 0.9rem; /* Еще больше уменьшаем описание */
+    }
+
+    .splide__slide {
+      height: 200px; /* Еще больше уменьшаем высоту слайдов */
+    }
   }
 </style>
