@@ -13,6 +13,7 @@
   import InvestText from "components/NewLanding/InvestText.svelte";
   import WorldMap from "components/NewLanding/WorldMap.svelte";
   import WhatWeDo from "components/NewLanding/WhatWeDo.svelte";
+  import SupportIcon from "components/Landing/SupportIcon.svelte";
   
 
 import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
@@ -42,6 +43,7 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
 <FutureProjects />
 <InvestText />
 <Reviews />
+<SupportIcon />
 
 
 <footer>
