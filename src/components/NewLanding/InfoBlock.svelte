@@ -96,7 +96,7 @@
     width: 200px;
     height: 300px;
     margin-left: -40px;
-    background-image: url('bgtextures/2cardbg.png'); /* Замените путь к вашему изображению */
+    background-image: url('/bgtextures/2cardbg.png'); /* Замените путь к вашему изображению */
   }
 
   .box3 {
@@ -105,7 +105,7 @@
     width: 170px;
     height: 250px;
     margin-left: -40px;
-    background-image: url('bgtextures/3cardbg.png'); /* Замените путь к вашему изображению */
+    background-image: url('/bgtextures/3cardbg.png'); /* Замените путь к вашему изображению */
   }
 
   /* Медиа-запросы для мобильных устройств */
