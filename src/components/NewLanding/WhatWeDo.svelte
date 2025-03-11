@@ -138,7 +138,7 @@
     }
   </style>
   
-  <div class="container">
+  <div class="container" id="about-section">
     <!-- Заголовок и описание -->
     <h1 class="title">Наш вклад в приумножение капиталов</h1>
     <p class="description">

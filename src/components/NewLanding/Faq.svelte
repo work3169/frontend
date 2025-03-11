@@ -153,7 +153,7 @@
   }
 </style>
 
-<div class="faq-container">
+<div class="faq-container" id="qa-section">
   {#each faq as item, index}
     <div class="faq-item">
       <div

@@ -24,7 +24,7 @@
   
 </style>
 
-<div class="min-h-screen text-white flex flex-col items-center justify-center px-4 background-image" in:fade="{{ duration: 1000 }}">
+<div  class="min-h-screen text-white flex flex-col items-center justify-center px-4 background-image" in:fade="{{ duration: 1000 }}"id="future-section">
   <!-- Заголовок -->
   <h1 class="text-4xl font-bold mb-8 text-center">
       Инвестируйте в логистику — будущее начинается сегодня!

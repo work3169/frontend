@@ -66,26 +66,42 @@
           </li>
           <li>
             <a
-  href="#hero-section"
+  href="#future-section"
   class:active={activeSection === "mainSection"}
   on:click={(e) => {
     e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("hero-section"); // Находим элемент по ID
+    const target = document.getElementById("future-section"); // Находим элемент по ID
     target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
   }}
 >
-  Главная
+  Перспективы
 </a>
           </li>
           <li>
-            <a href="#news" class:active={activeSection === "newsSection"}>
-              Новости
-            </a>
+            <a
+  href="#about-section"
+  class:active={activeSection === "mainSection"}
+  on:click={(e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const target = document.getElementById("about-section"); // Находим элемент по ID
+    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
+  }}
+>
+  О Нас
+</a>
           </li>
           <li>
-            <a href="#reviews" class:active={activeSection === "reviewsSection"}>
-              Отзывы
-            </a>
+            <a
+  href="#qa-section"
+  class:active={activeSection === "mainSection"}
+  on:click={(e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const target = document.getElementById("qa-section"); // Находим элемент по ID
+    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
+  }}
+>
+  Q & A
+</a>
           </li>
           <li>
             <a
