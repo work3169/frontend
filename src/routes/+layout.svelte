@@ -36,7 +36,7 @@
 
   :global(body) {
     background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6); /* Градиентный фон */
-    color: #ffffff;
+    
     font-family: Arial, sans-serif;
   }
 
