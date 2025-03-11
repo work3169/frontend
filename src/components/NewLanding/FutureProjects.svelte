@@ -98,26 +98,7 @@
   }
 
   /* Легенда */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .legend-color {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
+  
 
   .legend-text {
     color: rgba(255, 255, 255, 0.9);

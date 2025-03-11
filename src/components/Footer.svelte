@@ -1,21 +1,11 @@
-<footer class="footer gap-12 justify-start flex flex-col-reverse md:flex-row p-10 bg-neutral text-neutral-content w-full">
-  <div class="w-full md:w-auto text-center md:text-left">
-  <p>© 2021 DES LTD - ALL RIGHTS RESERVED</p>
-  <p class="text-[12px]">Support email: support-contact@logistico.com</p>
+<footer class="footer gap-12 justify-start flex flex-col-reverse md:flex-row p-10 bg-neutral text-neutral-content 2xl:container 2xl:mx-auto">
+  <div>
+    <p>© 2023 Distributed
+      Efficient Shipping LTD - ALL RIGHTS RESERVED</p>
+    <p class="text-[12px]">Support email: support-contact@des.com</p>
   </div>
-  <div class="w-full md:w-auto text-center md:text-right">
-  <a href="/static/terms" class="mr-4 hover:underline">Правила пользования</a>
-  <button
-  on:click={openPDF}
-  class="hover:underline bg-transparent border-none text-neutral-content cursor-pointer"
-  >
-  СЕРТИФИКАТ
-  </button>
+  <div>
+    <a href="/terms">Правила пользования</a>
+    <a href="/certificate.pdf" target="_blank">Сертификат</a>
   </div>
-  </footer>
-  
-  <script>
-  function openPDF() {
-  window.open('/static/certificate.pdf', '_blank');
-  }
-  </script>
+</footer>
