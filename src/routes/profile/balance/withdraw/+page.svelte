@@ -126,7 +126,7 @@
 
   <div class="flex flex-wrap items-center gap-4 gap-y-2 mt-3">
     <input placeholder="Введите сумму" class="input input-bordered input-secondary w-full max-w-sm" bind:value={amount} />
-    <button class="btn btn-primary w-full max-w-[200px]" on:click={withdraw} disabled={isLoadingWithdrawing}>
+    <button class="btn btn-primary w-full max-w-[200px] bg-[#4E8D8D]" on:click={withdraw} disabled={isLoadingWithdrawing}>
       {#if isLoadingWithdrawing}
         <Jellyfish size="35" color="#68cca1" />
       {:else}
@@ -145,7 +145,7 @@
     {/if}
   </div>
 
-  <button class="btn w-full max-w-[200px] mt-12" class:hidden={showAddWallet} on:click={() => (showAddWallet = true)} >
+  <button class="btn w-full max-w-[200px] mt-12 bg-[#4E8D8D]" class:hidden={showAddWallet} on:click={() => (showAddWallet = true)} >
     Добавить кошелек
   </button>
   {#if showAddWallet}

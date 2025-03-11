@@ -53,12 +53,12 @@
     <!-- head -->
     <thead class="text-neutral-content">
       <tr>
-        <th class="bg-neutral text-xs">Тип</th>
-        <th class="bg-neutral text-xs md:text-md">Статус</th>
-        <th class="bg-neutral text-xs md:text-md text-right">Начисление</th>
-        <th class="bg-neutral text-xs md:text-md text-right">Текущий баланс</th>
-        <th class="bg-neutral text-xs md:text-md text-right">Дата</th>
-        <th class="bg-neutral text-xs md:text-md text-left">Дополнительно</th>
+        <th class="bg-[#295858] text-xs">Тип</th>
+        <th class="bg-[#295858] text-xs md:text-md">Статус</th>
+        <th class="bg-[#295858] text-xs md:text-md text-right">Начисление</th>
+        <th class="bg-[#295858] text-xs md:text-md text-right">Текущий баланс</th>
+        <th class="bg-[#295858] text-xs md:text-md text-right">Дата</th>
+        <th class="bg-[#295858] text-xs md:text-md text-left">Дополнительно</th>
       </tr>
     </thead>
     {#if $userStore.operations.length}

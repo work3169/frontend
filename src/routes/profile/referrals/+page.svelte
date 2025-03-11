@@ -68,12 +68,12 @@
       <!-- head -->
       <thead class="text-neutral-content">
         <tr>
-          <th class="bg-neutral text-sm">Имя пользователя</th>
-          <th class="bg-neutral text-sm">Кол-во контрактов</th>
-          <th class="bg-neutral text-sm">Сумма контрактов</th>
-          <th class="bg-neutral text-sm">Доход</th>
-          <th class="bg-neutral text-sm">Линия</th>
-          <th class="bg-neutral text-sm">Родительское имя пользователя</th>
+          <th class="bg-[#295858] text-sm">Имя пользователя</th>
+          <th class="bg-[#295858] text-sm">Кол-во контрактов</th>
+          <th class="bg-[#295858] text-sm">Сумма контрактов</th>
+          <th class="bg-[#295858] text-sm">Доход</th>
+          <th class="bg-[#295858] text-sm">Линия</th>
+          <th class="bg-[#295858] text-sm">Родительское имя пользователя</th>
         </tr>
       </thead>
       {#if $referralsStore.details?.length === 0}

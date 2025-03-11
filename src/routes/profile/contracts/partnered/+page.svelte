@@ -17,7 +17,7 @@
   <HeaderContainer >
     <h1 class="font-medium text-2xl">Партнерские контракты</h1>
     <div class="flex flex-wrap gap-2">
-      <a class="btn btn-primary" href="/profile/contracts/partnered/new">ский контракт</a>
+      <a class="btn btn-primary bg-[#4E8D8D]" href="/profile/contracts/partnered/new">Партнерский контракт</a>
       <a class="btn btn-outline btn-neutral" href="/profile/contracts">Все контракты</a>
     </div>
 </HeaderContainer>

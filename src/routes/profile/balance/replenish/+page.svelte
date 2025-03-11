@@ -64,7 +64,7 @@
   {#if walletType === '4'}
     <div class="flex flex-wrap w-full gap-2 max-w-xl">
       <input bind:value={value} class="input input-bordered w-full max-w-sm" placeholder="Сумма" />
-      <button on:click={replenish} class="btn btn-primary px-8 w-full max-w-[150px]">Пополнить</button>
+      <button on:click={replenish} class="btn btn-primary px-8 w-full max-w-[150px] bg-[#4E8D8D]">Пополнить</button>
     </div>
 
     {#if error}
