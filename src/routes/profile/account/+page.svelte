@@ -77,7 +77,7 @@
    {/if}
   </div>
   <div>
-    <a class="font-semibold my-3 text-secondary" href="https://t.me/geef_support">Обратиться в поддержку</a>
+    <a class="font-semibold my-3 text-secondary" href="https://t.me/des_logi_support">Обратиться в поддержку</a>
   </div>
 
 
