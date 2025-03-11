@@ -7,7 +7,7 @@
   export { className as class };
 </script>
 
-<input 
+<input
   type="email" 
   name={name} 
   required={required}

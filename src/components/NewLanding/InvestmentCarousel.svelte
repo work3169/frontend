@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container ">
   <!-- Текстовая часть -->
   <div class="text-section">
     <h1 class="carousel-title">Инвестиции в логистику</h1>
@@ -82,18 +82,18 @@
 
 <style>
   .container {
-    display: flex;
-    
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    height: auto; /* Убираем фиксированную высоту */
-    overflow: hidden;
-    flex-direction: row; /* Горизонтальное расположение по умолчанию */
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  height: auto; /* Убираем фиксированную высоту */
+  overflow: hidden;
+  flex-direction: row; /* Горизонтальное расположение по умолчанию */
+  margin-top: 48px; /* Отступ сверху */
+}
 
   .text-section {
     flex: 1;

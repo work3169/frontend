@@ -28,12 +28,12 @@
     <!-- head -->
     <thead class="text-neutral-content">
       <tr>
-        <th class="bg-neutral text-sm">Контракт</th>
-        <th class="bg-neutral text-sm">Текущая прибыль</th>
-        <th class="bg-neutral text-sm">Длительность</th>
-        <th class="bg-neutral text-sm">Депозит</th>
-        <th class="bg-neutral text-sm">Прогресс</th>
-        <th class="bg-neutral text-sm">Дата создания</th>
+        <th class="bg-[#295858] text-sm">Контракт</th>
+        <th class="bg-[#295858] text-sm">Текущая прибыль</th>
+        <th class="bg-[#295858] text-sm">Длительность</th>
+        <th class="bg-[#295858] text-sm">Депозит</th>
+        <th class="bg-[#295858] text-sm">Прогресс</th>
+        <th class="bg-[#295858] text-sm">Дата создания</th>
       </tr>
     </thead>
     {#if $contracts.length === 0}

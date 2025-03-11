@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
 
-  let animationInterval: number;
+  let animationInterval: number = 0;
 
   onMount(() => {
     // Инициализация графика объема инвестиций
@@ -148,6 +148,7 @@
   }
 </style>
 
+<section id="stats-section">
 <div class="container">
   <div class="text-section">
     <h1 class="text-title">Информация о логистике</h1>
@@ -174,3 +175,4 @@
     <canvas id="investmentChart"></canvas>
   </div>
 </div>
+</section>

@@ -1,9 +1,10 @@
 <script lang="ts">
   import axios, { AxiosError } from "axios";
   import Input from "components/Auth/Input.svelte";
-	import SignInCard from "components/Auth/SigninCard.svelte";
+  import SignInCard from "components/Auth/SigninCard.svelte";
   import { Jellyfish } from 'svelte-loading-spinners';
   import { user } from "stores/user";
+
   let isLoading = false;
   let form: HTMLFormElement;
   let nickname = "";
@@ -12,44 +13,27 @@
     nickname: "",
     password: ""
   };
-  let serverError = ""
-  $: isLoading
-  //testing
-  const submitForm = async () => {
-  isLoading = true;
-  try {
-    console.log("Логин:", nickname, "Пароль:", password);
-    localStorage.setItem("isLoggedIn", "true");
-    
-    alert("Вход выполнен успешно! 🎉");
+  let serverError = "";
 
-    // Редирект в личный кабинет
-    window.location.href = "/profile"; // Или "/dashboard", если профиль там
-  } catch (e) {
-    serverError = "Ошибка. Попробуйте позже.";
-  } finally {
-    isLoading = false;
-  }
-}; // end testing
-  // const submitForm = async() => {
-  //   isLoading = true;
-  //   const formSubmit = new FormData(form)
-  //   try {
-  //     await user.login(formSubmit)
-  //   } catch (e: unknown | AxiosError) {
-  //     console.log('alo suka')
-  //     if (axios.isAxiosError(e)) {
-  //       serverError = "Неверные данные или неподтверждённый пользователь"
-  //     } else {
-  //       serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //   }
-  // }
+  const submitForm = async () => {
+    isLoading = true;
+    const formSubmit = new FormData(form);
+    try {
+      await user.login(formSubmit);
+    } catch (e: unknown | AxiosError) {
+      if (axios.isAxiosError(e)) {
+        serverError = "Неверные данные или неподтверждённый пользователь";
+      } else {
+        serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку";
+      }
+    } finally {
+      isLoading = false;
+    }
+  };
+
   function handleSubmit() {
     // Reset errors
-    serverError = ""
+    serverError = "";
     errors = {
       nickname: "",
       password: ""
@@ -65,33 +49,66 @@
     }
 
     // If there are no errors, submit the form
-    if (Object.values(errors).every(error => !error)) {
-      submitForm()
+    if (Object.values(errors).every((error) => !error)) {
+      submitForm();
     }
   }
 </script>
 
-<SignInCard>
+<SignInCard >
   {#if isLoading}
     <div class="flex justify-center items-center w-full min-h-[420px]">
-      <Jellyfish color="#0000FF" />
+      <Jellyfish color="#4E8D8D" />
     </div>
-  {/if}
-  {#if !isLoading}
-    <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form}>
-      <h1 class="mb-6 font-semibold text-lg text-center">Войти</h1>
-  
-      <Input type="text" bind:value={nickname} name="username" placeholder="Введите имя пользователя" label="Имя пользователя" error={errors.nickname} />
+  {:else}
+    <form on:submit|preventDefault={handleSubmit} class="space-y-6" bind:this={form}>
+      <h1 class="text-2xl font-bold text-center text-[#333333]">Войти</h1>
 
-      <Input type="password" bind:value={password} name="password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
+      <!-- Username Field -->
+      <Input
+        type="text"
+        bind:value={nickname}
+        name="username"
+        placeholder="Введите имя пользователя"
+        label="Имя пользователя"
+        error={errors.nickname}
+      />
 
+      <!-- Password Field -->
+      <Input
+        type="password"
+        bind:value={password}
+        name="password"
+        placeholder="Введите пароль"
+        label="Пароль"
+        error={errors.password}
+      />
+
+      <!-- Server Error Message -->
       {#if serverError}
-        <p class="text-error text-lg">{serverError}</p>
+        <p class="text-[#FF4D4D] text-sm text-center">{serverError}</p>
       {/if}
-      <div class="flex flex-col flex-wrap justify-center gap-2">
-        <button class="btn btn-primary">Войти</button>
-        <a class="btn btn-ghost" href="/auth/signup">Зарегистрироваться</a>
-        <a class="btn btn-ghost" href="/auth/forgot-password">Забыли пароль?</a>
+
+      <!-- Buttons -->
+      <div class="flex flex-col gap-4">
+        <button
+          type="submit"
+          class="btn bg-[#4E8D8D] text-white font-bold py-3 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300"
+        >
+          Войти
+        </button>
+        <a
+          href="/auth/signup"
+          class="btn btn-ghost border border-[#4E8D8D] text-[#4E8D8D] font-bold py-3 rounded-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300"
+        >
+          Зарегистрироваться
+        </a>
+        <a
+          href="/auth/forgot-password"
+          class="text-[#4E8D8D] text-sm text-center underline hover:text-[#3A7373] transition-colors duration-300"
+        >
+          Забыли пароль?
+        </a>
       </div>
     </form>
   {/if}

@@ -134,6 +134,7 @@
 </script>
 
 <section
+id="hero-section"
   class="hero-section relative text-white flex min-h-screen"
   style="background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6);"
 >

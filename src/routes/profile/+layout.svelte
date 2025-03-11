@@ -2,13 +2,14 @@
   import Drawer from "components/Profile/Drawer.svelte";
   import { onDestroy, setContext } from "svelte";
   import { user } from 'stores/user';
+  
 
   const intervalIdUser = setInterval(() => {
-    user.getUser();
+    user.getUser()
   }, 5000);
 
   const intervalIdCashflow = setInterval(() => {
-    user.getCashflow();
+    user.getCashflow()
   }, 5000);
   setContext('intervalIdCashflow', intervalIdCashflow);
 
@@ -18,35 +19,19 @@
   });
 </script>
 
-<div class="flex items-center justify-center h-screen py-5">
-  <div class="drawer drawer-mobile flex  justify-center h-full   ">
-    <div class="drawer-side ">
-      <Drawer />
+<div class="drawer drawer-mobile bg-gradient-to-br from-[#BCE6E6] to-[#D1ECEC] text-[#333333]">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content self-start overflow-y-scroll h-inherit">
+    <!-- Page content here -->
+    <div class="bg-gradient-to-br from-[#BCE6E6] to-[#D1ECEC] text-[#333333] w-full p-4 mb-16 lg:mb-0 h-content md:p-10">
+      <slot />
     </div>
-    <div class="drawer-content  relative  ">
-      <div class=" rounded-3xl shadow-lg w-full max-w-3xl h-full "
-      >
-        <slot />
-      </div>
-    </div>
-  </div>
+  </div> 
+  <Drawer />
 </div>
 
 <style>
-  :global(body) {
-    background-image: url('/bgtextures/ProfileBgSvg.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 0;
-    height: 100vh;
-  }
-
-  .rounded-3xl {
-    border-radius: 1.5rem;
-  }
-
-  .shadow-lg {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  .h-inherit {
+    height: inherit !important;
   }
 </style>

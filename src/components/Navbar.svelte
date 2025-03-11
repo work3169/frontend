@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Logo from "components/Logo.svelte";
+  
   import { onMount } from "svelte";
 
   export let activeSection = '';
@@ -29,30 +29,40 @@
   <div class="container mx-auto">
     <div class="navbar">
       <div class="navbar-start">
-        <div class="flex">
-          <div class="relative w-[40px]">
-            <a
-              class="absolute block left-0 top-[-34px] w-[68px] h-[68px]"
-              href="/"
-            >
-              
-            </a>
-          </div>
+        <div class="flex items-center">
+          <!-- Логотип -->
+          <a href="/" class="inline-block mr-2">
+            <img
+              src="/favicon.png"
+              alt="Company Logo"
+              class="h-[30px] inline-block"
+              style="vertical-align: middle;"
+            />
+          </a>
+          <!-- Текст "DES" -->
+          <a
+            class="btn btn-link decoration no-underline normal-case text-xl flex items-center"
+            href="/"
+            style:color={isNavbarScrolled ? 'black' : 'white'}
+          >
+            DES
+          </a>
         </div>
-        <a
-          class="btn btn-link decoration no-underline normal-case text-xl"
-          href="/"
-          style:color={isNavbarScrolled ? 'black' : 'white'}
-        >
-          RELOGIST
-        </a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 gap-1 text-sm">
           <li>
-            <a href="#main" class:active={activeSection === "mainSection"}>
-              Главная
-            </a>
+            <a
+  href="#hero-section"
+  class:active={activeSection === "mainSection"}
+  on:click={(e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const target = document.getElementById("hero-section"); // Находим элемент по ID
+    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
+  }}
+>
+  Главная
+</a>
           </li>
           <li>
             <a href="#products" class:active={activeSection === "productsSection"}>
@@ -70,18 +80,26 @@
             </a>
           </li>
           <li>
-            <a href="#contracts" class:active={activeSection === "contractsSection"}>
-              Контракты
-            </a>
+            <a
+  href="#stats-section"
+  class:active={activeSection === "mainSection"}
+  on:click={(e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const target = document.getElementById("stats-section"); // Находим элемент по ID
+    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
+  }}
+>
+  Статистика
+</a>
           </li>
         </ul>
       </div>
       <div class="navbar-end gap-2">
         {#if $userStore.user}
-          <a class="btn btn-outline rounded-md" href="/profile">Профиль</a>
+          <a class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300" href="/profile">Профиль</a>
         {:else}
-          <a class="btn btn-outline rounded-md" href="/auth/login">Войти</a>
-          <a class="btn btn-sm sm:btn-md rounded-md hidden md:flex" href="/auth/signup">Зарегистрироваться</a>
+          <a class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300 mr-2" href="/auth/login">Войти</a>
+          <a class="btn bg-white text-[#4E8D8D] font-bold py-2 px-4 rounded-md border border-[#4E8D8D] shadow-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300 hidden md:inline-flex" href="/auth/signup">Зарегистрироваться</a>
         {/if}
       </div>
     </div>

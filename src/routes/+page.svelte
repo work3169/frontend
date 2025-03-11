@@ -30,7 +30,7 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
 <InvestmentCarousel />
 <Possibilities />
 <WhatWeDo />
-<ProfitCalculator />
+<!-- <ProfitCalculator /> -->
 <InfoBlock />
 <Faq />
 <InvestmentInfo />

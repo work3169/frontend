@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-  <title>GEEF</title>
+  <title>DES</title>
 </svelte:head>
 
 <!-- Анимированный фон -->

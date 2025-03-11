@@ -21,7 +21,7 @@
     const stats = [
       { label: "Инвесторов", value: 15000, suffix: "+" },
       { label: "Управляемых активов", value: 120, suffix: " млн $" },
-      { label: "Годовая доходность", value: 18, suffix: "%" },
+      
       { label: "Проектов", value: 350, suffix: "+" }
     ];
   </script>

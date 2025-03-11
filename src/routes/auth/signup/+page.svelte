@@ -4,8 +4,9 @@
   import { browser } from "$app/environment";
   import { PUBLIC_BACKEND_URL } from "$env/static/public";
   import Input from "components/Auth/Input.svelte";
-	import SignInCard from "components/Auth/SigninCard.svelte";
+  import SignInCard from "components/Auth/SigninCard.svelte";
   import { Jellyfish } from 'svelte-loading-spinners';
+
   let isLoading = false;
   let form: HTMLFormElement;
   let firstname = "";
@@ -22,26 +23,26 @@
     password: "",
     confirmPassword: ""
   };
-  let serverError = ""
-  $: isLoading
+  let serverError = "";
+  $: isLoading;
+
   let ref_link = "";
   if (browser) {
     const queryString = window.location.search;
-
     const urlParams = new URLSearchParams(queryString);
-
     ref_link = urlParams.get('ref_link') || "";
 
     if (ref_link) {
-      localStorage.setItem('ref_link', ref_link)
+      localStorage.setItem('ref_link', ref_link);
     } else {
-      ref_link = localStorage.getItem('ref_link') || ""
+      ref_link = localStorage.getItem('ref_link') || "";
     }
   }
-  const submitForm = async() => {
+
+  const submitForm = async () => {
     isLoading = true;
-    const formSubmit = new FormData(form)
-    formSubmit.append('reffered_by_link', ref_link)
+    const formSubmit = new FormData(form);
+    formSubmit.append('reffered_by_link', ref_link);
     try {
       const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/register/`, {
         method: 'POST',
@@ -51,26 +52,27 @@
           'Access-Control-Allow-Origin': window?.location.origin,
         },
         data: formSubmit,
-      })
+      });
       goto(`/auth/confirm?uuid=${res.data.confirmed_link}`);
     } catch (e: unknown | AxiosError) {
       if (axios.isAxiosError(e)) {
         if (e.response?.data?.username) {
-          serverError = 'Пользователь с таким именем уже существует'
+          serverError = 'Пользователь с таким именем уже существует';
         } else if (e.response?.data?.email) {
-          serverError = 'Пользователь с таким емейлом уже существует'
+          serverError = 'Пользователь с таким емейлом уже существует';
         } else if (e.response?.data?.non_field_errors) {
-          serverError = e.response?.data?.non_field_errors[0]
+          serverError = e.response?.data?.non_field_errors[0];
         }
       } else {
-        serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
+        serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку";
       }
     } finally {
       isLoading = false;
     }
-  }
+  };
+
   function handleSubmit() {
-    serverError = ""
+    serverError = "";
     errors = {
       firstname: "",
       lastname: "",
@@ -109,7 +111,7 @@
     }
 
     if (Object.values(errors).every(error => !error)) {
-      submitForm()
+      submitForm();
     }
   }
 
@@ -122,32 +124,92 @@
 <SignInCard>
   {#if isLoading}
     <div class="flex justify-center items-center w-full min-h-[420px]">
-      <Jellyfish color="#0000FF" />
+      <Jellyfish color="#4E8D8D" />
     </div>
-  {/if}
-  {#if !isLoading}
-    <form on:submit|preventDefault={handleSubmit} class="space-y-4" bind:this={form}>
-      <h1 class="mb-6 font-semibold text-lg text-center">Регистрация</h1>
-  
-      <Input type="text" bind:value={firstname} name="first_name" placeholder="Введите имя" label="Имя" error={errors.firstname}/>
+  {:else}
+    <form on:submit|preventDefault={handleSubmit} class="space-y-6" bind:this={form}>
+      <h1 class="text-2xl font-bold text-center text-[#333333]">Регистрация</h1>
 
-      <Input type="text" bind:value={lastname} name="last_name" placeholder="Введите фамилию" label="Фамилия" error={errors.lastname} />
+      <!-- Имя -->
+      <Input
+        type="text"
+        bind:value={firstname}
+        name="first_name"
+        placeholder="Введите имя"
+        label="Имя"
+        error={errors.firstname}
+      />
 
-      <Input type="text" bind:value={nickname} name="username" placeholder="Введите имя пользователя" label="Имя пользователя" error={errors.nickname} />
+      <!-- Фамилия -->
+      <Input
+        type="text"
+        bind:value={lastname}
+        name="last_name"
+        placeholder="Введите фамилию"
+        label="Фамилия"
+        error={errors.lastname}
+      />
 
-      <Input type="email" bind:value={email} name="email" placeholder="Введите электронную почту" label="Электронная почта" error={errors.email} />
+      <!-- Имя пользователя -->
+      <Input
+        type="text"
+        bind:value={nickname}
+        name="username"
+        placeholder="Введите имя пользователя"
+        label="Имя пользователя"
+        error={errors.nickname}
+      />
 
-      <Input type="password" bind:value={password} name="password" placeholder="Введите пароль" label="Пароль" error={errors.password} />
+      <!-- Электронная почта -->
+      <Input
+        type="email"
+        bind:value={email}
+        name="email"
+        placeholder="Введите электронную почту"
+        label="Электронная почта"
+        error={errors.email}
+      />
 
-      <Input type="password" bind:value={confirmPassword} name="password_confirm" placeholder="Подтвердите пароль" label="Подтверждение пароля" error={errors.confirmPassword} />
+      <!-- Пароль -->
+      <Input
+        type="password"
+        bind:value={password}
+        name="password"
+        placeholder="Введите пароль"
+        label="Пароль"
+        error={errors.password}
+      />
+
+      <!-- Подтверждение пароля -->
+      <Input
+        type="password"
+        bind:value={confirmPassword}
+        name="password_confirm"
+        placeholder="Подтвердите пароль"
+        label="Подтверждение пароля"
+        error={errors.confirmPassword}
+      />
+
+      <!-- Сообщение об ошибке -->
       {#if serverError}
-        <p class="text-error text-lg">{serverError}</p>
+        <p class="text-[#FF4D4D] text-sm text-center">{serverError}</p>
       {/if}
-      <div class="flex flex-wrap justify-end gap-2">
-        <a class="btn btn-outline" href="/auth/login">Войти</a>
-        <button class="btn btn-primary">Зарегистрироваться</button>
+
+      <!-- Кнопки -->
+      <div class="flex flex-col gap-4">
+        <button
+          type="submit"
+          class="btn bg-[#4E8D8D] text-white font-bold py-3 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300"
+        >
+          Зарегистрироваться
+        </button>
+        <a
+          href="/auth/login"
+          class="btn btn-ghost border border-[#4E8D8D] text-[#4E8D8D] font-bold py-3 rounded-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300"
+        >
+          Войти
+        </a>
       </div>
     </form>
   {/if}
-
 </SignInCard>

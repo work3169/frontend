@@ -6,7 +6,7 @@
 
 <div class="drawer-side">
   <label for="my-drawer-2" class="drawer-overlay"></label> 
-  <ul class="menu p-4 w-72 bg-base-100">
+  <ul class="menu p-4 w-72 bg-gradient-to-br from-[#BCE6E6] to-[#D1ECEC] text-[#333333]">
     <div class="mt-8 mb-6 ml-3">
       <div class="avatar placeholder">
         <div class="bg-neutral-focus text-neutral-content rounded-full w-10">
