@@ -52,12 +52,12 @@
   }
 
   const investments: Investment[] = [
-    { id: 1, title: 'Сушей', description: 'Передвижение товаров грузовиками.', color: '#f1c40f', icon: 'cargoIcon' },
-    { id: 2, title: 'Сушей', description: 'Передвижение товаров грузовиками.', color: '#2ecc71', icon: 'truckIcon' },
+    { id: 1, title: 'Морские перевозки', description: 'Модернизация портов и судоходства.', color: '#f1c40f', icon: 'cargoIcon' },
+    { id: 2, title: 'Сухопутный транспорт', description: 'Передвижение товаров грузовиками.', color: '#2ecc71', icon: 'truckIcon' },
     { id: 3, title: 'Цифровизация', description: 'Разработка логистических IT-решений.', color: '#3498db', icon: 'internetIcon' },
     { id: 4, title: 'Электротранспорт', description: 'Инвестиции в электрогрузовики и экологичный транспорт.', color: '#9b59b6', icon: 'trainIcon' },
-    { id: 5, title: 'Морские перевозки', description: 'Модернизация портов и судоходства.', color: '#e74c3c', icon: 'planeIcon' },
-    { id: 6, title: 'Воздушная логистика', description: 'Развитие авиационной доставки.', color: '#16a085', icon: 'papersIcon' }
+    { id: 5, title: 'Авиаперевозки', description: 'Передвижение товаров воздушными судами.', color: '#e74c3c', icon: 'planeIcon' },
+    { id: 6, title: 'Оптимизация', description: 'Развитие и настройка логистической экономики.', color: '#16a085', icon: 'papersIcon' }
   ];
 
   function getShortDescription(investment: Investment): string {

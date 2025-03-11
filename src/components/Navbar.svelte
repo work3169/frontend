@@ -65,9 +65,17 @@
 </a>
           </li>
           <li>
-            <a href="#products" class:active={activeSection === "productsSection"}>
-              Продукты
-            </a>
+            <a
+  href="#hero-section"
+  class:active={activeSection === "mainSection"}
+  on:click={(e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const target = document.getElementById("hero-section"); // Находим элемент по ID
+    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
+  }}
+>
+  Главная
+</a>
           </li>
           <li>
             <a href="#news" class:active={activeSection === "newsSection"}>

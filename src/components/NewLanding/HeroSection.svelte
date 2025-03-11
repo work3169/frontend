@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { user as userStore } from "stores/user";
   import { onMount } from "svelte";
   let canvas: HTMLCanvasElement | null = null;
   let ctx: CanvasRenderingContext2D | null = null;
@@ -134,40 +135,59 @@
 </script>
 
 <section
-id="hero-section"
+  id="hero-section"
   class="hero-section relative text-white flex min-h-screen"
   style="background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6);"
 >
   <canvas bind:this={canvas} class="absolute inset-0"></canvas>
   <div class="relative z-10 w-full flex flex-col items-center justify-center px-6">
     <div class="space-y-6 max-w-md text-center">
-      <h1 class="text-3xl font-extrabold sm:text-5xl">
-        НАЧНИ<br />
-        <span class="text-blue-200">ЗАРАБАТЫВАТЬ</span><br />
-        <span class="text-purple-200">С НАМИ</span>
+      <!-- Название -->
+      <h1 class="text-4xl font-extrabold sm:text-5xl tracking-tight">
+        Distributed<br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
+          Efficient Shipping
+        </span>
       </h1>
-      <button
-        class="bg-white text-blue-500 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-100 hover:scale-105 transition duration-300"
-      >
-        Начать сейчас
-      </button>
+
+      <!-- Подзаголовок -->
+      <p class="text-lg sm:text-xl text-gray-200">
+        Умножаем скорость, создаем ценность.
+      </p>
+
+      <!-- Кнопка -->
+      {#if $userStore.user}
+        <!-- Если пользователь авторизован -->
+        <a 
+          href="/profile" 
+          class="inline-block mt-8 px-8 py-4 bg-gradient-to-br from-[#295858] to-[#4E8D8D] text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+        >
+          Перейти в профиль
+        </a>
+      {:else}
+        <!-- Если пользователь не авторизован -->
+        <a 
+          href="/auth/login" 
+          class="inline-block mt-8 px-8 py-4 bg-gradient-to-br from-[#295858] to-[#4E8D8D] text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+        >
+          Начать сейчас
+        </a>
+      {/if}
     </div>
   </div>
 </section>
 
 <style>
   @media (max-width: 768px) {
-    .hero-section > div {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
     h1 {
       font-size: 2rem;
     }
 
-    button {
+    p {
+      font-size: 1rem;
+    }
+
+    a {
       padding: 0.75rem 1.5rem;
       font-size: 0.9rem;
     }

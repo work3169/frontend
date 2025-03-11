@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { cubicOut } from "svelte/easing";
 
+  // Данные для графика
   let sectors = [
     { name: "Складские системы", percentage: 35, color: "#4E8D8D" },
     { name: "Транспортная инфраструктура", percentage: 25, color: "#2C3E50" },
@@ -10,43 +10,24 @@
     { name: "Морская логистика", percentage: 5, color: "#E74C3C" }
   ];
 
-  let chartRadius = 100;
-  let chartData: Array<{ percentage: number; color: string }> = [];
-  let totalPercentage = 0;
+  let animatedPercentages = Array(sectors.length).fill(0); // Массив для анимации
 
+  // Анимация заполнения столбцов
   onMount(() => {
-    // Запускаем анимацию заполнения кругового графика
     const interval = setInterval(() => {
-      if (totalPercentage < 100) {
-        totalPercentage += 1;
-        chartData = sectors.map((sector, index) => {
-          const cumulativePercentage =
-            sectors.slice(0, index).reduce((sum, s) => sum + s.percentage, 0);
-          return {
-            ...sector,
-            percentage: Math.min(
-              sector.percentage,
-              totalPercentage - cumulativePercentage
-            )
-          };
-        });
-      } else {
+      animatedPercentages = animatedPercentages.map((current, index) => {
+        if (current < sectors[index].percentage) {
+          return Math.min(current + 1, sectors[index].percentage);
+        }
+        return current;
+      });
+
+      // Останавливаем интервал, если все столбцы достигли целевого значения
+      if (animatedPercentages.every((val, index) => val === sectors[index].percentage)) {
         clearInterval(interval);
       }
     }, 30);
   });
-
-  function calculateArc(percentage: number, radius: number, offset: number) {
-    const startAngle = (offset / 100) * Math.PI * 2;
-    const endAngle = ((offset + percentage) / 100) * Math.PI * 2;
-    const x1 = radius + radius * Math.cos(startAngle);
-    const y1 = radius + radius * Math.sin(startAngle);
-    const x2 = radius + radius * Math.cos(endAngle);
-    const y2 = radius + radius * Math.sin(endAngle);
-    const largeArc = percentage > 50 ? 1 : 0;
-
-    return `M ${radius},${radius} L ${x1},${y1} A ${radius},${radius} 0 ${largeArc},1 ${x2},${y2} Z`;
-  }
 </script>
 
 <style>
@@ -60,7 +41,7 @@
     padding: 40px 20px;
     border-radius: 20px;
     background: linear-gradient(to right, #4E8D8D, #6DA0A0); /* Градиент из вашей палитры */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
     color: white;
@@ -70,10 +51,10 @@
   .header {
     font-size: 2.5rem;
     font-weight: bold;
+    text-align: center;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     margin-bottom: 20px;
-    text-align: center;
   }
 
   /* Текстовый блок */
@@ -85,40 +66,43 @@
     text-align: justify;
   }
 
-  /* Контейнер графика */
+  /* Контейнер для графика */
   .chart-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Столбец */
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Прогресс-бар */
+  .progress-bar {
     position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 20px auto;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    flex: 1;
+    overflow: hidden;
   }
 
-  /* Анимированный график */
-  .chart {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: d 0.5s cubic-out;
-  }
-
-  /* Центральная метка графика */
-  .chart-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out;
   }
 
   /* Легенда */
   .legend {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 10px;
     margin-top: 20px;
   }
 
@@ -141,19 +125,6 @@
     font-weight: bold;
   }
 
-  /* Декоративные элементы */
-  .decorative-circle {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    top: -50px;
-    right: -50px;
-    z-index: 1;
-    filter: blur(30px);
-  }
-
   /* Адаптивность */
   @media (max-width: 768px) {
     .header {
@@ -164,54 +135,40 @@
       font-size: 1rem;
     }
 
-    .chart-container {
-      width: 180px;
-      height: 180px;
-    }
-
-    .chart-label {
-      font-size: 1.2rem;
+    .progress-bar {
+      height: 15px;
     }
   }
 </style>
 
 <div class="container">
-  <!-- Декоративный элемент -->
-  <div class="decorative-circle"></div>
-
   <!-- Заголовок -->
   <div class="header">Логистические перспективы</div>
 
   <!-- Текстовый блок -->
   <div class="text-section">
     <p>
-      Прогнозы указывают на дальнейший рост мирового рынка логистических услуг, который к 2026 году может достигнуть 100 миллиардов евро, во многом благодаря быстрому развитию электронной торговли. 
+      Прогнозы указывают на дальнейший рост мирового рынка логистических услуг, который к 2026 году может достигнуть 100 миллиардов евро, во многом благодаря быстрому развитию электронной торговли.
 (FINAM)
     </p>
-    
   </div>
 
-  <!-- Круговой график -->
+  <!-- Горизонтальные столбцы -->
   <div class="chart-container">
-    <svg width="{chartRadius * 2}" height="{chartRadius * 2}">
-      {#each chartData as { percentage, color }, index}
-        <path
-          class="chart"
-          d="{calculateArc(percentage, chartRadius, sectors.slice(0, index).reduce((sum, s) => sum + s.percentage, 0))}"
-          fill="{color}"
-        />
-      {/each}
-    </svg>
-    <div class="chart-label">{totalPercentage}%</div>
-  </div>
-
-  <!-- Легенда -->
-  <div class="legend">
-    {#each sectors as { name, color }}
-      <div class="legend-item">
-        <div class="legend-color" style="background-color: {color};"></div>
-        <span class="legend-text">{name}</span>
+    {#each sectors as sector, index}
+      <div class="bar">
+        <span class="legend-text">{sector.name}</span>
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            style="background-color: {sector.color}; width: {animatedPercentages[index]}%;"
+          ></div>
+        </div>
+        <span class="legend-text">{animatedPercentages[index]}%</span>
       </div>
     {/each}
   </div>
+
+  <!-- Легенда -->
+  
 </div>

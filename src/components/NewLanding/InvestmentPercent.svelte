@@ -75,9 +75,6 @@
 {/if}
 
   <!-- Анимированный фоновый элемент -->
-  <div
-      class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-900 to-transparent"
-      in:fade="{{ duration: 1500 }}"
-  ></div>
+  
 </div>
 

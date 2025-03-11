@@ -87,8 +87,8 @@
     transform: translateY(calc(-14px * sin(var(--angle1))));
     width: 140px;
     height: 180px;
-    background-image: url('bgtextures/1cardbg.png'); /* Замените путь к вашему изображению */
-  }
+    background-image: url('/bgtextures/1cardbg.png'); /* Используйте прямые слеши */
+}
 
   .box2 {
     z-index: 2;
