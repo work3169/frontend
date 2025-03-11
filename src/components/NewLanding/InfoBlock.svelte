@@ -20,7 +20,6 @@
   });
 </script>
 
-  
 <style>
   .container {
     display: flex;
@@ -54,9 +53,14 @@
   .animation-section {
     flex: 1;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     position: relative;
+    overflow-x: auto; /* Добавляем горизонтальную прокрутку */
+    white-space: nowrap; /* Запрещаем перенос строк */
+    padding: 20px 10px; /* Добавляем внутренние отступы */
+    scrollbar-width: thin; /* Тонкая полоса прокрутки */
+    scrollbar-color: #ccc transparent; /* Цвет полосы прокрутки */
   }
 
   .box {
@@ -75,6 +79,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    flex-shrink: 0; /* Запрещаем уменьшение элементов */
+    margin: 0 10px; /* Добавляем отступы между блоками */
   }
 
   .box:hover {
@@ -88,7 +94,7 @@
     width: 140px;
     height: 180px;
     background-image: url('/bgtextures/1cardbg.png'); /* Используйте прямые слеши */
-}
+  }
 
   .box2 {
     z-index: 2;
@@ -130,15 +136,14 @@
     }
 
     .animation-section {
-      flex-direction: column; /* Располагаем блоки вертикально */
-      align-items: center; /* Центрируем блоки по центру */
+      gap: 10px; /* Добавляем отступ между блоками */
+      padding: 10px; /* Уменьшаем внутренний отступ */
     }
 
     .box {
       width: 100px; /* Уменьшаем ширину блоков */
       height: 130px; /* Уменьшаем высоту блоков */
       font-size: 0.9rem; /* Уменьшаем текст внутри блоков */
-      margin-bottom: 15px; /* Добавляем отступ между блоками */
     }
 
     .box1 {
@@ -190,25 +195,24 @@
     }
   }
 </style>
-  
-  <div class="container">
-    <div class="text-section">
-      <h1 class="text-title">Информация о логистике</h1>
-      <p class="text-content">
-        Транспорт – вложения в покупку и обновление автопарка, ж/д вагонов, судов и авиафлота. Это повышает скорость, надежность и гибкость поставок, снижая затраты на перевозки.
-      </p>
-      <p class="text-content">
-        Складская инфраструктура – строительство и модернизация складов, терминалов и распределительных центров. Оптимизация складской сети позволяет ускорить обработку грузов и снизить издержки хранения.
-      </p>
-      <p class="text-content">
-        Автоматизация – инвестиции в цифровые технологии, роботизацию, WMS-системы и искусственный интеллект. Они повышают эффективность логистических процессов, сокращают ошибки и ускоряют выполнение заказов.
-      </p>
-    </div>
-  
-    <div class="animation-section">
-      <div class="box box1" style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}">Склад</div>
-      <div class="box box2" style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}">Автоматизация</div>
-      <div class="box box3" style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}">Транспорт</div>
-    </div>
+
+<div class="container">
+  <div class="text-section">
+    <h1 class="text-title">Информация о логистике</h1>
+    <p class="text-content">
+      Транспорт – вложения в покупку и обновление автопарка, ж/д вагонов, судов и авиафлота. Это повышает скорость, надежность и гибкость поставок, снижая затраты на перевозки.
+    </p>
+    <p class="text-content">
+      Складская инфраструктура – строительство и модернизация складов, терминалов и распределительных центров. Оптимизация складской сети позволяет ускорить обработку грузов и снизить издержки хранения.
+    </p>
+    <p class="text-content">
+      Автоматизация – инвестиции в цифровые технологии, роботизацию, WMS-системы и искусственный интеллект. Они повышают эффективность логистических процессов, сокращают ошибки и ускоряют выполнение заказов.
+    </p>
   </div>
-  
+
+  <div class="animation-section">
+    <div class="box box1" style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}">Склад</div>
+    <div class="box box2" style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}">Автоматизация</div>
+    <div class="box box3" style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}">Транспорт</div>
+  </div>
+</div>
