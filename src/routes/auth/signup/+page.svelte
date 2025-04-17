@@ -1,123 +1,92 @@
 <script lang="ts">
-  import axios, { AxiosError } from "axios";
+  import axios, { AxiosError } from 'axios';
   import { goto } from '$app/navigation';
-  import { browser } from "$app/environment";
-  import { PUBLIC_BACKEND_URL } from "$env/static/public";
-  import Input from "components/Auth/Input.svelte";
-  import SignInCard from "components/Auth/SigninCard.svelte";
+  import { browser } from '$app/environment';
+  import { PUBLIC_BACKEND_URL } from '$env/static/public';
+  import Input from 'components/Auth/Input.svelte';
+  import SignInCard from 'components/Auth/SigninCard.svelte';
   import { Jellyfish } from 'svelte-loading-spinners';
+
+  import i18next from '../../../lib/i18n';
+  import { writable } from 'svelte/store';
+
+  /* == перевод == */
+  const t = writable((k: string) => i18next.t(k));
+  i18next.on('languageChanged', () => t.set((k: string) => i18next.t(k)));
 
   let isLoading = false;
   let form: HTMLFormElement;
-  let firstname = "";
-  let lastname = "";
-  let nickname = "";
-  let email = "";
-  let password = "";
-  let confirmPassword = "";
+
+  let firstname = '';
+  let lastname = '';
+  let nickname = '';
+  let email = '';
+  let password = '';
+  let confirmPassword = '';
+
   let errors = {
-    firstname: "",
-    lastname: "",
-    nickname: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
+    firstname: '',
+    lastname: '',
+    nickname: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   };
-  let serverError = "";
-  $: isLoading;
+  let serverError = '';
 
-  let ref_link = "";
+  /* реф‑ссылка */
+  let ref_link = '';
   if (browser) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    ref_link = urlParams.get('ref_link') || "";
-
-    if (ref_link) {
-      localStorage.setItem('ref_link', ref_link);
-    } else {
-      ref_link = localStorage.getItem('ref_link') || "";
-    }
+    const params = new URLSearchParams(window.location.search);
+    ref_link = params.get('ref_link') || localStorage.getItem('ref_link') || '';
+    if (ref_link) localStorage.setItem('ref_link', ref_link);
   }
 
-  const submitForm = async () => {
+  async function submitForm() {
     isLoading = true;
-    const formSubmit = new FormData(form);
-    formSubmit.append('reffered_by_link', ref_link);
+    const fd = new FormData(form);
+    fd.append('reffered_by_link', ref_link);
+
     try {
       const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/register/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': '*/*',
-          'Access-Control-Allow-Origin': window?.location.origin,
-        },
-        data: formSubmit,
+        headers: { Accept: '*/*' },
+        data: fd
       });
       goto(`/auth/confirm?uuid=${res.data.confirmed_link}`);
     } catch (e: unknown | AxiosError) {
-      if (axios.isAxiosError(e)) {
-        if (e.response?.data?.username) {
-          serverError = 'Пользователь с таким именем уже существует';
-        } else if (e.response?.data?.email) {
-          serverError = 'Пользователь с таким емейлом уже существует';
-        } else if (e.response?.data?.non_field_errors) {
-          serverError = e.response?.data?.non_field_errors[0];
-        }
+      if (axios.isAxiosError(e) && e.response?.data) {
+        const d = e.response.data as any;
+        if (d.username)   serverError = $t('auth.signup.errors.userExists');
+        else if (d.email) serverError = $t('auth.signup.errors.emailExists');
+        else if (d.non_field_errors) serverError = d.non_field_errors[0];
+        else serverError = $t('auth.signup.errors.server');
       } else {
-        serverError = "Произошла ошибка. Попробуйте позже или обратитесь в поддержку";
+        serverError = $t('auth.signup.errors.server');
       }
     } finally {
       isLoading = false;
     }
-  };
-
-  function handleSubmit() {
-    serverError = "";
-    errors = {
-      firstname: "",
-      lastname: "",
-      nickname: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    };
-
-    if (!firstname) {
-      errors.firstname = "Введите имя";
-    }
-
-    if (!lastname) {
-      errors.lastname = "Введите фамилию";
-    }
-
-    if (!nickname) {
-      errors.nickname = "Введите имя пользователя";
-    }
-
-    if (!email) {
-      errors.email = "Заполните электронную почту";
-    } else if (!isValidEmail(email)) {
-      errors.email = "Введите корректную электронную почту";
-    }
-
-    if (!password) {
-      errors.password = "Введите пароль";
-    }
-
-    if (!confirmPassword) {
-      errors.confirmPassword = "Пароли не совпадают";
-    } else if (password !== confirmPassword) {
-      errors.confirmPassword = "Пароли не совпадают";
-    }
-
-    if (Object.values(errors).every(error => !error)) {
-      submitForm();
-    }
   }
 
-  function isValidEmail(email: string) {
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    return emailRegex.test(email);
+  function isValidEmail(val: string) {
+    return /^\S+@\S+\.\S+$/.test(val);
+  }
+
+  function handleSubmit() {
+    serverError = '';
+    errors = { firstname: '', lastname: '', nickname: '', email: '', password: '', confirmPassword: '' };
+
+    if (!firstname)         errors.firstname       = $t('auth.signup.errors.requiredFirst');
+    if (!lastname)          errors.lastname        = $t('auth.signup.errors.requiredLast');
+    if (!nickname)          errors.nickname        = $t('auth.signup.errors.requiredUsername');
+    if (!email)             errors.email           = $t('auth.signup.errors.requiredEmail');
+    else if (!isValidEmail(email)) errors.email     = $t('auth.signup.errors.invalidEmail');
+    if (!password)          errors.password        = $t('auth.signup.errors.requiredPassword');
+    if (!confirmPassword || password !== confirmPassword)
+                           errors.confirmPassword  = $t('auth.signup.errors.mismatch');
+
+    if (Object.values(errors).every(e => !e)) submitForm();
   }
 </script>
 
@@ -127,87 +96,65 @@
       <Jellyfish color="#4E8D8D" />
     </div>
   {:else}
-    <form on:submit|preventDefault={handleSubmit} class="space-y-6" bind:this={form}>
-      <h1 class="text-2xl font-bold text-center text-[#333333]">Регистрация</h1>
+    <form bind:this={form} class="space-y-6" on:submit|preventDefault={handleSubmit}>
+      <h1 class="text-2xl font-bold text-center text-[#333333]">
+        {$t('auth.signup.title')}
+      </h1>
 
-      <!-- Имя -->
       <Input
-        type="text"
-        bind:value={firstname}
-        name="first_name"
-        placeholder="Введите имя"
-        label="Имя"
+        type="text"  bind:value={firstname} name="first_name"
+        placeholder={$t('auth.signup.firstNamePlaceholder')}
+        label={$t('auth.signup.firstNameLabel')}
         error={errors.firstname}
       />
 
-      <!-- Фамилия -->
       <Input
-        type="text"
-        bind:value={lastname}
-        name="last_name"
-        placeholder="Введите фамилию"
-        label="Фамилия"
+        type="text"  bind:value={lastname} name="last_name"
+        placeholder={$t('auth.signup.lastNamePlaceholder')}
+        label={$t('auth.signup.lastNameLabel')}
         error={errors.lastname}
       />
 
-      <!-- Имя пользователя -->
       <Input
-        type="text"
-        bind:value={nickname}
-        name="username"
-        placeholder="Введите имя пользователя"
-        label="Имя пользователя"
+        type="text"  bind:value={nickname} name="username"
+        placeholder={$t('auth.signup.usernamePlaceholder')}
+        label={$t('auth.signup.usernameLabel')}
         error={errors.nickname}
       />
 
-      <!-- Электронная почта -->
       <Input
-        type="email"
-        bind:value={email}
-        name="email"
-        placeholder="Введите электронную почту"
-        label="Электронная почта"
+        type="email" bind:value={email} name="email"
+        placeholder={$t('auth.signup.emailPlaceholder')}
+        label={$t('auth.signup.emailLabel')}
         error={errors.email}
       />
 
-      <!-- Пароль -->
       <Input
-        type="password"
-        bind:value={password}
-        name="password"
-        placeholder="Введите пароль"
-        label="Пароль"
+        type="password" bind:value={password} name="password"
+        placeholder={$t('auth.signup.passwordPlaceholder')}
+        label={$t('auth.signup.passwordLabel')}
         error={errors.password}
       />
 
-      <!-- Подтверждение пароля -->
       <Input
-        type="password"
-        bind:value={confirmPassword}
-        name="password_confirm"
-        placeholder="Подтвердите пароль"
-        label="Подтверждение пароля"
+        type="password" bind:value={confirmPassword} name="password_confirm"
+        placeholder={$t('auth.signup.confirmPlaceholder')}
+        label={$t('auth.signup.confirmLabel')}
         error={errors.confirmPassword}
       />
 
-      <!-- Сообщение об ошибке -->
       {#if serverError}
         <p class="text-[#FF4D4D] text-sm text-center">{serverError}</p>
       {/if}
 
-      <!-- Кнопки -->
       <div class="flex flex-col gap-4">
-        <button
-          type="submit"
-          class="btn bg-[#4E8D8D] text-white font-bold py-3 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300"
-        >
-          Зарегистрироваться
+        <button type="submit" class="btn bg-[#4E8D8D] text-white hover:bg-[#3A7373]">
+          {$t('auth.signup.submit')}
         </button>
-        <a
-          href="/auth/login"
-          class="btn btn-ghost border border-[#4E8D8D] text-[#4E8D8D] font-bold py-3 rounded-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300"
-        >
-          Войти
+
+        <a href="/auth/login"
+          class="btn btn-ghost border border-[#4E8D8D] text-[#4E8D8D] hover:bg-[#4E8D8D] hover:text-white">
+          {$t('auth.signup.login')}
         </a>
       </div>
     </form>

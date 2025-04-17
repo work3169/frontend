@@ -1,11 +1,19 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
+  import i18next from "../../lib/i18n";
+  import { writable } from "svelte/store";
+
+  // Подключаем i18n
+  const t = writable((key: string) => i18next.t(key));
+  i18next.on("languageChanged", () => {
+    t.set((key: string) => i18next.t(key));
+  });
 
   let animationInterval: number = 0;
 
   onMount(() => {
-    // Инициализация графика объема инвестиций
+    // Инициализация графика
     const investmentChartCtx = document.getElementById("investmentChart") as HTMLCanvasElement;
     new Chart(investmentChartCtx, {
       type: "line",
@@ -13,7 +21,7 @@
         labels: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"],
         datasets: [
           {
-            label: "Инвестиции (млрд USD)",
+            label: $t("investmentInfo.chartTitle"),
             data: [5.2, 6.8, 8.4, 10.1, 11.3, 15.6, 24.6, 34, 38],
             borderColor: "#007bff",
             backgroundColor: "rgba(0, 123, 255, 0.2)",
@@ -35,7 +43,7 @@
       },
     });
 
-    return () => clearInterval(animationInterval); // Очистка интервала при уничтожении компонента
+    return () => clearInterval(animationInterval);
   });
 </script>
 
@@ -109,70 +117,67 @@
   /* Медиа-запросы для мобильных устройств */
   @media (max-width: 768px) {
     .text-title {
-      font-size: 1.8rem; /* Уменьшаем заголовок */
+      font-size: 1.8rem;
     }
-
     .text-content {
-      font-size: 1rem; /* Уменьшаем основной текст */
+      font-size: 1rem;
     }
-
     .box {
-      width: 90px; /* Уменьшаем ширину блоков */
-      height: 120px; /* Уменьшаем высоту блоков */
-      font-size: 0.8rem; /* Уменьшаем текст внутри блоков */
+      width: 90px;
+      height: 120px;
+      font-size: 0.8rem;
     }
-
     canvas {
-      height: 200px !important; /* Уменьшаем высоту графика */
+      height: 200px !important;
     }
   }
 
   @media (max-width: 480px) {
     .text-title {
-      font-size: 1.5rem; /* Еще больше уменьшаем заголовок */
+      font-size: 1.5rem;
     }
-
     .text-content {
-      font-size: 0.9rem; /* Еще больше уменьшаем основной текст */
+      font-size: 0.9rem;
     }
-
     .box {
-      width: 80px; /* Еще больше уменьшаем ширину блоков */
-      height: 100px; /* Еще больше уменьшаем высоту блоков */
-      font-size: 0.7rem; /* Еще больше уменьшаем текст внутри блоков */
+      width: 80px;
+      height: 100px;
+      font-size: 0.7rem;
     }
-
     canvas {
-      height: 150px !important; /* Еще больше уменьшаем высоту графика */
+      height: 150px !important;
     }
   }
 </style>
 
 <section id="stats-section">
-<div class="container">
-  <div class="text-section">
-    <h1 class="text-title">Информация о логистике</h1>
-    <p class="text-content">
-      Глобальная логистическая отрасль демонстрирует значительный рост и привлекает существенные инвестиции. В 2021 году объем инвестиций в логистические стартапы достиг рекордных 24,6 миллиарда долларов США, что почти вдвое превышает показатель 2020 года (12,6 миллиарда долларов США). Этот рост обусловлен повышенным вниманием к цепочкам поставок и необходимости их модернизации в условиях пандемии COVID-19.(TRANS.INFO)
-    </p>
-    <p class="text-content">
-      В первой половине 2022 года инвестиции в логистическую инфраструктуру составили около 34 миллиардов долларов США, что на 13% больше по сравнению с аналогичным периодом предыдущего года. Основным драйвером этого роста является развитие электронной коммерции, объем которой в 2021 году увеличился на 13,3% и достиг примерно 88,1 миллиарда евро.
-(MORDOR INTELLIGENCE)
-    </p>
-    <p class="text-content">
-      В целом, несмотря на текущие экономические и геополитические вызовы, логистическая отрасль продолжает привлекать значительные инвестиции, отражая ее ключевую роль в обеспечении эффективных цепочек поставок и удовлетворении растущих потребностей мировой экономики.(PWC)
-    </p>
-  </div>
+  <div class="container">
+    <!-- Заголовок -->
+    <div class="text-section">
+      <h1 class="text-title">{$t("investmentInfo.title")}</h1>
+      <!-- Параграфы -->
+      <p class="text-content">
+        {$t("investmentInfo.paragraphs.p1")}
+      </p>
+      <p class="text-content">
+        {$t("investmentInfo.paragraphs.p2")}
+      </p>
+      <p class="text-content">
+        {$t("investmentInfo.paragraphs.p3")}
+      </p>
+    </div>
 
-  <div class="animation-section">
-    <div class="box">TRANS.INFO</div>
-    <div class="box">M.INT</div>
-    <div class="box">PWC</div>
-  </div>
+    <!-- Три синих «коробки» -->
+    <div class="animation-section">
+      <div class="box">{$t("investmentInfo.boxes.b1")}</div>
+      <div class="box">{$t("investmentInfo.boxes.b2")}</div>
+      <div class="box">{$t("investmentInfo.boxes.b3")}</div>
+    </div>
 
-  <div class="chart-container">
-    <h2>График объема инвестиций в логистические стартапы</h2>
-    <canvas id="investmentChart"></canvas>
+    <!-- График -->
+    <div class="chart-container">
+      <h2>{$t("investmentInfo.chartTitle")}</h2>
+      <canvas id="investmentChart"></canvas>
+    </div>
   </div>
-</div>
 </section>

@@ -75,9 +75,7 @@
     transform: translateY(0);
   }
 
-  .custom-gradient {
-    background: linear-gradient(to right, #4E8D8D, #6DA0A0, #8EB3B3, #AFC6C6);
-  }
+  
 
   .custom-shadow {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

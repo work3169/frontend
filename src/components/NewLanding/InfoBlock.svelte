@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import i18next from "../../lib/i18n";
+  import { writable } from "svelte/store";
 
   let angle1 = 0;
   let angle2 = 180;
@@ -12,11 +14,17 @@
     angle3 = (angle3 + 2) % 360;
   }
 
-  let animationInterval: number; // Заменено с NodeJS.Timeout на number
+  let animationInterval: number;
 
   onMount(() => {
-    animationInterval = setInterval(animate, 50); // Обновление анимации каждые 50 мс
-    return () => clearInterval(animationInterval); // Очистка интервала при уничтожении компонента
+    animationInterval = setInterval(animate, 50); // Обновление каждые 50 мс
+    return () => clearInterval(animationInterval); // Очистка интервала при уничтожении
+  });
+
+  // Подключаем i18n
+  const t = writable((key: string) => i18next.t(key));
+  i18next.on("languageChanged", () => {
+    t.set((key: string) => i18next.t(key));
   });
 </script>
 
@@ -58,9 +66,9 @@
     position: relative;
     overflow-x: auto; /* Добавляем горизонтальную прокрутку */
     white-space: nowrap; /* Запрещаем перенос строк */
-    padding: 20px 10px; /* Добавляем внутренние отступы */
-    scrollbar-width: thin; /* Тонкая полоса прокрутки */
-    scrollbar-color: #ccc transparent; /* Цвет полосы прокрутки */
+    padding: 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
   }
 
   .box {
@@ -79,8 +87,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    flex-shrink: 0; /* Запрещаем уменьшение элементов */
-    margin: 0 10px; /* Добавляем отступы между блоками */
+    flex-shrink: 0;
+    margin: 0 10px;
   }
 
   .box:hover {
@@ -93,7 +101,7 @@
     transform: translateY(calc(-14px * sin(var(--angle1))));
     width: 140px;
     height: 180px;
-    background-image: url('/bgtextures/1cardbg.png'); /* Используйте прямые слеши */
+    background-image: url('/bgtextures/1cardbg.png');
   }
 
   .box2 {
@@ -102,7 +110,7 @@
     width: 200px;
     height: 300px;
     margin-left: -40px;
-    background-image: url('/bgtextures/2cardbg.png'); /* Замените путь к вашему изображению */
+    background-image: url('/bgtextures/2cardbg.png');
   }
 
   .box3 {
@@ -111,84 +119,71 @@
     width: 170px;
     height: 250px;
     margin-left: -40px;
-    background-image: url('/bgtextures/3cardbg.png'); /* Замените путь к вашему изображению */
+    background-image: url('/bgtextures/3cardbg.png');
   }
 
-  /* Медиа-запросы для мобильных устройств */
+  /* Медиа-запросы для мобильных */
   @media (max-width: 768px) {
     .container {
-      flex-direction: column; /* Изменяем расположение на вертикальное */
-      height: auto; /* Убираем фиксированную высоту */
+      flex-direction: column;
+      height: auto;
     }
-
     .text-section {
-      padding-right: 0; /* Убираем отступ справа */
-      text-align: center; /* Центрируем текст */
-      margin-bottom: 20px; /* Добавляем отступ между текстом и анимацией */
+      padding-right: 0;
+      text-align: center;
+      margin-bottom: 20px;
     }
-
     .text-title {
-      font-size: 1.8rem; /* Уменьшаем заголовок */
+      font-size: 1.8rem;
     }
-
     .text-content {
-      font-size: 1rem; /* Уменьшаем основной текст */
+      font-size: 1rem;
     }
-
     .animation-section {
-      gap: 10px; /* Добавляем отступ между блоками */
-      padding: 10px; /* Уменьшаем внутренний отступ */
+      gap: 10px;
+      padding: 10px;
     }
-
     .box {
-      width: 100px; /* Уменьшаем ширину блоков */
-      height: 130px; /* Уменьшаем высоту блоков */
-      font-size: 0.9rem; /* Уменьшаем текст внутри блоков */
+      width: 100px;
+      height: 130px;
+      font-size: 0.9rem;
     }
-
     .box1 {
       width: 120px;
       height: 160px;
     }
-
     .box2 {
       width: 150px;
       height: 200px;
-      margin-left: 0; /* Убираем отрицательный отступ */
+      margin-left: 0;
     }
-
     .box3 {
       width: 130px;
       height: 180px;
-      margin-left: 0; /* Убираем отрицательный отступ */
+      margin-left: 0;
     }
   }
 
   @media (max-width: 480px) {
     .text-title {
-      font-size: 1.5rem; /* Еще больше уменьшаем заголовок */
+      font-size: 1.5rem;
     }
-
     .text-content {
-      font-size: 0.9rem; /* Еще больше уменьшаем основной текст */
+      font-size: 0.9rem;
     }
-
     .box {
-      width: 80px; /* Еще больше уменьшаем ширину блоков */
-      height: 110px; /* Еще больше уменьшаем высоту блоков */
-      font-size: 0.8rem; /* Еще больше уменьшаем текст внутри блоков */
+      width: 80px;
+      height: 110px;
+      font-size: 0.8rem;
     }
-
     .box1 {
       width: 100px;
       height: 140px;
     }
-
     .box2 {
       width: 130px;
       height: 180px;
     }
-
     .box3 {
       width: 110px;
       height: 160px;
@@ -197,22 +192,42 @@
 </style>
 
 <div class="container">
+  <!-- ЛЕВАЯ ЧАСТЬ: Заголовок и параграфы -->
   <div class="text-section">
-    <h1 class="text-title">Информация о логистике</h1>
+    <h1 class="text-title">{$t('infoBlock.title')}</h1>
+
     <p class="text-content">
-      Транспорт – вложения в покупку и обновление автопарка, ж/д вагонов, судов и авиафлота. Это повышает скорость, надежность и гибкость поставок, снижая затраты на перевозки.
+      {$t('infoBlock.paragraphs.transport')}
     </p>
     <p class="text-content">
-      Складская инфраструктура – строительство и модернизация складов, терминалов и распределительных центров. Оптимизация складской сети позволяет ускорить обработку грузов и снизить издержки хранения.
+      {$t('infoBlock.paragraphs.warehouse')}
     </p>
     <p class="text-content">
-      Автоматизация – инвестиции в цифровые технологии, роботизацию, WMS-системы и искусственный интеллект. Они повышают эффективность логистических процессов, сокращают ошибки и ускоряют выполнение заказов.
+      {$t('infoBlock.paragraphs.automation')}
     </p>
   </div>
 
+  <!-- ПРАВАЯ ЧАСТЬ: Анимированные блоки -->
   <div class="animation-section">
-    <div class="box box1" style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}">Склад</div>
-    <div class="box box2" style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}">Автоматизация</div>
-    <div class="box box3" style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}">Транспорт</div>
+    <div 
+      class="box box1" 
+      style="--angle1: {Math.sin(angle1 * (Math.PI / 180))}"
+    >
+      {$t('infoBlock.boxes.box1')}
+    </div>
+
+    <div 
+      class="box box2" 
+      style="--angle2: {Math.sin(angle2 * (Math.PI / 180))}"
+    >
+      {$t('infoBlock.boxes.box2')}
+    </div>
+
+    <div 
+      class="box box3" 
+      style="--angle3: {Math.sin(angle3 * (Math.PI / 180))}"
+    >
+      {$t('infoBlock.boxes.box3')}
+    </div>
   </div>
 </div>

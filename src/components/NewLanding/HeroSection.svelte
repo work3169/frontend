@@ -1,6 +1,17 @@
 <script lang="ts">
-  import { user as userStore } from "stores/user";
+  import { user as userStore } from "../../stores/user";
   import { onMount } from "svelte";
+  import i18next from '../../lib/i18n';
+  import { writable } from 'svelte/store';
+
+  // Создаем store для перевода
+  const t = writable((key: string, options?: any) => i18next.t(key, options));
+
+  // Обновляем store при изменении языка
+  i18next.on('languageChanged', () => {
+    t.set((key: string, options?: any) => i18next.t(key, options));
+  });
+
   let canvas: HTMLCanvasElement | null = null;
   let ctx: CanvasRenderingContext2D | null = null;
   const particles: Particle[] = [];
@@ -144,15 +155,15 @@
     <div class="space-y-6 max-w-md text-center">
       <!-- Название -->
       <h1 class="text-4xl font-extrabold sm:text-5xl tracking-tight">
-        Distributed<br />
+        {$t('hero.title.line1')}<br />
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
-          Efficient Shipping
+          {$t('hero.title.line2')}
         </span>
       </h1>
 
       <!-- Подзаголовок -->
       <p class="text-lg sm:text-xl text-gray-200">
-        Умножаем скорость, создаем ценность.
+        {$t('hero.subtitle')}
       </p>
 
       <!-- Кнопка -->
@@ -162,7 +173,7 @@
           href="/profile" 
           class="inline-block mt-8 px-8 py-4 bg-gradient-to-br from-[#295858] to-[#4E8D8D] text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
         >
-          Перейти в профиль
+          {$t('hero.button.profile')}
         </a>
       {:else}
         <!-- Если пользователь не авторизован -->
@@ -170,7 +181,7 @@
           href="/auth/login" 
           class="inline-block mt-8 px-8 py-4 bg-gradient-to-br from-[#295858] to-[#4E8D8D] text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
         >
-          Начать сейчас
+          {$t('hero.button.start')}
         </a>
       {/if}
     </div>

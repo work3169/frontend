@@ -1,10 +1,23 @@
 <script lang="ts">
-  
   import { onMount } from "svelte";
+  import { writable } from 'svelte/store';
+  import i18next from '../lib/i18n';
+  import { user as userStore } from "stores/user"; // Импортируем userStore
+
+  // Создаем store для перевода
+  const t = writable((key: string, options?: any) => i18next.t(key, options));
+
+  // Обновляем store при изменении языка
+  i18next.on('languageChanged', () => {
+    t.set((key: string, options?: any) => i18next.t(key, options));
+  });
+
+  // Функция для смены языка
+  const changeLanguage = (lng: string) => {
+    i18next.changeLanguage(lng);
+  };
 
   export let activeSection = '';
-
-  import { user as userStore } from "stores/user";
 
   let isNavbarScrolled = false;
 
@@ -53,77 +66,98 @@
         <ul class="menu menu-horizontal px-1 gap-1 text-sm">
           <li>
             <a
-  href="#hero-section"
-  class:active={activeSection === "mainSection"}
-  on:click={(e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("hero-section"); // Находим элемент по ID
-    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
-  }}
->
-  Главная
-</a>
+              href="#hero-section"
+              class:active={activeSection === "mainSection"}
+              on:click={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("hero-section");
+                target?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {$t('home')}
+            </a>
           </li>
           <li>
             <a
-  href="#future-section"
-  class:active={activeSection === "mainSection"}
-  on:click={(e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("future-section"); // Находим элемент по ID
-    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
-  }}
->
-  Перспективы
-</a>
+              href="#future-section"
+              class:active={activeSection === "mainSection"}
+              on:click={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("future-section");
+                target?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {$t('future')}
+            </a>
           </li>
           <li>
             <a
-  href="#about-section"
-  class:active={activeSection === "mainSection"}
-  on:click={(e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("about-section"); // Находим элемент по ID
-    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
-  }}
->
-  О Нас
-</a>
+              href="#about-section"
+              class:active={activeSection === "mainSection"}
+              on:click={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("about-section");
+                target?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {$t('about')}
+            </a>
           </li>
           <li>
             <a
-  href="#qa-section"
-  class:active={activeSection === "mainSection"}
-  on:click={(e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("qa-section"); // Находим элемент по ID
-    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
-  }}
->
-  Q & A
-</a>
+              href="#qa-section"
+              class:active={activeSection === "mainSection"}
+              on:click={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("qa-section");
+                target?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {$t('qa')}
+            </a>
           </li>
           <li>
             <a
-  href="#stats-section"
-  class:active={activeSection === "mainSection"}
-  on:click={(e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
-    const target = document.getElementById("stats-section"); // Находим элемент по ID
-    target?.scrollIntoView({ behavior: "smooth" }); // Плавная прокрутка до элемента
-  }}
->
-  Статистика
-</a>
+              href="#stats-section"
+              class:active={activeSection === "mainSection"}
+              on:click={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("stats-section");
+                target?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {$t('stats')}
+            </a>
           </li>
         </ul>
       </div>
       <div class="navbar-end gap-2">
+        <!-- Language switcher -->
+        <div class="flex items-center space-x-2 mr-2">
+          <button on:click={() => changeLanguage('ru')} class="text-sm hover:underline">🇷🇺</button>
+          <button on:click={() => changeLanguage('en')} class="text-sm hover:underline">🇬🇧</button>
+        </div>
+
         {#if $userStore.user}
-          <a class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300" href="/profile">Профиль</a>
+          <a
+            class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300"
+            href="/profile"
+          >
+            {$t('profile')}
+          </a>
         {:else}
-          <a class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300 mr-2" href="/auth/login">Войти</a>
-          <a class="btn bg-white text-[#4E8D8D] font-bold py-2 px-4 rounded-md border border-[#4E8D8D] shadow-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300 hidden md:inline-flex" href="/auth/signup">Зарегистрироваться</a>
+          <a
+            class="btn bg-[#4E8D8D] text-white font-bold py-2 px-4 rounded-md shadow-md hover:bg-[#3A7373] transition-all duration-300 mr-2"
+            href="/auth/login"
+          >
+            {$t('login')}
+          </a>
+          <a
+            class="btn bg-white text-[#4E8D8D] font-bold py-2 px-4 rounded-md border border-[#4E8D8D] shadow-md hover:bg-[#4E8D8D] hover:text-white transition-all duration-300 hidden md:inline-flex"
+            href="/auth/signup"
+          >
+            {$t('signup')}
+          </a>
         {/if}
       </div>
     </div>

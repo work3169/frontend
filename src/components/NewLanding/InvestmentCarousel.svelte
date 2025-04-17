@@ -1,12 +1,12 @@
-<div class="container ">
+<div class="container">
   <!-- Текстовая часть -->
   <div class="text-section">
-    <h1 class="carousel-title">Инвестиции в логистику</h1>
+    <h1 class="carousel-title">{$t('investments.title')}</h1>
     <p class="carousel-description">
-      Логистика играет важнейшую роль в мировой экономике. Развивайте складские мощности, транспортную инфраструктуру и экологические технологии, чтобы достичь успеха.
+      {$t('investments.description1')}
     </p>
     <p class="carousel-description">
-      Узнайте больше о различных направлениях инвестирования в логистику: складские системы, электротранспорт, морские и воздушные перевозки.
+      {$t('investments.description2')}
     </p>
   </div>
   <!-- Карусель -->
@@ -23,14 +23,14 @@
           768: { perPage: 1 },
         }
       }}
-      aria-label="Инвестиции в логистику"
+      aria-label={$t('investments.carouselLabel')}
     >
       {#each investments as investment}
         <SplideSlide>
           <div class="splide__slide" style="--color: {investment.color}">
-            <img src={`/icons/${investment.icon}.png`} alt={investment.title} style="width: 50px; height: 50px;" />
-            <h3>{investment.title}</h3>
-            <p>{investment.description}</p>
+            <img src={`/icons/${investment.icon}.png`} alt={$t(`investments.icons.${investment.icon}`)} style="width: 50px; height: 50px;" />
+            <h3>{$t(`investments.titles.${investment.title}`)}</h3>
+            <p>{$t(`investments.descriptions.${investment.description}`)}</p>
             <p>{getShortDescription(investment)}</p>
           </div>
         </SplideSlide>
@@ -42,6 +42,16 @@
 <script lang="ts">
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import '@splidejs/svelte-splide/css';
+  import i18next from '../../lib/i18n';
+  import { writable } from 'svelte/store';
+
+  // Создаем store для перевода
+  const t = writable((key: string) => i18next.t(key));
+
+  // Обновляем store при изменении языка
+  i18next.on('languageChanged', () => {
+    t.set((key: string) => i18next.t(key));
+  });
 
   interface Investment {
     id: number;
@@ -52,28 +62,28 @@
   }
 
   const investments: Investment[] = [
-    { id: 1, title: 'Морские перевозки', description: 'Модернизация портов и судоходства.', color: '#f1c40f', icon: 'cargoIcon' },
-    { id: 2, title: 'Сухопутный транспорт', description: 'Передвижение товаров грузовиками.', color: '#2ecc71', icon: 'truckIcon' },
-    { id: 3, title: 'Цифровизация', description: 'Разработка логистических IT-решений.', color: '#3498db', icon: 'internetIcon' },
-    { id: 4, title: 'Электротранспорт', description: 'Инвестиции в электрогрузовики и экологичный транспорт.', color: '#9b59b6', icon: 'trainIcon' },
-    { id: 5, title: 'Авиаперевозки', description: 'Передвижение товаров воздушными судами.', color: '#e74c3c', icon: 'planeIcon' },
-    { id: 6, title: 'Оптимизация', description: 'Развитие и настройка логистической экономики.', color: '#16a085', icon: 'papersIcon' }
+    { id: 1, title: 'seaTransport', description: 'seaTransportDesc', color: '#f1c40f', icon: 'cargoIcon' },
+    { id: 2, title: 'landTransport', description: 'landTransportDesc', color: '#2ecc71', icon: 'truckIcon' },
+    { id: 3, title: 'digitalization', description: 'digitalizationDesc', color: '#3498db', icon: 'internetIcon' },
+    { id: 4, title: 'electricTransport', description: 'electricTransportDesc', color: '#9b59b6', icon: 'trainIcon' },
+    { id: 5, title: 'airTransport', description: 'airTransportDesc', color: '#e74c3c', icon: 'planeIcon' },
+    { id: 6, title: 'optimization', description: 'optimizationDesc', color: '#16a085', icon: 'papersIcon' }
   ];
 
   function getShortDescription(investment: Investment): string {
     switch (investment.icon) {
       case 'planeIcon':
-        return '10-20 млрд $ в год';
+        return $t('investments.shortDescriptions.plane');
       case 'truckIcon':
-        return '50-70 млрд $ в год';
+        return $t('investments.shortDescriptions.truck');
       case 'cargoIcon':
-        return '50-60 млрд $ в год';
+        return $t('investments.shortDescriptions.cargo');
       case 'internetIcon':
-        return '150-170 млрд $ в год';
+        return $t('investments.shortDescriptions.internet');
       case 'trainIcon':
-        return '90-95 млрд $ в год';
+        return $t('investments.shortDescriptions.train');
       case 'papersIcon':
-        return '5-7 млрд $ в год';
+        return $t('investments.shortDescriptions.papers');
       default:
         return '';
     }
@@ -82,18 +92,18 @@
 
 <style>
   .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  height: auto; /* Убираем фиксированную высоту */
-  overflow: hidden;
-  flex-direction: row; /* Горизонтальное расположение по умолчанию */
-  margin-top: 48px; /* Отступ сверху */
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    height: auto;
+    overflow: hidden;
+    flex-direction: row;
+    margin-top: 48px;
+  }
 
   .text-section {
     flex: 1;
@@ -112,8 +122,6 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    
-    
   }
 
   .carousel-description {
@@ -141,47 +149,46 @@
     opacity: 0.7;
   }
 
-  /* Медиа-запросы для мобильных устройств */
   @media (max-width: 768px) {
     .container {
-      flex-direction: column; /* Вертикальное расположение */
-      align-items: stretch; /* Растягиваем элементы по ширине */
-      gap: 1rem; /* Уменьшаем отступ между элементами */
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
     }
 
     .text-section {
-      text-align: center; /* Центрируем текст */
-      padding: 10px; /* Уменьшаем отступы */
+      text-align: center;
+      padding: 10px;
     }
 
     .carousel-section {
-      max-width: 100%; /* Карусель занимает всю ширину */
+      max-width: 100%;
     }
 
     .carousel-title {
-      font-size: 1.5rem; /* Уменьшаем заголовок */
+      font-size: 1.5rem;
     }
 
     .carousel-description {
-      font-size: 1rem; /* Уменьшаем описание */
+      font-size: 1rem;
     }
 
     .splide__slide {
-      height: 250px; /* Уменьшаем высоту слайдов */
+      height: 250px;
     }
   }
 
   @media (max-width: 480px) {
     .carousel-title {
-      font-size: 1.2rem; /* Еще больше уменьшаем заголовок */
+      font-size: 1.2rem;
     }
 
     .carousel-description {
-      font-size: 0.9rem; /* Еще больше уменьшаем описание */
+      font-size: 0.9rem;
     }
 
     .splide__slide {
-      height: 200px; /* Еще больше уменьшаем высоту слайдов */
+      height: 200px;
     }
   }
 </style>

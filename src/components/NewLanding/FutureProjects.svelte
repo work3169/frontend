@@ -1,37 +1,47 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import i18next from '../../lib/i18n';
+  import { writable } from 'svelte/store';
+  import { onMount } from 'svelte';
 
-  // Данные для графика
+  // Шаг 1: создаём store для перевода
+  const t = writable((key: string) => i18next.t(key));
+  i18next.on('languageChanged', () => {
+    t.set((key: string) => i18next.t(key));
+  });
+
+  // Данные по секторам: цвет и целевые проценты (анимация)
   let sectors = [
-    { name: "Складские системы", percentage: 35, color: "#4E8D8D" },
-    { name: "Транспортная инфраструктура", percentage: 25, color: "#2C3E50" },
-    { name: "Цифровизация", percentage: 20, color: "#16A085" },
-    { name: "Экологичный транспорт", percentage: 15, color: "#F39C12" },
-    { name: "Морская логистика", percentage: 5, color: "#E74C3C" }
+    { color: '#4E8D8D', percentage: 35 },
+    { color: '#2C3E50', percentage: 25 },
+    { color: '#16A085', percentage: 20 },
+    { color: '#F39C12', percentage: 15 },
+    { color: '#E74C3C', percentage: 5 },
   ];
 
-  let animatedPercentages = Array(sectors.length).fill(0); // Массив для анимации
+  // Начальное состояние анимированных процентов (все 0)
+  let animatedPercentages = Array(sectors.length).fill(0);
 
-  // Анимация заполнения столбцов
+  // Шаг 2: При монтировании компонента запускаем интервал для «нарастания» процентов
   onMount(() => {
     const interval = setInterval(() => {
       animatedPercentages = animatedPercentages.map((current, index) => {
-        if (current < sectors[index].percentage) {
-          return Math.min(current + 1, sectors[index].percentage);
-        }
-        return current;
+        const target = sectors[index].percentage;
+        return current < target ? Math.min(current + 1, target) : current;
       });
 
-      // Останавливаем интервал, если все столбцы достигли целевого значения
-      if (animatedPercentages.every((val, index) => val === sectors[index].percentage)) {
+      // Когда все достигли целевых значений, очищаем интервал
+      if (animatedPercentages.every((val, idx) => val === sectors[idx].percentage)) {
         clearInterval(interval);
       }
     }, 30);
+
+    // Не забываем очистить интервал, если компонент размонтируют
+    return () => clearInterval(interval);
   });
 </script>
 
 <style>
-  /* Основной контейнер */
+  /* Контейнер */
   .container {
     display: flex;
     flex-direction: column;
@@ -40,7 +50,7 @@
     margin: 0 auto;
     padding: 40px 20px;
     border-radius: 20px;
-    background: linear-gradient(to right, #4E8D8D, #6DA0A0); /* Градиент из вашей палитры */
+    background: linear-gradient(to right, #4E8D8D, #6DA0A0);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
@@ -57,7 +67,7 @@
     margin-bottom: 20px;
   }
 
-  /* Текстовый блок */
+  /* Текст */
   .text-section {
     margin-bottom: 40px;
     line-height: 1.6;
@@ -66,7 +76,7 @@
     text-align: justify;
   }
 
-  /* Контейнер для графика */
+  /* Контейнер для столбиков */
   .chart-container {
     width: 100%;
     display: flex;
@@ -74,14 +84,13 @@
     gap: 15px;
   }
 
-  /* Столбец */
+  /* Каждая строка (столбик) */
   .bar {
     display: flex;
     align-items: center;
     gap: 10px;
   }
 
-  /* Прогресс-бар */
   .progress-bar {
     position: relative;
     height: 20px;
@@ -96,9 +105,6 @@
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
   }
-
-  /* Легенда */
-  
 
   .legend-text {
     color: rgba(255, 255, 255, 0.9);
@@ -122,34 +128,36 @@
   }
 </style>
 
-<div class="container">
+<div class="container" id="future-projects-section">
   <!-- Заголовок -->
-  <div class="header">Логистические перспективы</div>
-
-  <!-- Текстовый блок -->
-  <div class="text-section">
-    <p>
-      Прогнозы указывают на дальнейший рост мирового рынка логистических услуг, который к 2026 году может достигнуть 100 миллиардов евро, во многом благодаря быстрому развитию электронной торговли.
-(FINAM)
-    </p>
+  <div class="header">
+    {$t('futureProjects.title')}
   </div>
 
-  <!-- Горизонтальные столбцы -->
+  <!-- Текст -->
+  <div class="text-section">
+    {$t('futureProjects.paragraph')}
+  </div>
+
+  <!-- Столбики -->
   <div class="chart-container">
     {#each sectors as sector, index}
       <div class="bar">
-        <span class="legend-text">{sector.name}</span>
+        <!-- Название сектора. В i18n: futureProjects.sectors[index].name -->
+        <span class="legend-text">
+          {$t(`futureProjects.sectors.${index}.name`)}
+        </span>
+
         <div class="progress-bar">
           <div
             class="progress-fill"
             style="background-color: {sector.color}; width: {animatedPercentages[index]}%;"
           ></div>
         </div>
+
+        <!-- Текущее значение процентов -->
         <span class="legend-text">{animatedPercentages[index]}%</span>
       </div>
     {/each}
   </div>
-
-  <!-- Легенда -->
-  
 </div>

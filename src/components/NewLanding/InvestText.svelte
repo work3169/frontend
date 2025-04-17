@@ -1,5 +1,15 @@
 <script lang="ts">
-  export let imageUrl: string = "/path/to/your/image.jpg"; // URL изображения
+  import i18next from '../../lib/i18n';
+  import { writable } from 'svelte/store';
+
+  // Принимаем в качестве пропса URL картинки (можете использовать по своему вкусу)
+  export let imageUrl: string = "landingImages/LogiPhoto1.jpg";
+
+  // Создаём store для перевода
+  const t = writable((key: string) => i18next.t(key));
+  i18next.on('languageChanged', () => {
+    t.set((key: string) => i18next.t(key));
+  });
 </script>
 
 <style>
@@ -12,7 +22,7 @@
     padding: 40px 20px;
     max-width: 1200px;
     margin: 60px auto;
-    background: linear-gradient(to right, #4E8D8D, #6DA0A0); /* Градиент из вашей палитры */
+    background: linear-gradient(to right, #4E8D8D, #6DA0A0);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     gap: 30px;
@@ -24,7 +34,7 @@
   .text-content {
     flex: 1;
     max-width: 500px;
-    z-index: 2; /* Текст поверх фоновых элементов */
+    z-index: 2;
   }
 
   .title {
@@ -32,12 +42,12 @@
     font-weight: bold;
     color: white;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Легкая тень для текста */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .paragraph {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый */
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.6;
     margin-bottom: 15px;
   }
@@ -45,7 +55,6 @@
   /* Контейнер изображения */
   .image-container {
     flex: 1;
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,23 +73,11 @@
   }
 
   .image-container:hover img {
-    transform: scale(1.1); /* Эффект увеличения при наведении */
-    filter: brightness(1.1); /* Легкое осветление */
+    transform: scale(1.1);
+    filter: brightness(1.1);
   }
 
-  /* Анимация появления */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .fade-in-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Декоративные элементы */
+  /* Декоративный круг */
   .decorative-circle {
     position: absolute;
     width: 200px;
@@ -100,11 +97,9 @@
       text-align: center;
       padding: 20px;
     }
-
     .text-content {
       max-width: 100%;
     }
-
     .image-container {
       max-width: 100%;
     }
@@ -116,21 +111,15 @@
   <div class="decorative-circle"></div>
 
   <!-- Текстовый контент -->
-  <div class="text-content fade-in fade-in-active">
-    <h1 class="title">Инвестиции в логистику</h1>
-    <p class="paragraph">
-      Логистика — это основа мировой экономики. Развитие складских систем, внедрение цифровых технологий и улучшение транспортной инфраструктуры позволяют компаниям оптимизировать затраты и повысить эффективность.
-    </p>
-    <p class="paragraph">
-      С ростом спроса на экологичные технологии инвестиции в электрический транспорт и снижение углеродного следа становятся приоритетом. Поддержка этих направлений помогает сохранить природу и улучшить качество жизни.
-    </p>
-    <p class="paragraph">
-      Выбирая логистику как сферу для инвестиций, вы вкладываете в будущее глобальной экономики.
-    </p>
+  <div class="text-content">
+    <h1 class="title">{$t('investText.title')}</h1>
+    <p class="paragraph">{$t('investText.paragraphs.p1')}</p>
+    <p class="paragraph">{$t('investText.paragraphs.p2')}</p>
+    <p class="paragraph">{$t('investText.paragraphs.p3')}</p>
   </div>
 
   <!-- Изображение -->
   <div class="image-container">
-    <img src="landingImages\LogiPhoto1.jpg" alt="Логистика" />
+    <img src={imageUrl} alt="Investment in logistics" />
   </div>
 </div>

@@ -27,7 +27,8 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
   <div class="circle circle-4"></div>
 </div>
 
-<Navbar activeSection={''} />
+ 
+  <Navbar activeSection={''} />
 
 
 <HeroSection />
@@ -44,6 +45,7 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
 <InvestText />
 <Reviews />
 <SupportIcon />
+
 
 
 <footer>
@@ -66,13 +68,7 @@ import InvestmentPercent from "components/NewLanding/InvestmentPercent.svelte";
     font-family: Arial, sans-serif;
   }
 
-  .content {
-    position: relative;
-    z-index: 10; /* Контент поверх фона */
-    min-height: 100vh; /* Минимальная высота контента = высота экрана */
-    
-    box-sizing: border-box; /* Учитываем padding в высоте */
-  }
+  
 
   /* Анимированные кружочки */
   .background-animation {

@@ -82,9 +82,11 @@ function createUserStore() {
         subscribe,
         logout: async () => {
             // Remove tokens from cookies
+            document.cookie.split(';').forEach(c => {
+                const name = c.trim().split('=')[0];
+                document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+              });
             await goto('/auth/login');
-            nookies.destroy(null, 'access_token');
-            nookies.destroy(null, 'refresh_token');
             set(initialUser);
         },
         login: async (formSubmit: FormData) => {
