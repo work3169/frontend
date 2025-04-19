@@ -534,6 +534,60 @@ i18next.init({
     "replenish": "Deposit",
     "withdraw": "Withdraw",
     "logout": "Log out"
+  },
+
+  "newContractsPage": {
+    "title": "Add contract",
+    "allContracts": "All contracts"
+  },
+
+  "manageContracts": {
+    "title": "Contract management",
+    "add": "Add contract",
+    "partnered": "Partnered contracts"
+  },
+
+  "contractTable": {
+    "name": "Name",
+    "min": "Min deposit",
+    "max": "Max deposit",
+    "percent": "Percent",
+    "term": "Term",
+    "choose": "Choose",
+    "selected": "Selected contract",
+    "amountPlaceholder": "Deposit amount",
+    "deposit": "Make deposit",
+    "successAdded": "Contract added successfully"
+  },
+  "commonEr": {
+    "serverError": "Something went wrong. Please try again later or contact support"
+  },
+
+  "partneredTable": {
+    "name": "Name",
+    "min": "Min deposit",
+    "max": "Max deposit",
+    "percent": "Percent",
+    "term": "Term",
+    "maxPartners": "Max partners",
+    "choose": "Choose",
+    "selected": "Selected contract",
+    "initialContribution": "Initial contribution amount",
+    "amountPlaceholder": "Deposit amount",
+    "partners": "Partners",
+    "partnerPlaceholder": "Enter partner username",
+    "add": "Add",
+    "partnersEmpty": "Partner list is empty",
+    "deposit": "Make deposit",
+    "needFill": "Please fill partner list and enter an initial contribution",
+    "successCreated": "Contract created successfully",
+    "noContracts": "No contracts available for opening. Please contact support."
+  },
+
+  "partneredAdd": {
+    "title":        "Create partnered contract",
+    "partneredBtn": "Partnered contracts",
+    "allBtn":       "All contracts"
   }
         
         
@@ -1066,8 +1120,62 @@ i18next.init({
     "replenish": "Внести средства",
     "withdraw": "Вывести средства",
     "logout": "Выйти из аккаунта"
+  },
+
+  
+        "newContractsPage": {
+    "title": "Добавить контракт",
+    "allContracts": "Все контракты"
+  },
+
+  "manageContracts": {
+    "title": "Управление контрактами",
+    "add": "Добавить контракт",
+    "partnered": "Партнерские контракты"
+  },
+
+  "contractTable": {
+    "name": "Название",
+    "min": "Мин. взнос",
+    "max": "Макс. взнос",
+    "percent": "Процент",
+    "term": "Срок",
+    "choose": "Выбрать",
+    "selected": "Выбранный контракт",
+    "amountPlaceholder": "Сумма взноса",
+    "deposit": "Внести взнос",
+    "successAdded": "Контракт успешно добавлен"
+  },
+  "commonEr": {
+    "serverError": "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
+  },
+
+  "partneredTable": {
+    "name": "Название",
+    "min": "Мин. взнос",
+    "max": "Макс. взнос",
+    "percent": "Процент",
+    "term": "Срок",
+    "maxPartners": "Макс. кол-во партнёров",
+    "choose": "Выбрать",
+    "selected": "Выбранный контракт",
+    "initialContribution": "Изначальная сумма взноса",
+    "amountPlaceholder": "Сумма взноса",
+    "partners": "Партнеры",
+    "partnerPlaceholder": "Введите ник партнера",
+    "add": "Добавить",
+    "partnersEmpty": "Список партнеров пуст",
+    "deposit": "Внести взнос",
+    "needFill": "Пожалуйста, заполните список партнёров и укажите изначальный взнос",
+    "successCreated": "Контракт успешно создан",
+    "noContracts": "У вас нет доступных контрактов для открытия. Обратитесь в службу поддержки."
+  },
+
+  "partneredAdd": {
+    "title":        "Создать партнерский контракт",
+    "partneredBtn": "Партнерские контракты",
+    "allBtn":       "Все контракты"
   }
-        
         
       }
     }
