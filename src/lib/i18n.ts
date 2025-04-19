@@ -418,7 +418,123 @@ i18next.init({
           noDeclinedInvitations:'No declined invitations.',
           newContractButton:   'Partnered contract',
           allContractsButton:  'All contracts'
-        }
+        },
+
+        balancePage: {
+          title:     'Balance management',
+          replenish: 'Replenish funds',
+          withdraw:  'Withdraw funds'
+        },
+
+        cashflow: {
+          headers: {
+            type:            'Type',
+            status:          'Status',
+            amount:          'Amount',
+            currentBalance:  'Current balance',
+            date:            'Date',
+            details:         'Details'
+          },
+          type: {
+            replenish:        'Replenish balance',
+            withdraw:         'Withdraw',
+            dividend:         'Contract dividend',
+            adminBonus:       'Admin bonus',
+            contractOpen:     'Contract opened',
+            contractClose:    'Contract closed',
+            referralBonus:    'Referral bonus'
+          },
+          status: {
+            pending:         'Pending',
+            success:         'Success',
+            declined:        'Declined'
+          },
+          noHistory:        'No transaction history',
+          loadMore:         'Load more'
+        },
+
+        balanceStat: {
+          currentBalance: 'Current balance'
+        },
+
+        replenishPage: {
+          title:               'Replenish balance',
+          back:                'Back',
+          amountPlaceholder:   'Amount',
+          replenish:           'Replenish',
+          invalidFormat:       'Invalid amount format',
+          pleaseReplenish:     'Please replenish your balance with ${{value}} to wallet {{wallet}}.',
+          support:             'To use this method, please contact support.'
+        },
+
+        withdrawPage: {
+          title:                   'Withdraw funds',
+          back:                    'Back',
+          noWallets:               'You have no wallets for withdrawal. Please add a wallet.',
+          selectWalletPrompt:      'Select a wallet',
+          amountPlaceholder:       'Enter amount',
+          withdraw:                'Withdraw',
+          addWallet:               'Add wallet',
+          manageWallets:           'Manage wallets',
+          enterWalletNumber:       'Enter credit card or crypto wallet number',
+          selectWalletType:        'Select wallet type',
+          walletTypes: {
+            creditCard:            'Credit Card',
+            trc20:                 'TRC20 USDT',
+            bitcoin:               'Bitcoin',
+            ethereum:              'Ethereum'
+          },
+          enterWalletPlaceholder:  'Enter wallet number',
+          invalidWalletFormat:     'Invalid wallet number format',
+          invalidWalletType:       'Invalid wallet type',
+          walletAdded:             'Wallet added successfully. Please select it above.',
+          withdrawalSubmitted:     'Your withdrawal request has been submitted. Please await admin approval.',
+          serverError:             'Something went wrong. Please try again later or contact support.'
+        },
+
+        "referralsPage": {
+    "title": "Referral system",
+    "totalContracts": "Total contracts",
+    "totalValue": "Total contracts value",
+    "totalProfit": "Total profit",
+    "firstLine": "First‑line income",
+    "secondLine": "Second‑line income",
+    "thirdLine": "Third‑line income",
+    "username": "Username",
+    "contractsCount": "Contracts count",
+    "contractsValue": "Contracts value",
+    "income": "Income",
+    "line": "Line",
+    "parentUsername": "Parent username",
+    "empty": "You have no referral income yet. To become a partner of the platform and earn additional income from invited users, use your referral link"
+  },
+  "common": {
+    "back": "Back"
+  },
+
+  "profilePage": {
+    "title": "Profile",
+    "verified": "Account verified!",
+    "needVerification": "Contact support for identity verification",
+    "temporaryRestrictions": "Temporary restrictions applied",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "referralLink": "Referral link",
+    "howItWorks": "How it works?",
+    "myReferralSystem": "My referral system",
+    "rewardsHeading": "Referral reward conditions:",
+    "rewardsIntro": "When a new contract is opened via your referral link you receive:",
+    "line1": "1. First line: 5% of the initial investment made by the partner registered with your link.",
+    "line2": "2. Second line: 3% of the initial investment made by partners invited by your first‑line referrals.",
+    "line3": "3. Third line: 2% of the initial investment made by partners invited by your second‑line referrals.",
+    "individualHeading": "Individual conditions:",
+    "individualText": "If you show high activity, we may offer special terms and bonuses as recognition of your contribution.",
+    "support": "Contact support",
+    "replenish": "Deposit",
+    "withdraw": "Withdraw",
+    "logout": "Log out"
+  }
         
         
       }
@@ -834,7 +950,124 @@ i18next.init({
           noDeclinedInvitations:'Нет отклоненных приглашений.',
           newContractButton:   'Партнерский контракт',
           allContractsButton:  'Все контракты'
-        }
+        },
+
+        balancePage: {
+          title:     'Управление балансом',
+          replenish: 'Внести средства',
+          withdraw:  'Вывести средства'
+        },
+
+        cashflow: {
+          headers: {
+            type:            'Тип',
+            status:          'Статус',
+            amount:          'Начисление',
+            currentBalance:  'Текущий баланс',
+            date:            'Дата',
+            details:         'Дополнительно'
+          },
+          type: {
+            replenish:        'Пополнение баланса',
+            withdraw:         'Вывод со счета',
+            dividend:         'Процент от контракта',
+            adminBonus:       'Бонус от администрации',
+            contractOpen:     'Открытие контракта',
+            contractClose:    'Закрытие контракта',
+            referralBonus:    'Реферальный бонус'
+          },
+          status: {
+            pending:         'На рассмотрении',
+            success:         'Успех',
+            declined:        'Отклонено'
+          },
+          noHistory:        'Нет истории операций',
+          loadMore:         'Загрузить больше'
+        },
+
+        balanceStat: {
+          currentBalance: 'Текущий баланс'
+        },
+
+        replenishPage: {
+          title:               'Пополнить баланс',
+          back:                'Назад',
+          amountPlaceholder:   'Сумма',
+          replenish:           'Пополнить',
+          invalidFormat:       'Неверный формат суммы',
+          pleaseReplenish:     'Пожалуйста, пополните баланс на сумму ${{value}} на кошелек {{wallet}}.',
+          support:             'Для пополнения данным способом, пожалуйста, обратитесь в службу поддержки.'
+        },
+
+        withdrawPage: {
+          title:                   'Вывести средства',
+          back:                    'Назад',
+          noWallets:               'У вас нет кошельков для вывода средств. Пожалуйста, добавьте кошелек.',
+          selectWalletPrompt:      'Выберите кошелек',
+          amountPlaceholder:       'Введите сумму',
+          withdraw:                'Вывести',
+          addWallet:               'Добавить кошелек',
+          manageWallets:           'Управление кошельками',
+          enterWalletNumber:       'Введите номер кредитной карты или криптокошелька',
+          selectWalletType:        'Выберите тип кошелька',
+          walletTypes: {
+            creditCard:            'Кредитная карта',
+            trc20:                 'TRC20 USDT',
+            bitcoin:               'Bitcoin',
+            ethereum:              'Ethereum'
+          },
+          enterWalletPlaceholder:  'Введите номер кошелька',
+          invalidWalletFormat:     'Неверный формат номера кошелька',
+          invalidWalletType:       'Неверный тип кошелька',
+          walletAdded:             'Кошелек успешно добавлен. Пожалуйста, выберите его в списке выше',
+          withdrawalSubmitted:     'Ваша заявка на вывод средств успешно отправлена. Пожалуйста, ожидайте ответа от администрации',
+          serverError:             'Произошла ошибка. Попробуйте позже или обратитесь в поддержку'
+        },
+
+        "referralsPage": {
+    "title": "Реферальная система",
+    "totalContracts": "Всего контрактов",
+    "totalValue": "Общая сумма контрактов",
+    "totalProfit": "Общий доход",
+    "firstLine": "Доход первой линии",
+    "secondLine": "Доход второй линии",
+    "thirdLine": "Доход третьей линии",
+    "username": "Имя пользователя",
+    "contractsCount": "Кол-во контрактов",
+    "contractsValue": "Сумма контрактов",
+    "income": "Доход",
+    "line": "Линия",
+    "parentUsername": "Родительское имя пользователя",
+    "empty": "У вас на данный момент отсутствует реферальный доход. Чтобы стать партнёром платформы и получать дополнительный доход от привлечения партнёров, воспользуйтесь реферальной ссылкой"
+  },
+  "common": {
+    "back": "Назад"
+  },
+
+  "profilePage": {
+    "title": "Профиль",
+    "verified": "Аккаунт верифицирован!",
+    "needVerification": "Обратитесь в поддержку для верификации личности",
+    "temporaryRestrictions": "Наложены временные ограничения",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Электронная почта",
+    "referralLink": "Реферальная ссылка",
+    "howItWorks": "Как это работает?",
+    "myReferralSystem": "Моя реферальная система",
+    "rewardsHeading": "Условия реферальных наград:",
+    "rewardsIntro": "При открытии нового контракта по вашей ссылке вы получаете:",
+    "line1": "1. Первая линия: 5% от первоначального вложения партнёра, зарегистрированного по вашей ссылке.",
+    "line2": "2. Вторая линия: 3% от первоначального вложения партнёров, приглашённых вашей первой линией.",
+    "line3": "3. Третья линия: 2% от первоначального вложения партнёров, приглашённых вашей второй линией.",
+    "individualHeading": "Индивидуальные условия:",
+    "individualText": "При высокой активности мы можем предложить вам индивидуальные условия и бонусы как признание вашего вклада.",
+    "support": "Обратиться в поддержку",
+    "replenish": "Внести средства",
+    "withdraw": "Вывести средства",
+    "logout": "Выйти из аккаунта"
+  }
+        
         
       }
     }
