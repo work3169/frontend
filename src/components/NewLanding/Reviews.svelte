@@ -7,36 +7,43 @@
     }
 
     const reviews: Review[] = [
-        { text: "Прекрасная компания, всё четко и прозрачно!", author: "Иван И." },
-        { text: "Мои инвестиции окупились уже через год.", author: "Екатерина П." },
-        { text: "Отличный сервис, приятно работать!", author: "Михаил С." },
-        { text: "Надежность, которой можно доверять!", author: "Ольга Л." },
-        { text: "Прекрасная поддержка, всегда помогают.", author: "Дмитрий К." },
-        { text: "Рекомендую всем, кто хочет приумножить капитал.", author: "Анна Е." },
-        { text: "Динамичный рост портфеля, спасибо команде!", author: "Павел В." },
-        { text: "Быстрая помощь в любых вопросах.", author: "Анастасия Т." },
-        { text: "Просто и удобно, рекомендую новичкам.", author: "Игорь Р." },
-        { text: "Высокая надежность, проверено годами.", author: "Светлана Н." },
-        { text: "Профессиональная команда, спасибо за помощь!", author: "Александр Л." },
-        { text: "Удобный интерфейс и прозрачные условия.", author: "Марина К." },
-        { text: "Инвестирую с удовольствием, доход стабильно растет.", author: "Владимир П." },
-        { text: "Работать с вами — одно удовольствие!", author: "Юлия Б." },
-        { text: "Прогнозы и стратегии работают отлично.", author: "Олег С." },
-        { text: "Доверяю только вам, продолжаем сотрудничество!", author: "Евгений З." },
-        { text: "Сервис на высшем уровне, благодарю за помощь!", author: "Ксения Ф." },
-        { text: "Отличное приложение для инвестиций.", author: "Максим Г." },
-        { text: "Всё максимально прозрачно и понятно.", author: "Елена Д." },
-        { text: "Долго искал надежного партнера. Нашел вас!", author: "Андрей Ч." },
-        { text: "Стабильный доход без сюрпризов.", author: "Виктория Н." },
-        { text: "Очень рекомендую, удобно даже для новичков.", author: "Ирина А." },
-        { text: "Инвестировал и не пожалел.", author: "Денис Л." },
-        { text: "Отличный сервис для профессионалов.", author: "Георгий П." },
-        { text: "Мои ожидания полностью оправдались.", author: "Татьяна К." },
-        { text: "Команда знает своё дело, спасибо!", author: "Роман М." },
-        { text: "Всё на высшем уровне.", author: "Оксана Е." },
-        { text: "Я очень доволен вашим сервисом.", author: "Артем С." },
-        { text: "Спасибо за прозрачность и поддержку.", author: "Людмила В." },
-    ];
+  // Russian (RU)
+  { text: "Прекрасная компания, всё чётко и прозрачно!", author: "Иван Иванов" },
+  { text: "Прекрасная поддержка, всегда помогают.", author: "Дмитрий Ковалёв" },
+  { text: "Инвестирую с удовольствием, доход стабильно растёт.", author: "Владимир Петров" },
+  { text: "Сервис на высшем уровне, благодарю за помощь!", author: "Ксения Фролова" },
+  { text: "Просто и удобно, рекомендую новичкам.", author: "Игорь Романов" },
+  { text: "Мои ожидания полностью оправдались.", author: "Татьяна Карпова" },
+  { text: "Спасибо за прозрачность и поддержку.", author: "Людмила Васильева" },
+
+  // English (EN)
+  { text: "My investments paid off in just a year.", author: "Catherine Parker" },
+  { text: "I recommend this service to everyone who wants to grow their capital.", author: "Anna Evans" },
+  { text: "High reliability—proven over the years.", author: "Steven Nelson" },
+  { text: "It's a pleasure working with you!", author: "Julia Baker" },
+  { text: "Great investment app.", author: "Max Green" },
+  { text: "Highly recommended, convenient even for beginners.", author: "Irene Adams" },
+  { text: "The team knows their stuff—thank you!", author: "Roman Mitchell" },
+
+  // German (DE)
+  { text: "Ausgezeichneter Service, es ist angenehm, mit euch zu arbeiten!", author: "Michael Schuster" },
+  { text: "Dynamisches Portfoliowachstum – danke an das Team!", author: "Paul Vogel" },
+  { text: "Professionelles Team, danke für die Hilfe!", author: "Alexander Lehmann" },
+  { text: "Prognosen und Strategien funktionieren ausgezeichnet.", author: "Oleg Schröder" },
+  { text: "Alles ist absolut transparent und verständlich.", author: "Elena Dietrich" },
+  { text: "Ich habe investiert und es nicht bereut.", author: "Dennis Lindner" },
+  { text: "Alles auf höchstem Niveau.", author: "Oxana Engel" },
+
+  // French (FR)
+  { text: "Fiabilité à laquelle on peut se fier !", author: "Olivia Laurent" },
+  { text: "Aide rapide pour toutes les questions.", author: "Anastasie Tessier" },
+  { text: "Interface conviviale et conditions transparentes.", author: "Marine Keller" },
+  { text: "Je ne fais confiance qu'à vous, continuons notre collaboration !", author: "Eugène Zola" },
+  { text: "J'ai cherché longtemps un partenaire fiable. Je vous ai trouvé !", author: "André Chevalier" },
+  { text: "Excellent service pour les professionnels.", author: "Georges Proust" },
+  { text: "Je suis très satisfait de votre service.", author: "Artem Savard" }
+];
+
 
     interface VisibleReview extends Review {
         id: number;
