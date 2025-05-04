@@ -561,7 +561,7 @@ i18next.init({
   },
   "commonEr": {
     "serverError": "Something went wrong. Please try again later or contact support"
-  },
+  }, 
 
   "partneredTable": {
     "name": "Name",
@@ -588,6 +588,26 @@ i18next.init({
     "title":        "Create partnered contract",
     "partneredBtn": "Partnered contracts",
     "allBtn":       "All contracts"
+  },
+
+  commonContract: {
+    inviteSuccess: 'User successfully invited.',
+    serverError: 'Something went wrong. Please try again later or contact support.',
+    enterAmount: 'Please enter contribution amount.',
+    active: 'Active',
+    created: 'Created',
+    ends: 'Ends',
+    creator: 'Contract creator',
+    accept: 'Accept',
+    decline: 'Decline',
+    confirmDecline: 'Are you sure?',
+    back: 'Back',
+    enterContribution: 'Enter contribution amount for partner contract.',
+    amountPlaceholder: 'Contribution amount',
+    yourContribution: 'Your contribution',
+    plannedIncome: 'Planned income',
+    addUser: 'Add user',
+    usernamePlaceholder: 'Username'
   }
         
         
@@ -1175,6 +1195,26 @@ i18next.init({
     "title":        "Создать партнерский контракт",
     "partneredBtn": "Партнерские контракты",
     "allBtn":       "Все контракты"
+  },
+
+  commonContract: {
+    inviteSuccess: 'Пользователь успешно приглашён.',
+    serverError: 'Произошла ошибка. Попробуйте позже или обратитесь в поддержку',
+    enterAmount: 'Введите сумму взноса.',
+    active: 'Активен',
+    created: 'Создан',
+    ends: 'Оканчивается',
+    creator: 'Создатель контракта',
+    accept: 'Принять',
+    decline: 'Отклонить',
+    confirmDecline: 'Вы уверены?',
+    back: 'Назад',
+    enterContribution: 'Укажите сумму взноса в партнерский контракт.',
+    amountPlaceholder: 'Сумма взноса',
+    yourContribution: 'Ваш взнос',
+    plannedIncome: 'Планируемый доход',
+    addUser: 'Добавить пользователя',
+    usernamePlaceholder: 'Имя пользователя'
   }
         
       }
