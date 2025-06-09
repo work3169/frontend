@@ -608,7 +608,17 @@ i18next.init({
     plannedIncome: 'Planned income',
     addUser: 'Add user',
     usernamePlaceholder: 'Username'
-  }
+  },
+
+  registrationConfirmation: {
+  "title": "Registration Confirmation",
+  "instruction": "Please confirm your registration by going to Telegram.",
+  "linkText": "Go to the link",
+  "afterConfirmation": "After confirming your registration, you can log into your account."
+}
+
+
+  
         
         
       }
@@ -1215,6 +1225,13 @@ i18next.init({
     plannedIncome: 'Планируемый доход',
     addUser: 'Добавить пользователя',
     usernamePlaceholder: 'Имя пользователя'
+  },
+
+  registrationConfirmation: {
+    "title": "Подтверждение регистрации",
+    "instruction": "Подтвердите регистрацию, перейдя в телеграм.",
+    "linkText": "Перейти по ссылке",
+    "afterConfirmation": "После подтверждения регистрации, вы можете войти в свой аккаунт."
   }
         
       }

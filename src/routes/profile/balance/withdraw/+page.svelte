@@ -16,6 +16,8 @@
   if (browser) userStore.getCashflow();
 
   let wallets: Array<any> = [];
+  let walletsLoaded = false; // ✅ добавили флаг
+
   let walletInput = "";
   let walletType = "";
   let selectedWallet = "";
@@ -30,6 +32,7 @@
   let showAddWallet = false;
 
   const getWallets = async () => {
+    walletsLoaded = false; // перед началом загрузки сбрасываем флаг
     const accessToken = await userStore.getAccessToken();
     const res = await axios(`${PUBLIC_BACKEND_URL}/api/v1/user/get_wallets/`, {
       method: "GET",
@@ -39,6 +42,7 @@
       }
     });
     wallets = res.data;
+    walletsLoaded = true; // загрузка завершена
   };
 
   const addWallet = async () => {
@@ -119,7 +123,7 @@
 <Balance />
 
 <div class="bg-base-100 overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-8 min-h-[240px] rounded-xl p-4 shadow-xl">
-  {#if !wallets.length && !$userStore.isLoading}
+  {#if walletsLoaded && wallets.length === 0} <!-- ✅ изменили условие -->
     <p class="text-warning text-medium text-lg">
       {$t("withdrawPage.noWallets")}
     </p>
