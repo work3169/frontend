@@ -58,7 +58,7 @@
     }
   };
 
-  // Рассчитываем сообщение (прибыль или ошибка)
+  // Рассчитываем сообщение о прибыли
   $: profitMessage = (() => {
     if (!selectedContract) return "";
     const deposit = Number(contractValue);
@@ -77,6 +77,17 @@
     const workingDaysFactor = 5 / 7;
     const profit = deposit + (deposit * percentPerDay * term * workingDaysFactor);
     return `${$t("contractTable.estimatedProfit")}: $${profit.toFixed(2)}`;
+  })();
+
+  // Рассчитываем цвет для сообщения
+  $: profitColor = (() => {
+    if (!selectedContract) return "";
+    const deposit = Number(contractValue);
+    if (!deposit || isNaN(deposit)) return "";
+    if (deposit < selectedContract.min_money || deposit > selectedContract.max_money) {
+      return "text-red-500";
+    }
+    return "text-green-600";
   })();
 </script>
 
@@ -141,7 +152,7 @@
       </button>
     </div>
 
-    <div class="text-sm mt-1 {profitMessage.includes('Ожидаемый') ? 'text-success' : 'text-error'}">
+    <div class="text-sm mt-1 {profitColor}">
       {profitMessage}
     </div>
 

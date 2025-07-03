@@ -387,7 +387,7 @@ i18next.init({
         drawer: {
           contracts: 'Contracts',
           partneredContracts: 'Partnered Contracts',
-          balanceHistory: 'Balance History',
+          balanceHistory: 'History',
           deposit: 'Deposit Funds',
           withdraw: 'Withdraw Funds',
           referrals: 'Referral System',
@@ -558,9 +558,9 @@ i18next.init({
     "amountPlaceholder": "Deposit amount",
     "deposit": "Make deposit",
     "successAdded": "Contract added successfully",
-    "tooSmall": "low amount",
-"tooLarge": "high amount",
-"estimatedProfit": "Estimated profit"
+    "estimatedProfit": "Estimated profit",
+  "tooSmall": "The amount is below the minimum",
+  "tooLarge": "The amount exceeds the maximum"
   },
   "commonEr": {
     "serverError": "Something went wrong. Please try again later or contact support"
@@ -1006,7 +1006,7 @@ i18next.init({
         drawer: {
           contracts: 'Контракты',
           partneredContracts: 'Партнерские контракты',
-          balanceHistory: 'История баланса',
+          balanceHistory: 'История',
           deposit: 'Внести средства',
           withdraw: 'Вывести средства',
           referrals: 'Реферальная система',
