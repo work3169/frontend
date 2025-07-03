@@ -557,7 +557,10 @@ i18next.init({
     "selected": "Selected contract",
     "amountPlaceholder": "Deposit amount",
     "deposit": "Make deposit",
-    "successAdded": "Contract added successfully"
+    "successAdded": "Contract added successfully",
+    "tooSmall": "low amount",
+"tooLarge": "high amount",
+"estimatedProfit": "Estimated profit"
   },
   "commonEr": {
     "serverError": "Something went wrong. Please try again later or contact support"
@@ -1174,7 +1177,11 @@ i18next.init({
     "selected": "Выбранный контракт",
     "amountPlaceholder": "Сумма взноса",
     "deposit": "Внести взнос",
-    "successAdded": "Контракт успешно добавлен"
+    "successAdded": "Контракт успешно добавлен",
+    "estimatedProfit": "Ожидаемый доход",
+    "tooSmall": "Сумма меньше допустимой",
+"tooLarge": "Сумма превышает лимит"
+
   },
   "commonEr": {
     "serverError": "Произошла ошибка. Попробуйте позже или обратитесь в поддержку"
