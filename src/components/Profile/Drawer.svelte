@@ -117,10 +117,11 @@
 </div>
 
 <div class="btm-nav lg:hidden">
-  <a href="/" class="flex flex-col items-center">
-    <img src="/favicon.png" alt="logo" class="w-5 h-5" />
-    <span class="btm-nav-label">{$t('drawer.home')}</span>
-  </a>
+  <a href="/" class:active={window.location.pathname === '/'}>
+  <img src="/favicon.png" alt="logo" class="w-5 h-5 align-middle" />
+  <span class="btm-nav-label truncate">{$t('drawer.home')}</span>
+</a>
+
   <BotNavButton
     icon="network-chart"
     text={$t('drawer.contracts')}
@@ -136,4 +137,11 @@
     text={$t('drawer.account')}
     href="/profile/account"
   />
+
+  <a href="#" on:click|preventDefault={toggleLang}>
+    <box-icon name="flag" class="fill-current"></box-icon>
+    <span class="btm-nav-label ">{$lang === 'ru' ? 'RU' : 'EN'}</span>
+  </a>
 </div>
+
+
