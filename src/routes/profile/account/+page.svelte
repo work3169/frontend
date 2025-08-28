@@ -90,7 +90,7 @@
   </div>
 
   <div>
-    <a class="font-semibold my-3 text-secondary" href="https://t.me/des_logi_support">{$t('profilePage.support')}</a>
+    <a class="font-semibold my-3 text-secondary" href="https://t.me/des_logi_support_res">{$t('profilePage.support')}</a>
   </div>
 
   <div class="flex flex-wrap gap-4">
