@@ -1,13 +1,13 @@
 <script lang="ts">
-  /* ───── imports ───── */
   import DrawerButton from 'components/Profile/DrawerButton.svelte';
-  import BotNavButton  from './BotNavButton.svelte';
+  import BotNavButton from './BotNavButton.svelte';
   import { user as userStore } from 'stores/user';
 
-  import i18next from '../../lib/i18n';         // путь поправьте при необходимости
+  import i18next from '../../lib/i18n';
   import { writable, get } from 'svelte/store';
+  import { browser } from "$app/environment";
 
-  /* ───── переключение языка ───── */
+  // язык
   const lang = writable<string>(i18next.language || 'ru');
   i18next.on('languageChanged', (lng: string) => lang.set(lng));
   function toggleLang() {
@@ -15,11 +15,17 @@
     i18next.changeLanguage(next);
   }
 
-  /* ───── перевод ───── */
+  // перевод
   const t = writable((key: string) => i18next.t(key));
   i18next.on('languageChanged', () =>
     t.set((key: string) => i18next.t(key))
   );
+
+  // защищённый доступ к window
+  let pathname = "";
+  if (browser) {
+    pathname = window.location.pathname;
+  }
 </script>
 
 <div class="drawer-side">
@@ -39,109 +45,64 @@
       </span>
     </div>
 
-    <!-- пункты меню с i18n -->
-    <DrawerButton
-      icon="objects-horizontal-right"
-      text={$t('drawer.contracts')}
-      href="/profile/contracts"
-    />
-    <DrawerButton
-      icon="network-chart"
-      text={$t('drawer.partneredContracts')}
-      href="/profile/contracts/partnered"
-    />
+    <!-- пункты меню -->
+    <DrawerButton icon="objects-horizontal-right" text={$t('drawer.contracts')} href="/profile/contracts" />
+    <DrawerButton icon="network-chart" text={$t('drawer.partneredContracts')} href="/profile/contracts/partnered" />
 
     <br />
 
-    <DrawerButton
-      icon="history"
-      text={$t('drawer.balanceHistory')}
-      href="/profile/balance"
-    />
-    <DrawerButton
-      icon="wallet-alt"
-      text={$t('drawer.deposit')}
-      href="/profile/balance/replenish"
-    />
-    <DrawerButton
-      icon="money-withdraw"
-      text={$t('drawer.withdraw')}
-      href="/profile/balance/withdraw"
-    />
+    <DrawerButton icon="history" text={$t('drawer.balanceHistory')} href="/profile/balance" />
+    <DrawerButton icon="wallet-alt" text={$t('drawer.deposit')} href="/profile/balance/replenish" />
+    <DrawerButton icon="money-withdraw" text={$t('drawer.withdraw')} href="/profile/balance/withdraw" />
 
     <br />
 
-    <DrawerButton
-      icon="group"
-      text={$t('drawer.referrals')}
-      href="/profile/referrals"
-    />
-    <DrawerButton
-      icon="user"
-      text={$t('drawer.account')}
-      href="/profile/account"
-    />
+    <DrawerButton icon="group" text={$t('drawer.referrals')} href="/profile/referrals" />
+    <DrawerButton icon="user" text={$t('drawer.account')} href="/profile/account" />
 
     <br />
 
-    <DrawerButton
-      icon="home-alt-2"
-      text={$t('drawer.home')}
-      href="/"
-    />
+    <DrawerButton icon="home-alt-2" text={$t('drawer.home')} href="/" />
 
-    <!-- кнопка переключения языка (не трогаем) -->
+    <!-- кнопка смены языка -->
     <li class="mt-4 ml-3">
-      <button
-      
-        class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-200 transition"
-        on:click={toggleLang}
-      >
+      <button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-200 transition" on:click={toggleLang}>
         {#if $lang === 'ru'}
-        <box-icon name="flag" class="fill-current"></box-icon> RU Смена языка 
+          <box-icon name="flag" class="fill-current"></box-icon> RU Смена языка
         {:else}
-        <box-icon name="flag" class="fill-current"></box-icon> GB Language change
+          <box-icon name="flag" class="fill-current"></box-icon> GB Language change
         {/if}
       </button>
     </li>
 
     <!-- выход -->
-    <div on:click={userStore.logout} class="mt-4">
-      <DrawerButton
-        icon="log-out-circle"
-        text={$t('drawer.logout')}
-        href="#"
-      />
+    <div class="mt-4">
+      <button
+        on:click={userStore.logout}
+        class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-200 transition"
+      >
+        <box-icon name="log-out-circle"></box-icon>
+        {$t('drawer.logout')}
+      </button>
     </div>
   </ul>
 </div>
 
+<!-- нижняя навигация -->
 <div class="btm-nav lg:hidden">
-  <a href="/" class:active={window.location.pathname === '/'}>
-  <img src="/favicon.png" alt="logo" class="w-5 h-5 align-middle" />
-  <span class="btm-nav-label truncate">{$t('drawer.home')}</span>
-</a>
+  {#if browser}
+    <a href="/" class:active={pathname === '/'}>
+      <img src="/favicon.png" alt="logo" class="w-5 h-5 align-middle" />
+      <span class="btm-nav-label truncate">{$t('drawer.home')}</span>
+    </a>
+  {/if}
 
-  <BotNavButton
-    icon="network-chart"
-    text={$t('drawer.contracts')}
-    href="/profile/contracts"
-  />
-  <BotNavButton
-    icon="history"
-    text={$t('drawer.balanceHistory')}
-    href="/profile/balance"
-  />
-  <BotNavButton
-    icon="user"
-    text={$t('drawer.account')}
-    href="/profile/account"
-  />
+  <BotNavButton icon="network-chart" text={$t('drawer.contracts')} href="/profile/contracts" />
+  <BotNavButton icon="history" text={$t('drawer.balanceHistory')} href="/profile/balance" />
+  <BotNavButton icon="user" text={$t('drawer.account')} href="/profile/account" />
 
   <a href="#" on:click|preventDefault={toggleLang}>
     <box-icon name="flag" class="fill-current"></box-icon>
-    <span class="btm-nav-label ">{$lang === 'ru' ? 'RU' : 'EN'}</span>
+    <span class="btm-nav-label ">{ $lang === 'ru' ? 'RU' : 'EN' }</span>
   </a>
 </div>
-
-
