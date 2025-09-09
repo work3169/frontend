@@ -101,8 +101,8 @@
   <BotNavButton icon="history" text={$t('drawer.balanceHistory')} href="/profile/balance" />
   <BotNavButton icon="user" text={$t('drawer.account')} href="/profile/account" />
 
-  <a href="#" on:click|preventDefault={toggleLang}>
-    <box-icon name="flag" class="fill-current"></box-icon>
-    <span class="btm-nav-label ">{ $lang === 'ru' ? 'RU' : 'EN' }</span>
-  </a>
+  <button on:click={toggleLang} class="flex flex-col items-center">
+  <box-icon name="flag" class="fill-current"></box-icon>
+  <span class="btm-nav-label">{ $lang === 'ru' ? 'RU' : 'EN' }</span>
+</button>
 </div>
