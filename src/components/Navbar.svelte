@@ -151,7 +151,7 @@
                   : "bg-white/20 text-white border-white"
               }`}
             >
-              {lng === "ru" ? "🇷🇺" : "🇬🇧"}
+              {lng === "ru" ? "RU" : "EN"}
             </button>
           {/each}
         </div>

@@ -16,7 +16,7 @@ function createReferralsStore() {
     getReferrals: async () => {
       try {
         const accessToken = await user.getAccessToken();
-        const response = await axios.get(`${BACKEND_URL}/user/referrals/`, {
+        const response = await axios.get(`${BACKEND_URL}/user/contracts/referrals/`, {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': window.location.origin,

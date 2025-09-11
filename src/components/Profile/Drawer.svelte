@@ -70,7 +70,7 @@
         {#if $lang === 'ru'}
           <box-icon name="flag" class="fill-current"></box-icon> RU Смена языка
         {:else}
-          <box-icon name="flag" class="fill-current"></box-icon> GB Language change
+          <box-icon name="flag" class="fill-current"></box-icon> EN Language change
         {/if}
       </button>
     </li>
