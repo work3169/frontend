@@ -60,8 +60,8 @@
       <div class="navbar-end gap-4">
         <!-- Переключатель языка -->
         <div class="flex items-center space-x-2">
-          <button class="text-sm hover:underline" on:click={() => changeLanguage('ru')}>🇷🇺</button>
-          <button class="text-sm hover:underline" on:click={() => changeLanguage('en')}>🇬🇧</button>
+          <button class="text-sm hover:underline" on:click={() => changeLanguage('ru')}>RU</button>
+          <button class="text-sm hover:underline" on:click={() => changeLanguage('en')}>EN</button>
         </div>
 
         <!-- Авторизация / профиль -->

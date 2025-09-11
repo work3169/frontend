@@ -397,14 +397,34 @@ i18next.init({
         },
 
         contractsTable: {
-          contract: 'Contract',
-          currentProfit: 'Current profit',
-          duration: 'Duration',
-          deposit: 'Deposit',
-          progress: 'Progress',
-          creationDate: 'Creation date',
-          noContracts: 'You have no contracts'
-        },
+  contract: 'Contract',
+  currentProfit: 'Current profit',
+  duration: 'Days since start',
+  deposit: 'Deposit',
+  progress: 'Progress',
+  creationDate: 'Creation date',
+  noContracts: 'You have no contracts',
+
+  reinvestProfit: 'Reinvest profit',
+  reinvestTotal: 'Total profit',
+  reinvestFinished: 'Completed reinvests',
+
+  // modals
+  modalReinvestTitle: 'Reinvestment',
+  modalReinvestText: 'You are about to start reinvestment for contract',
+  modalReinvestConfirm: 'Confirm',
+  modalReinvestCancel: 'Cancel',
+
+  modalStopTitle: 'Reinvestment enabled',
+  modalStopText: 'To cancel reinvestment, please contact support',
+  modalStopConfirm: 'Disable',
+
+  modalSupportTitle: 'Reinvestment unavailable',
+  modalSupportText: 'To start reinvestment for this contract, please contact support',
+  modalOk: 'OK'
+}
+
+,
 
         partneredContractsPage: {
           title:               'Partnered contracts',
@@ -1016,14 +1036,34 @@ i18next.init({
         },
 
         contractsTable: {
-          contract: 'Контракт',
-          currentProfit: 'Текущая прибыль',
-          duration: 'Длительность',
-          deposit: 'Депозит',
-          progress: 'Прогресс',
-          creationDate: 'Дата создания',
-          noContracts: 'У вас нет контрактов'
-        },
+  contract: 'Контракт',
+  currentProfit: 'Текущий профит',
+  duration: 'Дней с начала',
+  deposit: 'Депозит',
+  progress: 'Прогресс',
+  creationDate: 'Создан',
+  noContracts: 'У вас нет контрактов',
+
+  reinvestProfit: 'Доход от реинвеста',
+  reinvestTotal: 'Общий профит',
+  reinvestFinished: 'Завершено реинвестов',
+
+  // модалки
+  modalReinvestTitle: 'Реинвестиция',
+  modalReinvestText: 'Вы собираетесь запустить реинвестирование для контракта',
+  modalReinvestConfirm: 'Подтвердить',
+  modalReinvestCancel: 'Отмена',
+
+  modalStopTitle: 'Реинвестиция активна',
+  modalStopText: 'Для отмены реинвестирования обратитесь в службу поддержки',
+  modalStopConfirm: 'Отключить',
+
+  modalSupportTitle: 'Реинвестиция недоступна',
+  modalSupportText: 'Для запуска реинвестирования по контракту обратитесь в поддержку',
+  modalOk: 'ОК'
+}
+
+,
 
         partneredContractsPage: {
           title:               'Партнерские контракты',

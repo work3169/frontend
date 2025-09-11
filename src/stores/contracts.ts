@@ -4,16 +4,27 @@ import axios from 'axios';
 import { user } from 'stores/user';
 
 export interface Contract {
+  id: number;  // уникальный id контракта
+
   contract: {
-    name: string,
-    type?: string,
-  },
-  current_profit: number,
-  days_from_start: number,
-  complete_percent: number,
-  deposit_amount: number,
-  creation_date: string | Date,
+    name: string;
+    type?: string;
+  };
+
+  current_profit: number;                     // текущая прибыль
+  days_from_start: number;                    // сколько дней работает контракт
+  complete_percent: number;                   // прогресс в %
+  deposit_amount: number;                     // сумма депозита
+  creation_date: string | Date;               // дата создания
+
+  status: boolean;                            // статус
+  current_reinvests_session_profit: number;   // профит по текущей реинвестиции
+  total_reinvests_profit: number;             // профит по всем реинвестам
+  active_reinvestment: boolean;               // есть ли активная реинвестиция
+  finished_reinvestments: number;             // количество завершённых реинвестов
+  can_reinvest: boolean;                      // можно ли включить реинвест
 }
+
 
 export interface CommonContractItem {
   contract_creator: string

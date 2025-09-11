@@ -119,7 +119,7 @@
   }
 </style>
 
-<section class="possibilities-section">
+<section id="about-section" class="possibilities-section">
   <div class="possibilities-header">
     <!-- Заголовок и описание теперь берем из possibilities.title / .description -->
     <h2>{$t("possibilities.title")}</h2>
