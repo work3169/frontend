@@ -1,6 +1,6 @@
 <script lang="ts">
   import { user as userStore } from "stores/user";
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
   import i18next from '../../lib/i18n';
   import { writable, get } from 'svelte/store';
 
@@ -37,7 +37,24 @@
   const getNextCashflow = () => {
     clearInterval(intervalIdCashflow);
     userStore.getNextCashflow();
-  }
+  };
+
+  // 👇 sentinel для IntersectionObserver
+  let sentinel: HTMLDivElement;
+
+  onMount(() => {
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && $userStore.next_cashflow && !$userStore.isLoading) {
+          getNextCashflow();
+        }
+      },
+      { threshold: 1.0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  });
 </script>
 
 <div class="overflow-x-auto max-w-4xl 2xl:max-w-6xl mt-8">
@@ -84,9 +101,7 @@
             </tr>
           {/each}
         </tbody>
-      {/if}
-
-      {#if $userStore.operations.length === 0}
+      {:else}
         <tbody>
           <tr>
             <td colspan="6" class="text-center">
@@ -98,6 +113,11 @@
     </table>
   {/key}
 </div>
+
+<!-- sentinel только если есть данные -->
+{#if $userStore.operations.length}
+  <div bind:this={sentinel} class="h-8"></div>
+{/if}
 
 {#if $userStore.next_cashflow}
   <button

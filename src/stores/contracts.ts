@@ -20,7 +20,17 @@ export interface Contract {
   status: boolean;                            // статус
   current_reinvests_session_profit: number;   // профит по текущей реинвестиции
   total_reinvests_profit: number;             // профит по всем реинвестам
-  active_reinvestment: boolean;               // есть ли активная реинвестиция
+  active_reinvestment: {
+    id: number;
+    type: number;
+    start_date: string;  // ISO строка
+    end_day: string;     // ISO строка
+    base_amount: number;
+    collected_profit: number;
+    expected_total_profit: number;
+    days_passed: number;
+    days_total: number;
+  };              // есть ли активная реинвестиция
   finished_reinvestments: number;             // количество завершённых реинвестов
   can_reinvest: boolean;                      // можно ли включить реинвест
 }

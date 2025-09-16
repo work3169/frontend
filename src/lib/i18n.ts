@@ -419,9 +419,11 @@ i18next.init({
   modalStopText: 'To cancel reinvestment, please contact support',
   modalStopConfirm: 'Disable',
 
-  modalSupportTitle: 'Reinvestment unavailable',
+  modalSupportTitle: 'Reinvestment',
   modalSupportText: 'To start reinvestment for this contract, please contact support',
-  modalOk: 'OK'
+  modalOk: 'OK',
+   reinvestEndDate: "Reinvestment end date",
+    reinvestExpectedProfit: "Expected profit"
 }
 
 ,
@@ -1058,9 +1060,11 @@ i18next.init({
   modalStopText: 'Для отмены реинвестирования обратитесь в службу поддержки',
   modalStopConfirm: 'Отключить',
 
-  modalSupportTitle: 'Реинвестиция недоступна',
+  modalSupportTitle: 'Реинвестиция',
   modalSupportText: 'Для запуска реинвестирования по контракту обратитесь в поддержку',
-  modalOk: 'ОК'
+  modalOk: 'ОК',
+  reinvestEndDate: "Окончание реинвеста",
+    reinvestExpectedProfit: "Ожидаемый профит"
 }
 
 ,

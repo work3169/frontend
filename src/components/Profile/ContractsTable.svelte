@@ -93,7 +93,7 @@
 
   {#each $contracts as contract}
     <div
-      class="rounded-2xl shadow-lg border border-base-300 bg-base-100 flex flex-col justify-between transition hover:shadow-xl h-auto"
+      class="rounded-2xl shadow-lg border border-base-300 bg-base-100 flex flex-col justify-between transition hover:shadow-xl self-start"
       style={contract.active_reinvestment
         ? "background: linear-gradient(135deg, #e0ffe8, #b3f2c9);" 
         : ""}
@@ -122,27 +122,30 @@
           </div>
 
           {#if contract.active_reinvestment}
-            <div class="mt-3 border-t pt-2 space-y-1">
-              <div class="flex justify-between">
-                <span class="text-gray-500">{$t("contractsTable.reinvestProfit")}:</span>
-                <span class="font-semibold">
-                  {money(contract.current_reinvests_session_profit || 0)}
-                </span>
-              </div>
-              <!-- <div class="flex justify-between">
-                <span class="text-gray-500">{$t("contractsTable.reinvestTotal")}:</span>
-                <span class="font-semibold">
-                  {money(contract.total_reinvests_profit || 0)}
-                </span>
-              </div> -->
-              <!-- <div class="flex justify-between">
-                <span class="text-gray-500">{$t("contractsTable.reinvestFinished")}:</span>
-                <span class="font-semibold">
-                  {contract.finished_reinvestments ?? 0}
-                </span>
-              </div> -->
-            </div>
-          {/if}
+  <div class="mt-3 border-t pt-2 space-y-1">
+    <div class="flex justify-between">
+      <span class="text-gray-500">{$t("contractsTable.reinvestProfit")}:</span>
+      <span class="font-semibold">
+        {money(contract.current_reinvests_session_profit || 0)}
+      </span>
+    </div>
+
+    <div class="flex justify-between">
+      <span class="text-gray-500">{$t("contractsTable.reinvestEndDate")}:</span>
+      <span class="font-semibold">
+        {returnDate(contract.active_reinvestment.end_day)}
+      </span>
+    </div>
+
+    <div class="flex justify-between">
+      <span class="text-gray-500">{$t("contractsTable.reinvestExpectedProfit")}:</span>
+      <span class="font-semibold">
+        {money(contract.active_reinvestment.expected_total_profit || 0)}
+      </span>
+    </div>
+  </div>
+{/if}
+
         </div>
 
         <div class="mt-4">
@@ -187,15 +190,15 @@
         </button>
       {:else}
         <button
-          class="w-full border-none text-white font-semibold 
-                 bg-gradient-to-r from-red-400 to-red-500 
-                 hover:from-red-500 hover:to-red-600 
-                 rounded-t-none rounded-b-2xl py-3 transition-colors"
-          on:click={() => {
-            selectedContract = contract;
-            modalType = "support";
-          }}
-        >
+  class="w-full border-none text-white font-semibold 
+         bg-gradient-to-r from-gray-400 to-gray-500 
+         hover:from-gray-500 hover:to-gray-600 
+         rounded-t-none rounded-b-2xl py-3 transition-colors"
+  on:click={() => {
+    selectedContract = contract;
+    modalType = "support";
+  }}
+>
           {$t("contractsTable.modalSupportTitle")}
         </button>
       {/if}
